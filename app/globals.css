@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.shadow-effect {
+  fill: rgba(54, 52, 52, 0.5);
+  filter: blur(60px);
+}
+
+.search-box {
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+}

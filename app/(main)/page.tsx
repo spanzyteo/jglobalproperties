@@ -1,11 +1,13 @@
-import React from "react";
+'use client'
+
 import Navbar from "./components/Navbar";
+import Hero from "./components/home/Hero";
 
 const Home = () => {
   return (
     <>
       <Navbar />
-      page
+      <Hero />
     </>
   );
 };
