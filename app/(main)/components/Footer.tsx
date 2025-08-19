@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BiSend } from "react-icons/bi";
+import { FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaYoutube } from "react-icons/fa6";
+import { IoLogoInstagram } from "react-icons/io5";
 
 const Footer = () => {
   return (
@@ -54,34 +57,18 @@ const Footer = () => {
           </div>
           <div className="flex flex-col items-start gap-2 lg:shrink-0 ">
             <div className="flex gap-[0.34238rem] p-[0.34238rem] items-center">
-              <Image
-                src={"/footer/instagram.png"}
-                width={24}
-                height={24}
-                alt="instagram"
-                className="w-6 h-6"
-              />
-              <Image
-                src={"/footer/linkedin.png"}
-                width={24}
-                height={24}
-                alt="instagram"
-                className="w-6 h-6"
-              />
-              <Image
-                src={"/footer/facebook.png"}
-                width={24}
-                height={24}
-                alt="instagram"
-                className="w-6 h-6"
-              />
-              <Image
-                src={"/footer/youtube.png"}
-                width={24}
-                height={24}
-                alt="instagram"
-                className="w-6 h-6"
-              />
+              <div className="flex h-6 w-6  items-center justify-center rounded-full bg-white">
+                <IoLogoInstagram className="text-gray-900 h-[0.58331rem w-[0.58331rem" />
+              </div>
+              <div className="flex h-6 w-6  items-center justify-center rounded-full bg-white">
+                <FaLinkedin className="text-gray-900 h-[0.58331rem w-[0.58331rem" />
+              </div>
+              <div className="flex h-6 w-6  items-center justify-center rounded-full bg-white">
+                <FaFacebook className="text-gray-900 h-[0.58331rem w-[0.58331rem" />
+              </div>
+              <div className="flex h-6 w-6  items-center justify-center rounded-full bg-white">
+                <FaYoutube className="text-gray-900 h-[0.58331rem w-[0.58331rem" />
+              </div>
             </div>
             <div className="flex items-start gap-2">
               <Image
