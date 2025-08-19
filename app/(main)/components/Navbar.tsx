@@ -1,11 +1,18 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { IoMdMenu } from "react-icons/io";
+import { useAppDispatch } from "../store/hooks";
+import { openSidebar } from "../store/mobileSidebarSlice";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
+
+  const handleOpenSidebar = () => {
+    dispatch(openSidebar());
+  };
   return (
-    <div className="flex h-[4.1875rem] lg:h-[7.5rem] p-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] bg-[#FFF] fixed w-full top-0 z-50">
+    <div className="flex h-[4.1875rem] lg:h-[7.5rem] px-4 py-12 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] bg-[#FFF] fixed w-full top-0 z-50">
       <div className="flex justify-between items-center">
         <Image
           src={"/logo.svg"}
@@ -14,7 +21,7 @@ const Navbar = () => {
           height={70}
           className="w-[5.62rem] h-[4.374rem] object-cover"
         />
-        <IoMdMenu className="w-[3rem] h-[3rem] lg:hidden" />
+        <IoMdMenu onClick={handleOpenSidebar} className="w-[3rem] h-[3rem] lg:hidden" />
         <div className="lg:flex hidden p-2 items-center gap-2 justify-between">
           <Link
             href={"/"}
