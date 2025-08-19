@@ -6,7 +6,7 @@ import { BiSend } from "react-icons/bi";
 const Footer = () => {
   return (
     <div className="flex p-8 lg:py-[5.62rem] lg:px-[5rem] items-center gap-[0.625rem] bg-black lg:justify-center pb-20 lg:pb-10">
-      <div className="flex flex-col lg:flex-row items-center gap-[1.875rem] lg:gap-[13.5rem]">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-[1.875rem] lg:gap-[13.5rem]">
         <div className="flex flex-col items-start w-[9.875rem] lg:w-[7.07144rem]">
           <Image
             src={"/logo1.svg"}
@@ -19,7 +19,7 @@ const Footer = () => {
             © 2025 All rights reserved.
           </p>
         </div>
-        <div className="flex flex-col lg:flex-row justify-center items-start lg:gap-[3.25rem] gap-[0.9375rem]">
+        <div className="flex flex-col lg:flex-row justify-center items-start lg:gap-[3.25rem] gap-[1.7rem]">
           <div className="flex flex-col items-start gap-[0.25rem] lg:shrink-0">
             <Link
               href={"/"}
