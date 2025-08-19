@@ -13,3 +13,7 @@
   aspect-ratio: 50/30;
   box-shadow: 2px 5px 30px 0 rgba(0, 0, 0, 0.15);
 }
+
+.footer-logo {
+  aspect-ratio: 9/7;
+}

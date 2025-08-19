@@ -28,7 +28,7 @@ const About = () => {
       </div>
       <video
         controls
-        // autoPlay
+        autoPlay
         src="/ceo.mp4"
         className="rounded-[1.25rem] lg:rounded-[2.8125rem] h-[12.31131rem] lg:h-[38.27831rem] video-class object-cover"
       ></video>

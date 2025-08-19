@@ -26,7 +26,7 @@ const reviewsData: Review[] = [
     name: "Mr James",
     title: "House Investor",
     content:
-      "Jglobal Properties is a stress-free straight-to-the-point Real estate brokerage firm I used to acquire landed properties in Lagos. The company took me by the hand throughout the process and made sure I saved costs and money. I will highly recommend the company to anyone interested in land and property acquisition in Lagos state and Nigeria at large.",
+      "Jglobal Properties is a stress-free straight-to-the-point Real estate brokerage firm I used to acquire landed properties in Lagos. The company took me by the hand throughout the process and made sure I saved costs and money.",
   },
   {
     id: "3",
@@ -89,20 +89,15 @@ const Review = () => {
   };
 
   return (
-    <div className="w-full bg-gray-50 py-12 md:py-20">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="w-full bg-gray-50 py-12 md:py-20 mt-8">
+      <div className="max-w-7xl mx-auto px-8">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            What Our Clients Say
+          <h2 className="text-[1.5rem] md:text-4xl lg:text-5xl font-bold text-gray-900 leading-[1.75rem] text-center">
+            What Our Clients Are Saying
           </h2>
-          <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">
-            Discover why thousands of investors trust Jglobal Properties
-          </p>
-        </div>
 
         {/* Reviews Display */}
-        <div className="relative flex items-center justify-center min-h-[500px] md:min-h-[400px] mb-8 overflow-hidden">
+        <div className="relative flex items-center justify-center min-h-[350px] md:min-h-[400px] mb-8 overflow-hidden ">
           {/* Mobile view - scrolling effect */}
           <div className="md:hidden w-full">
             <div className="flex items-center justify-center">
