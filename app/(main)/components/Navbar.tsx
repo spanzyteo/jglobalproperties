@@ -12,7 +12,7 @@ const Navbar = () => {
     dispatch(openSidebar());
   };
   return (
-    <div className="flex h-[4.1875rem] lg:h-[7.5rem] px-4 py-12 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] bg-[#FFF] fixed w-full top-0 z-50 shadow-lg">
+    <div className="flex h-[4.1875rem] lg:h-[6rem] px-4 py-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] bg-[#FFF] fixed w-full top-0 z-50 shadow-lg">
       <div className="flex justify-between items-center">
         <Image
           src={"/logo.svg"}
@@ -36,7 +36,7 @@ const Navbar = () => {
             Properties
           </Link>
           <Link
-            href={"/about-us"}
+            href={"/about"}
             className={`text-[1rem] font-medium leading-[1.25rem] py-4 px-2 w-[7.8rem] h-[3rem] flex items-center justify-center`}
           >
             About us
