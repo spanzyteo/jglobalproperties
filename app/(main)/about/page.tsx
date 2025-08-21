@@ -75,7 +75,7 @@ const About = () => {
               {team.map((item: TeamData) => (
                 <div
                   key={item.id}
-                  className="flex flex-col items-start rounded-[1rem] lg:w-[18.0625rem] group cursor-pointer relative"
+                  className="flex flex-col items-start rounded-[1rem] lg:w-[18.0625rem] w-[17rem] group cursor-pointer relative"
                 >
                   <Image
                     src={item.image}
