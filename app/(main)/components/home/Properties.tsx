@@ -1,18 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import React from "react";
 import { FaAngleRight } from "react-icons/fa";
 
 const Properties = () => {
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-[2.5rem] lg:gap-[4.4375rem] px-[2rem] lg:px-[8.31rem] mt-[5.5rem] lg:mt-[9rem] relative">
-      <Image
-        src={"/properties.svg"}
-        width={433}
-        height={322}
-        alt="properties"
-        className="w-[9.45081rem] lg:w-[27rem] h-[7.02338rem] lg:h-[20rem] absolute top-0 left-10 lg:left-32"
-      />
+    <div className="flex flex-col lg:flex-row items-center gap-[2.5rem] lg:gap-[4.4375rem] px-[2rem] lg:px-[8.31rem] mt-[5.5rem] lg:mt-[9rem]">
       <div className="relative flex flex-col lg:w-[25.25rem] p-[0.625rem] gap-4 lg:gap-8">
         <div className="flex flex-col gap-2 lg:gap-4 items-start">
           <h1 className="lg:text-[3rem] text-[1.5rem] font-bold leading-[3.25rem]">

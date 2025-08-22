@@ -2,7 +2,7 @@
 
 const About = () => {
   return (
-    <div className="flex flex-col gap-[3.25rem] mt-[3rem] lg:mt-[9.13rem] px-[2rem] lg:px-[11.19rem]">
+    <div className="flex flex-col gap-[3.25rem] pt-[3rem] lg:pt-[9.13rem] px-[2rem] lg:px-[11.19rem] bg-gray-200 pb-[3rem] lg:pb-[5rem]">
       <div className="flex flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-6">
           <h1 className="text-[1.5rem] lg:text-[3rem] font-bold text-center leading-[1.75rem] lg:leading-[3.25rem]">

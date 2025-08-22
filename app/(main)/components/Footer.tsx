@@ -8,7 +8,7 @@ import { IoLogoInstagram } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <div className="flex p-8 lg:py-[5.62rem] lg:px-[5rem] items-center gap-[0.625rem] bg-black lg:justify-center pb-20 lg:pb-10">
+    <div className="flex p-8 lg:pt-[5.62rem] lg:pb-[5.62rem] lg:px-[5rem] items-center gap-[0.625rem] bg-black lg:justify-center pb-20">
       <div className="flex flex-col lg:flex-row lg:items-center gap-[1.875rem] lg:gap-[13.5rem]">
         <div className="flex flex-col items-start w-[9.875rem] lg:w-[7.07144rem]">
           <Image
@@ -22,35 +22,35 @@ const Footer = () => {
             © 2025 All rights reserved.
           </p>
         </div>
-        <div className="flex flex-col lg:flex-row justify-center items-start lg:gap-[3.25rem] gap-[1.7rem]">
+        <div className="flex flex-col lg:flex-row justify-center lg:items-center lg:gap-[3.25rem] gap-[1.7rem]">
           <div className="flex flex-col items-start gap-[0.25rem] lg:shrink-0">
             <Link
               href={"/"}
-              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-xl text-white"
+              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-[1rem] leading-[1.25rem] text-white"
             >
               Home
             </Link>
             <Link
               href={"/properties"}
-              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-xl text-white"
+              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-[1rem] leading-[1.25rem] text-white"
             >
               Properties
             </Link>
             <Link
               href={"/about"}
-              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-xl text-white"
+              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-[1rem] leading-[1.25rem] text-white"
             >
               About us
             </Link>
             <Link
               href={"/blog"}
-              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-xl text-white"
+              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-[1rem] leading-[1.25rem] text-white"
             >
               Blog
             </Link>
             <Link
               href={"/contact"}
-              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-xl text-white"
+              className="flex py-[0.125rem] px-[0.25rem] items-center gap-[0.625rem] text-[1rem] leading-[1.25rem] text-white"
             >
               Contact Us
             </Link>

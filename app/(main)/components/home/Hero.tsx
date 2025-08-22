@@ -6,7 +6,7 @@ import { SlLocationPin } from "react-icons/sl";
 
 const Hero = () => {
   return (
-    <div className="lg:h-[44.8125rem] h-[41.562rem] bg-center bg-cover bg-no-repeat bg-[url(/hero.png)] lg:mt-[7.5rem] flex flex-col">
+    <div className="lg:h-[44.8125rem] h-[41.562rem] bg-center bg-cover bg-no-repeat bg-[url(/hero.png)] lg:mt-[6rem] flex flex-col">
       <div className="flex flex-col items-center gap-[3.0625rem] lg:gap-30 mt-[13.1rem] lg:mt-[8.19rem]">
         <div className="flex flex-col items-center gap-6 lg:gap-0 lg:w-[47.75rem] w-[90%] relative">
           <Image
