@@ -42,7 +42,7 @@ const Modal = () => {
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="flex max-w-[58rem] lg:h-[33rem] pt-14 pb-5 lg:py-0 px-4 lg:px-[3rem] flex-col gap-16 bg-white rounded-[1.75rem] relative justify-center"
+            className="flex w-[92%] lg:max-w-[58rem] lg:h-[33rem] pt-14 pb-5 lg:py-0 px-4 lg:px-[3rem] flex-col gap-16 bg-white rounded-[1.75rem] relative justify-center"
             initial={{
               opacity: 0,
               scale: 0.8,
@@ -67,8 +67,8 @@ const Modal = () => {
               className="w-4 h-4 cursor-pointer text-gray-600 hover:text-gray-800 absolute top-6 right-8"
               onClick={closeModal}
             />
-            <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-16">
-              <div className="flex flex-col lg:w-[28rem] items-start gap-4">
+            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-16 justify-center">
+              <div className="flex flex-col w-full md:w-[28rem] items-start gap-4">
                 <div className="flex flex-col items-start gap-1 lg:gap-3">
                   <h1 className="lg:text-[2rem] text-[1rem] font-semibold lg:leading-[2.3rem] leading-[1.5rem]">
                     Essential Updates for Investors and Homebuyers
@@ -103,7 +103,7 @@ const Modal = () => {
                 width={313}
                 height={344}
                 alt="modal"
-                className="lg:w-[19.6rem] w-full h-[21.5rem] modal mt-4 object-cover rounded-[1.25rem]"
+                className="md:w-[19.6rem] w-full h-[17rem] lg:h-[21.5rem] modal mt-4 object-cover rounded-[1.25rem]"
               />
             </div>
           </motion.div>
