@@ -21,3 +21,11 @@
 .about1-img {
   aspect-ratio: 167/143;
 }
+
+.media-shadow {
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.ceo-img {
+  aspect-ratio: 3/4;
+}
