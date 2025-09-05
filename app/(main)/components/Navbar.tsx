@@ -5,19 +5,38 @@ import { IoMdMenu } from "react-icons/io";
 import { useAppDispatch } from "../store/hooks";
 import { openSidebar } from "../store/mobileSidebarSlice";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleOpenSidebar = () => {
     dispatch(openSidebar());
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50); // Trigger effect after 50px scroll
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="flex h-[4.1875rem] lg:h-[6rem] px-4 py-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] bg-[#FFF] fixed w-full top-0 z-50 shadow-lg">
+    <div
+      className={`flex h-[4.1875rem] lg:h-[6rem] px-4 py-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] fixed z-50 shadow-lg transition-all duration-300 ease-in-out
+        ${
+          isScrolled
+            ? "top-4 left-4 right-4 bg-white/90 backdrop-blur-md rounded-2xl lg:top-6 lg:left-6 lg:right-6 lg:w-auto lg:mx-6"
+            : "top-0 w-full bg-[#FFF]"
+        }
+      `}
+    >
       <div className="flex justify-between items-center">
         <Image
           src={"/logo.svg"}
