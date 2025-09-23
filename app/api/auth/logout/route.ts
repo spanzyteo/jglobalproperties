@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     // Create response
     const nextResponse = NextResponse.json({
       success: true,
-      message: "Logout successful",
+      message: response.data.message || "Logout successful",
     });
 
     // Clear all authentication cookies

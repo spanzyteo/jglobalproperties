@@ -19,7 +19,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:3000/api/v1";
+    const backendUrl =
+      process.env.BACKEND_URL || "http://localhost:3000/api/v1";
     const backendResponse = await axios.post(`${backendUrl}/auth/signin`, {
       email,
       password,
