@@ -1,5 +1,6 @@
 'use client'
 import { ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function ClientLayout({
   children,
@@ -9,6 +10,7 @@ export default function ClientLayout({
   return (
     <div>
       {children}
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 }

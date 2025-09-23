@@ -36,7 +36,7 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.6,
+        duration: 1.2,
         staggerChildren: 0.2,
       },
     },
@@ -45,13 +45,13 @@ const About = () => {
   const itemVariants: Variants = {
     hidden: {
       opacity: 0,
-      y: 30,
+      y: 70,
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 1,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
