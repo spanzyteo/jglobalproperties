@@ -13,7 +13,7 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Image from "next/image";
 
-type LandImage = {
+type HouseImage = {
   id: string;
   url: string;
   publicId: string;
@@ -22,27 +22,12 @@ type LandImage = {
   order: number;
 };
 
-type LandUnit = {
+type HouseUnit = {
   id: string;
   size: number;
   unit: string;
   price: string;
   available: boolean;
-};
-
-type LandsType = {
-  id: string;
-  title: string;
-  slug: string;
-  overview: string;
-  location: string;
-  state: string;
-  country: string;
-  status: string;
-  metaTitle: string | null;
-  metaDescription: string | null;
-  units: LandUnit[];
-  images: LandImage[];
 };
 
 type ImageDetail = {
@@ -51,19 +36,20 @@ type ImageDetail = {
   order: number;
 };
 
-const EditLand = () => {
+const EditHouse = () => {
   const { id } = useParams();
   const router = useRouter();
 
   const mdParser = new MarkdownIt();
 
-  // Basic land information
+  // Basic house information
   const [title, setTitle] = useState("");
   const [overview, setOverview] = useState("");
   const [location, setLocation] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("Nigeria");
-  const [status, setStatus] = useState("FOR_SALE");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("FINISHED_HOMES");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
 
@@ -75,48 +61,47 @@ const EditLand = () => {
   // Images state
   const [images, setImages] = useState<File[]>([]);
   const [imageDetails, setImageDetails] = useState<ImageDetail[]>([]);
-  const [existingImages, setExistingImages] = useState<LandImage[]>([]);
+  const [existingImages, setExistingImages] = useState<HouseImage[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
 
-  const statusOptions = [
-    { value: "FOR_SALE", label: "For Sale" },
-    { value: "SOLD", label: "Sold" },
-    { value: "RESERVED", label: "Reserved" },
-    { value: "DRAFT", label: "Draft" },
+  const categoriesOptions = [
+    { value: "FINISHED_HOMES", label: "Finished Homes" },
+    { value: "OFF_PLAN_HOMES", label: "Off Plan Homes" },
   ];
 
   const unitOptions = ["sqm", "acres", "hectares", "plots"];
 
   useEffect(() => {
-    const fetchLand = async () => {
+    const fetchHouse = async () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
-          `https://jglobalproperties-api.onrender.com/api/v1/lands/${id}`,
+          `https://jglobalproperties-api.onrender.com/api/v1/houses/${id}`,
           {
             withCredentials: true,
           }
         );
 
         const { data } = response.data;
-        console.log("Fetched land data:", data);
+        console.log("Fetched house data:", data);
 
-        // Set basic information
+        //Set basic information
         setTitle(data.title || "");
         setOverview(data.overview || "");
         setLocation(data.location || "");
         setState(data.state || "");
         setCountry(data.country || "Nigeria");
-        setStatus(data.status || "FOR_SALE");
+        setCategory(data.category || "FINISHED_HOMES");
+        setPrice(data.price || "");
         setMetaTitle(data.metaTitle || "");
         setMetaDescription(data.metaDescription || "");
 
         // Set units
         if (data.units && data.units.length > 0) {
           setUnits(
-            data.units.map((unit: LandUnit) => ({
+            data.units.map((unit: HouseUnit) => ({
               size: unit.size,
               unit: unit.unit,
               price: unit.price,
@@ -128,7 +113,9 @@ const EditLand = () => {
         // Set existing images
         if (data.images && data.images.length > 0) {
           setExistingImages(
-            data.images.sort((a: LandImage, b: LandImage) => a.order - b.order)
+            data.images.sort(
+              (a: HouseImage, b: HouseImage) => a.order - b.order
+            )
           );
         }
 
@@ -137,13 +124,13 @@ const EditLand = () => {
         setFetchLoading(false);
         const message =
           error.response?.data?.message ||
-          "An error occurred while fetching land data";
+          "An error occurred while fetching house data";
         toast.error(message);
       }
     };
 
     if (id) {
-      fetchLand();
+      fetchHouse();
     }
   }, [id]);
 
@@ -221,13 +208,14 @@ const EditLand = () => {
     try {
       const formData = new FormData();
 
-      // Add basic land data
+      // Add basic house data
       formData.append("title", title);
       formData.append("overview", overview);
       formData.append("location", location);
       formData.append("state", state);
       formData.append("country", country);
-      formData.append("status", status);
+      formData.append("category", category);
+      formData.append("price", price);
 
       if (metaTitle) formData.append("metaTitle", metaTitle);
       if (metaDescription) formData.append("metaDescription", metaDescription);
@@ -272,7 +260,7 @@ const EditLand = () => {
       }
 
       const response = await axios.patch(
-        `https://jglobalproperties-api.onrender.com/api/v1/lands/${id}`,
+        `https://jglobalproperties-api.onrender.com/api/v1/houses/${id}`,
         formData,
         {
           headers: {
@@ -284,8 +272,8 @@ const EditLand = () => {
 
       // Handle boolean or object response
       if (response.data.success) {
-        toast.success("Land updated successfully!");
-        router.push("/admin/lands");
+        toast.success("House updated successfully!");
+        router.push("/admin/houses");
       }
 
       setLoading(false);
@@ -293,8 +281,9 @@ const EditLand = () => {
       setLoading(false);
       const message =
         error.response?.data?.message ||
-        "An error occurred while updating the land";
+        "An error occurred while updating the house";
       toast.error(message);
+      console.log(message);
     }
   };
 
@@ -328,9 +317,9 @@ const EditLand = () => {
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
             >
               <MdArrowBack className="h-5 w-5" />
-              Back to Lands
+              Back to houses
             </button>
-            <h1 className="text-xl font-semibold">Edit Land Information</h1>
+            <h1 className="text-xl font-semibold">Edit house Information</h1>
           </div>
 
           {/* Basic Information */}
@@ -342,7 +331,7 @@ const EditLand = () => {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Land title"
+                placeholder="House title"
                 className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
@@ -357,7 +346,7 @@ const EditLand = () => {
                   style={{ height: "300px" }}
                   renderHTML={(text) => mdParser.render(text)}
                   onChange={({ text }) => setOverview(text)}
-                  placeholder="Write detailed land overview and description..."
+                  placeholder="Write detailed house overview and description..."
                 />
               </div>
             </div>
@@ -401,21 +390,34 @@ const EditLand = () => {
               />
             </div>
 
-            {/* Status */}
+            {/* Category */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Status</h1>
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Category</h1>
               <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
                 required
               >
-                {statusOptions.map((option) => (
+                {categoriesOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Price */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Price</h1>
+              <input
+                type="text"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="Price"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                required
+              />
             </div>
 
             {/* Meta Title */}
@@ -451,7 +453,7 @@ const EditLand = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-[#4A5568]">
-                Land Units
+                House Units
               </h2>
               <button
                 type="button"
@@ -602,8 +604,8 @@ const EditLand = () => {
                 ))}
               </div>
               <p className="text-sm text-gray-500 mt-2">
-                Note: To modify existing images, you&apos;ll need to upload new ones.
-                Existing images will be replaced.
+                Note: To modify existing images, you&apos;ll need to upload new
+                ones. Existing images will be replaced.
               </p>
             </div>
           )}
@@ -746,7 +748,7 @@ const EditLand = () => {
             disabled={loading}
             className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Updating..." : "Update Land"}
+            {loading ? "Updating..." : "Update House"}
           </button>
         </div>
       </form>
@@ -754,4 +756,4 @@ const EditLand = () => {
   );
 };
 
-export default EditLand;
+export default EditHouse;
