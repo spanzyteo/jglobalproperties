@@ -9,32 +9,27 @@ import Image from "next/image";
 import { ThreeCircles } from "react-loader-spinner";
 import { MdArrowBack } from "react-icons/md";
 
-type LandImage = {
+type HouseImage = {
   id: string;
   url: string;
   publicId: string;
   caption: string | null;
   isPrimary: boolean;
   order: number;
-  // landId: string;
-  // houseId: string | null;
-  // blogId: string | null;
-  // createdAt: string;
-  // updatedAt: string;
 };
 
-type LandUnit = {
+type HouseUnit = {
   id: string;
-  size: number;
+  size: string;
   unit: string;
   price: string;
   available: boolean;
-  landId: string;
+  houseId: string;
   createdAt: string;
   updatedAt: string;
 };
 
-type LandReview = {
+type HouseReview = {
   id: string;
   rating: number;
   comment: string;
@@ -43,7 +38,7 @@ type LandReview = {
   updatedAt: string;
 };
 
-type LandsType = {
+type HouseType = {
   id: string;
   title: string;
   slug: string;
@@ -51,16 +46,17 @@ type LandsType = {
   location: string;
   state: string;
   country: string;
-  status: string;
+  price: string;
+  category: string;
   averageRating: number | null;
   totalReviews: number;
   metaTitle: string | null;
   metaDescription: string | null;
   createdAt: string;
   updatedAt: string;
-  units: LandUnit[];
-  images: LandImage[];
-  reviews: LandReview[];
+  units: HouseUnit[];
+  images: HouseImage[];
+  reviews: HouseReview[];
   _count: {
     reviews: number;
     favorites: number;
@@ -69,42 +65,42 @@ type LandsType = {
 
 type ApiResponse = {
   success: boolean;
-  data: LandsType;
+  data: HouseType;
 };
 
-const LandId = () => {
-  const { id: landId } = useParams();
+const HouseId = () => {
+  const { id: houseId } = useParams();
   const router = useRouter();
-  const [land, setLand] = useState<LandsType | null>(null);
+  const [house, setHouse] = useState<HouseType | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchLand = async () => {
+    const fetchHouse = async () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/lands/${landId}`,
+          `https://jglobalproperties-api.onrender.com/api/v1/houses/${houseId}`,
           {
             withCredentials: true,
           }
         );
 
         const { data } = response.data;
-        setLand(data);
+        setHouse(data);
         setLoading(false);
       } catch (error: any) {
         setLoading(false);
         const message =
           error.response?.data?.message ||
-          "An error occurred while fetching land details";
+          "An error occurred while fetching house details";
         toast.error(message);
       }
     };
 
-    if (landId) {
-      fetchLand();
+    if (houseId) {
+      fetchHouse();
     }
-  }, [landId]);
+  }, [houseId]);
 
   const formatPrice = (price: string) => {
     return new Intl.NumberFormat("en-NG", {
@@ -144,7 +140,7 @@ const LandId = () => {
     );
   }
 
-  if (!land) {
+  if (!house) {
     return (
       <div className="bg-white flex flex-col h-[100vh]">
         <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
@@ -157,7 +153,7 @@ const LandId = () => {
               Back
             </button>
             <h1 className="text-gray-600 text-lg text-center mt-8">
-              Land not found.
+              House not found.
             </h1>
           </div>
         </div>
@@ -171,21 +167,21 @@ const LandId = () => {
         <div className="mt-4">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4 cursor-pointer"
           >
             <MdArrowBack className="h-5 w-5" />
-            Back to Lands
+            Back to Houses
           </button>
           <div className="flex items-center justify-between">
             <h1 className="font-semibold sm:text-xl text-lg">
-              Land Details - {land.title}
+              House Details - {house.title}
             </h1>
             <div className="flex gap-2">
               <button
-                onClick={() => router.push(`/admin/lands/edit/${land.id}`)}
+                onClick={() => router.push(`/admin/houses/edit/${house.id}`)}
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm cursor-pointer"
               >
-                Edit Land
+                Edit House
               </button>
             </div>
           </div>
@@ -202,58 +198,46 @@ const LandId = () => {
                 <tbody>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200 w-1/4">ID</td>
-                    <td className="p-3 text-gray-700">{land.id}</td>
+                    <td className="p-3 text-gray-700">{house.id}</td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Title</td>
-                    <td className="p-3 text-gray-700">{land.title}</td>
+                    <td className="p-3 text-gray-700">{house.title}</td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Slug</td>
-                    <td className="p-3 text-gray-700">{land.slug}</td>
+                    <td className="p-3 text-gray-700">{house.slug}</td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Overview</td>
-                    <td className="p-3 text-gray-700">{land.overview}</td>
+                    <td className="p-3 text-gray-700">{house.overview}</td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Location</td>
                     <td className="p-3 text-gray-700 capitalize">
-                      {land.location}
+                      {house.location}
                     </td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">State</td>
                     <td className="p-3 text-gray-700 capitalize">
-                      {land.state}
+                      {house.state}
                     </td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Country</td>
-                    <td className="p-3 text-gray-700">{land.country}</td>
+                    <td className="p-3 text-gray-700">{house.country}</td>
                   </tr>
                   <tr className="border border-gray-300">
-                    <td className="p-3 font-semibold bg-gray-200">Status</td>
-                    <td className="p-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          land.status === "FOR_SALE"
-                            ? "bg-green-100 text-green-800"
-                            : land.status === "SOLD"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {land.status.replace("_", " ")}
-                      </span>
-                    </td>
+                    <td className="p-3 font-semibold bg-gray-200">Price</td>
+                    <td className="p-3 text-gray-700">{formatPrice(house.price)}</td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">
                       Created At
                     </td>
                     <td className="p-3 text-gray-700">
-                      {formatDate(land.createdAt)}
+                      {formatDate(house.createdAt)}
                     </td>
                   </tr>
                   <tr className="border border-gray-300">
@@ -261,7 +245,7 @@ const LandId = () => {
                       Updated At
                     </td>
                     <td className="p-3 text-gray-700">
-                      {formatDate(land.updatedAt)}
+                      {formatDate(house.updatedAt)}
                     </td>
                   </tr>
                 </tbody>
@@ -270,7 +254,7 @@ const LandId = () => {
           </div>
 
           {/* SEO Information */}
-          {(land.metaTitle || land.metaDescription) && (
+          {(house.metaTitle || house.metaDescription) && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-lg font-semibold mb-4 text-gray-800">
                 SEO Information
@@ -278,21 +262,21 @@ const LandId = () => {
               <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse border border-gray-300">
                   <tbody>
-                    {land.metaTitle && (
+                    {house.metaTitle && (
                       <tr className="border border-gray-300">
                         <td className="p-3 font-semibold bg-gray-200 w-1/4">
                           Meta Title
                         </td>
-                        <td className="p-3 text-gray-700">{land.metaTitle}</td>
+                        <td className="p-3 text-gray-700">{house.metaTitle}</td>
                       </tr>
                     )}
-                    {land.metaDescription && (
+                    {house.metaDescription && (
                       <tr className="border border-gray-300">
                         <td className="p-3 font-semibold bg-gray-200">
                           Meta Description
                         </td>
                         <td className="p-3 text-gray-700">
-                          {land.metaDescription}
+                          {house.metaDescription}
                         </td>
                       </tr>
                     )}
@@ -305,17 +289,17 @@ const LandId = () => {
           {/* Images */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-lg font-semibold mb-4 text-gray-800">
-              Images ({land.images.length})
+              Images ({house.images.length})
             </h2>
-            {land.images.length > 0 ? (
+            {house.images.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {land.images
+                {house.images
                   .sort((a, b) => a.order - b.order)
                   .map((image) => (
                     <div key={image.id} className="relative">
                       <Image
                         src={image.url}
-                        alt={image.caption || `Land image ${image.order + 1}`}
+                        alt={image.caption || `House image ${image.order + 1}`}
                         width={300}
                         height={200}
                         className="w-full h-48 object-cover rounded-lg"
@@ -343,7 +327,7 @@ const LandId = () => {
               </div>
             ) : (
               <p className="text-gray-500">
-                No images available for this land.
+                No images available for this house.
               </p>
             )}
           </div>
@@ -351,9 +335,9 @@ const LandId = () => {
           {/* Units */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-lg font-semibold mb-4 text-gray-800">
-              Available Units ({land.units.length})
+              Available Units ({house.units.length})
             </h2>
-            {land.units.length > 0 ? (
+            {house.units.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse border border-gray-300">
                   <thead>
@@ -376,7 +360,7 @@ const LandId = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {land.units.map((unit) => (
+                    {house.units.map((unit) => (
                       <tr key={unit.id}>
                         <td className="border border-gray-300 p-3 text-gray-700">
                           {unit.size.toLocaleString()}
@@ -407,7 +391,7 @@ const LandId = () => {
                 </table>
               </div>
             ) : (
-              <p className="text-gray-500">No units defined for this land.</p>
+              <p className="text-gray-500">No units defined for this house.</p>
             )}
           </div>
 
@@ -423,17 +407,19 @@ const LandId = () => {
                     <td className="p-3 font-semibold bg-gray-200 w-1/4">
                       Total Reviews
                     </td>
-                    <td className="p-3 text-gray-700">{land._count.reviews}</td>
+                    <td className="p-3 text-gray-700">
+                      {house._count.reviews}
+                    </td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">
                       Average Rating
                     </td>
                     <td className="p-3 text-gray-700">
-                      {land.averageRating ? (
+                      {house.averageRating ? (
                         <div className="flex items-center gap-2">
                           <span className="text-yellow-500">★</span>
-                          <span>{land.averageRating.toFixed(1)}</span>
+                          <span>{house.averageRating.toFixed(1)}</span>
                         </div>
                       ) : (
                         <span className="text-gray-500">No ratings yet</span>
@@ -445,7 +431,7 @@ const LandId = () => {
                       Total Favorites
                     </td>
                     <td className="p-3 text-gray-700">
-                      {land._count.favorites}
+                      {house._count.favorites}
                     </td>
                   </tr>
                 </tbody>
@@ -453,13 +439,13 @@ const LandId = () => {
             </div>
 
             {/* Recent Reviews */}
-            {land.reviews && land.reviews.length > 0 && (
+            {house.reviews && house.reviews.length > 0 && (
               <div className="mt-6">
                 <h3 className="text-md font-semibold mb-3 text-gray-800">
                   Recent Reviews
                 </h3>
                 <div className="space-y-3">
-                  {land.reviews.slice(0, 5).map((review) => (
+                  {house.reviews.slice(0, 5).map((review) => (
                     <div key={review.id} className="border rounded-lg p-3">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
@@ -496,4 +482,4 @@ const LandId = () => {
   );
 };
 
-export default LandId;
+export default HouseId;
