@@ -83,9 +83,8 @@ const EditLand = () => {
   const statusOptions = [
     { value: "FOR_SALE", label: "For Sale" },
     { value: "SOLD", label: "Sold" },
-    { value: "PENDING", label: "Pending" },
-    { value: "OFF_MARKET", label: "Off Market" },
-    { value: "COMING_SOON", label: "Coming Soon" },
+    { value: "RESERVED", label: "Reserved" },
+    { value: "DRAFT", label: "Draft" },
   ];
 
   const unitOptions = ["sqm", "acres", "hectares", "plots"];
@@ -233,20 +232,43 @@ const EditLand = () => {
       if (metaTitle) formData.append("metaTitle", metaTitle);
       if (metaDescription) formData.append("metaDescription", metaDescription);
 
-      // Add units data
-      formData.append(
-        "units",
-        JSON.stringify(units.filter((unit) => unit.size > 0 && unit.price))
-      );
-
-      // Add images
-      images.forEach((image, index) => {
-        formData.append("files", image);
+      // Add units data - structure as form fields for proper validation
+      const validUnits = units.filter((unit) => unit.size > 0 && unit.price);
+      validUnits.forEach((unit, index) => {
+        formData.append(`units[${index}][size]`, unit.size.toString());
+        formData.append(`units[${index}][unit]`, unit.unit);
+        formData.append(`units[${index}][price]`, unit.price);
+        formData.append(
+          `units[${index}][available]`,
+          unit.available.toString()
+        );
       });
 
-      // Add image details
-      if (imageDetails.length > 0) {
-        formData.append("imageDetails", JSON.stringify(imageDetails));
+      // Add images - only if there are new images to upload
+      if (images.length > 0) {
+        images.forEach((image, index) => {
+          formData.append("images", image);
+        });
+
+        // Add image details - structure as form fields for proper validation
+        if (imageDetails.length > 0) {
+          imageDetails.forEach((detail, index) => {
+            if (detail.caption) {
+              formData.append(
+                `imageDetails[${index}][caption]`,
+                detail.caption
+              );
+            }
+            formData.append(
+              `imageDetails[${index}][isPrimary]`,
+              detail.isPrimary.toString()
+            );
+            formData.append(
+              `imageDetails[${index}][order]`,
+              detail.order.toString()
+            );
+          });
+        }
       }
 
       const response = await axios.patch(
@@ -260,6 +282,7 @@ const EditLand = () => {
         }
       );
 
+      // Handle boolean or object response
       if (response.data.success) {
         toast.success("Land updated successfully!");
         router.push("/admin/lands");
@@ -522,7 +545,7 @@ const EditLand = () => {
                       Available
                     </label>
                     <select
-                      value={unit.available ? "true" : "false"}
+                      value={unit.available.toString()}
                       onChange={(e) =>
                         updateUnit(
                           index,
@@ -718,7 +741,7 @@ const EditLand = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-[27rem] flex justify-center xl:justify-start">
+        <div className="xl:ml-[27rem] flex justify-center">
           <button
             type="submit"
             disabled={loading}
