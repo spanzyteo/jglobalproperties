@@ -16,11 +16,6 @@ type LandImage = {
   caption: string | null;
   isPrimary: boolean;
   order: number;
-  // landId: string;
-  // houseId: string | null;
-  // blogId: string | null;
-  // createdAt: string;
-  // updatedAt: string;
 };
 
 type LandUnit = {
