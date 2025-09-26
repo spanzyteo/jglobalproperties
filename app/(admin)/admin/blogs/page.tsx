@@ -19,9 +19,19 @@ type BlogsImage = {
   order: number;
 };
 
-type BlogTag = {
+type Tag = {
   id: string;
   name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type BlogTag = {
+  id: string;
+  blogId: string;
+  tagId: string;
+  tag: Tag; // Single tag object, not array
 };
 
 type BlogCategory = {
@@ -141,7 +151,7 @@ const Blogs = () => {
         <div className="flex items-center justify-between mt-4">
           <h1 className="font-semibold sm:text-xl text-lg">Blogs List</h1>
           <button
-            onClick={() => router.push("/admin/add-new-lands")}
+            onClick={() => router.push("/admin/add-new-blogs")}
             className="px-7 py-2 bg-[#941A1A] rounded-[5px] text-white text-[13px] font-semibold hover:opacity-75 active:opacity-60 transition-all duration-500 ease-in-out cursor-pointer"
           >
             Add Blogs
@@ -218,7 +228,7 @@ const Blogs = () => {
 
                     <td className="px-4 py-3">
                       <p className="text-sm text-[#4A5568] max-w-[200px]">
-                        {item.excerpt}
+                        {item.excerpt || "No excerpt available"}
                       </p>
                     </td>
 
@@ -229,7 +239,17 @@ const Blogs = () => {
                     </td>
 
                     <td className="px-4 py-3">
-                      <p className="text-sm text-[#4A5568] capitalize">
+                      <p
+                        className={`px-2 py-1 rounded-full text-sm text-center font-medium ${
+                          item.status === "PUBLISHED"
+                            ? "bg-green-100 text-green-800"
+                            : item.status === "DRAFT"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : item.status === "ARCHIVED"
+                            ? "bg-gray-100 text-gray-800"
+                            : "bg-blue-100 text-blue-800"
+                        }`}
+                      >
                         {item.status}
                       </p>
                     </td>
@@ -246,19 +266,19 @@ const Blogs = () => {
 
                     <td className="px-4 py-3">
                       {item.tags.length > 0 ? (
-                        <div className="flex flex-wrap gap-1">
-                          {item.tags.map((tag) => (
+                        <div className="flex flex-wrap gap-2">
+                          {item.tags.map((tagRelation) => (
                             <span
-                              key={tag.id}
-                              className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                              key={tagRelation.id}
+                              className="px-2 py-1 text-[#4A5568] text-sm"
                             >
-                              {tag.name}
+                              {tagRelation.tag.name}
                             </span>
                           ))}
                         </div>
                       ) : (
                         <span className="text-sm text-gray-400 italic">
-                          No tags
+                          No tags assigned
                         </span>
                       )}
                     </td>
@@ -274,7 +294,7 @@ const Blogs = () => {
                                   height={40}
                                   src={image.url}
                                   alt={
-                                    image.caption || `Land image ${index + 1}`
+                                    image.caption || `Blog image ${index + 1}`
                                   }
                                   className="h-10 w-10 object-cover rounded-full border-2 border-white"
                                   unoptimized
@@ -311,10 +331,10 @@ const Blogs = () => {
 
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <Link href={`/admin/lands/${item.id}`}>
+                        <Link href={`/admin/blogs/${item.id}`}>
                           <MdOutlineRemoveRedEye className="h-5 w-5 text-purple-400 hover:text-purple-300 cursor-pointer" />
                         </Link>
-                        <Link href={`/admin/lands/edit/${item.id}`}>
+                        <Link href={`/admin/blogs/edit/${item.id}`}>
                           <MdOutlineEdit className="h-5 w-5 text-blue-400 hover:text-blue-300 cursor-pointer" />
                         </Link>
                         <RiDeleteBin5Line

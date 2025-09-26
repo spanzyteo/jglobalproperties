@@ -166,7 +166,7 @@ const LandId = () => {
         <div className="mt-4">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4 cursor-pointer"
           >
             <MdArrowBack className="h-5 w-5" />
             Back to Lands
@@ -178,7 +178,7 @@ const LandId = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => router.push(`/admin/lands/edit/${land.id}`)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm cursor-pointer"
+                className="px-4 py-2 bg-[#941A1A] text-white rounded hover:bg-[#941A1A]/80 text-sm cursor-pointer transition-all ease-in-out duration-500"
               >
                 Edit Land
               </button>

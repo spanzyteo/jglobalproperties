@@ -6,14 +6,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { MdArrowBack, MdClose, MdAdd } from "react-icons/md";
+import { MdArrowBack, MdClose } from "react-icons/md";
 import { ThreeCircles } from "react-loader-spinner";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Image from "next/image";
 
-type HouseImage = {
+type BlogsImage = {
   id: string;
   url: string;
   publicId: string;
@@ -22,12 +22,16 @@ type HouseImage = {
   order: number;
 };
 
-type HouseUnit = {
+type BlogTag = {
   id: string;
-  size: number;
-  unit: string;
-  price: string;
-  available: boolean;
+  name: string;
+  slug: string;
+};
+
+type BlogCategory = {
+  id: string;
+  name: string;
+  slug: string;
 };
 
 type ImageDetail = {
@@ -36,85 +40,76 @@ type ImageDetail = {
   order: number;
 };
 
-const EditHouse = () => {
+const EditBlog = () => {
   const { id } = useParams();
   const router = useRouter();
 
   const mdParser = new MarkdownIt();
-
-  // Basic house information
   const [title, setTitle] = useState("");
-  const [overview, setOverview] = useState("");
-  const [location, setLocation] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("Nigeria");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("FINISHED_HOMES");
+  const [excerpt, setExcerpt] = useState("");
+  const [content, setContent] = useState("");
+  const [status, setStatus] = useState("DRAFT");
+  const [categoryId, setCategoryId] = useState("");
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
 
-  // Units state
-  const [units, setUnits] = useState<
-    Array<{ size: number; unit: string; price: string; available: boolean }>
-  >([{ size: 0, unit: "sqm", price: "", available: true }]);
+
+  // Available options
+  const [categories, setCategories] = useState<BlogCategory[]>([]);
+  const [availableTags, setAvailableTags] = useState<BlogTag[]>([]);
 
   // Images state
   const [images, setImages] = useState<File[]>([]);
   const [imageDetails, setImageDetails] = useState<ImageDetail[]>([]);
-  const [existingImages, setExistingImages] = useState<HouseImage[]>([]);
+  const [existingImages, setExistingImages] = useState<BlogsImage[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
 
-  const categoriesOptions = [
-    { value: "FINISHED_HOMES", label: "Finished Homes" },
-    { value: "OFF_PLAN_HOMES", label: "Off Plan Homes" },
+  const statusOptions = [
+    { value: "DRAFT", label: "Draft" },
+    { value: "PUBLISHED", label: "Published" },
+    { value: "ARCHIVED", label: "Archived" },
+    { value: "SCHEDULED", label: "Scheduled" },
   ];
 
-  const unitOptions = ["sqm", "acres", "hectares", "plots"];
-
+  // Fetch blog data
   useEffect(() => {
-    const fetchHouse = async () => {
+    const fetchBlog = async () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
-          `https://jglobalproperties-api.onrender.com/api/v1/houses/${id}`,
+          `https://jglobalproperties-api.onrender.com/api/v1/blogs/${id}/admin`,
           {
             withCredentials: true,
           }
         );
 
         const { data } = response.data;
-        console.log("Fetched house data:", data);
+        console.log("Fetched blog data:", data);
 
-        //Set basic information
         setTitle(data.title || "");
-        setOverview(data.overview || "");
-        setLocation(data.location || "");
-        setState(data.state || "");
-        setCountry(data.country || "Nigeria");
-        setCategory(data.category || "FINISHED_HOMES");
-        setPrice(data.price || "");
+        setExcerpt(data.excerpt || "");
+        setContent(data.content || "");
+        setStatus(data.status || "DRAFT");
+        setCategoryId(data.category.id || "");
         setMetaTitle(data.metaTitle || "");
         setMetaDescription(data.metaDescription || "");
 
-        // Set units
-        if (data.units && data.units.length > 0) {
-          setUnits(
-            data.units.map((unit: HouseUnit) => ({
-              size: unit.size,
-              unit: unit.unit,
-              price: unit.price,
-              available: unit.available,
-            }))
+        // Set selected tags
+        if (data.tags && data.tags.length > 0) {
+          const tagIds = data.tags.map(
+            (tagRelation: any) => tagRelation.tag.id
           );
+          setSelectedTagIds(tagIds);
         }
 
         // Set existing images
         if (data.images && data.images.length > 0) {
           setExistingImages(
             data.images.sort(
-              (a: HouseImage, b: HouseImage) => a.order - b.order
+              (a: BlogsImage, b: BlogsImage) => a.order - b.order
             )
           );
         }
@@ -124,15 +119,70 @@ const EditHouse = () => {
         setFetchLoading(false);
         const message =
           error.response?.data?.message ||
-          "An error occurred while fetching house data";
+          "An error occurred while fetching blog data";
         toast.error(message);
       }
     };
 
     if (id) {
-      fetchHouse();
+      fetchBlog();
     }
   }, [id]);
+
+  // Fetch categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `https://jglobalproperties-api.onrender.com/api/v1/categories`,
+          {
+            withCredentials: true,
+          }
+        );
+
+        if (response.data.success) {
+          setCategories(response.data.data);
+        }
+      } catch (error: any) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Fetch tags
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get(
+          `https://jglobalproperties-api.onrender.com/api/v1/tags`,
+          {
+            withCredentials: true,
+          }
+        );
+
+        if (response.data.success) {
+          setAvailableTags(response.data.data);
+        }
+      } catch (error: any) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+
+    fetchTags();
+  }, []);
+
+  // Handle tag selection
+  const handleTagToggle = (tagId: string) => {
+    setSelectedTagIds((prev) => {
+      if (prev.includes(tagId)) {
+        return prev.filter((id) => id !== tagId);
+      } else {
+        return [...prev, tagId];
+      }
+    });
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -178,67 +228,55 @@ const EditHouse = () => {
     );
   };
 
-  const addUnit = () => {
-    setUnits((prev) => [
-      ...prev,
-      { size: 0, unit: "sqm", price: "", available: true },
-    ]);
-  };
-
-  const removeUnit = (index: number) => {
-    if (units.length > 1) {
-      setUnits((prev) => prev.filter((_, i) => i !== index));
-    }
-  };
-
-  const updateUnit = (
-    index: number,
-    field: keyof (typeof units)[0],
-    value: any
-  ) => {
-    setUnits((prev) =>
-      prev.map((unit, i) => (i === index ? { ...unit, [field]: value } : unit))
-    );
-  };
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Validation
+    if (!title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+
+    if (!content.trim()) {
+      toast.error("Content is required");
+      return;
+    }
+
+    if (!categoryId) {
+      toast.error("Category is required");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const formData = new FormData();
 
-      // Add basic house data
+      // Add basic blog data
       formData.append("title", title);
-      formData.append("overview", overview);
-      formData.append("location", location);
-      formData.append("state", state);
-      formData.append("country", country);
-      formData.append("category", category);
-      formData.append("price", price);
+      if (excerpt) formData.append("excerpt", excerpt);
+      formData.append("content", content);
+      formData.append("status", status);
+      formData.append("categoryId", categoryId);
 
+      // Add tag IDs
+      if (selectedTagIds.length > 0) {
+        selectedTagIds.forEach((tagId) => {
+          formData.append("tagIds", tagId);
+        });
+      }
+
+      // Add optional fields
       if (metaTitle) formData.append("metaTitle", metaTitle);
       if (metaDescription) formData.append("metaDescription", metaDescription);
 
-      // Add units data - structure as form fields for proper validation
-      const validUnits = units.filter((unit) => unit.size > 0 && unit.price);
-      validUnits.forEach((unit, index) => {
-        formData.append(`units[${index}][size]`, unit.size.toString());
-        formData.append(`units[${index}][unit]`, unit.unit);
-        formData.append(`units[${index}][price]`, unit.price);
-        formData.append(
-          `units[${index}][available]`,
-          unit.available.toString()
-        );
-      });
-
       // Add images - only if there are new images to upload
       if (images.length > 0) {
-        images.forEach((image, index) => {
+        images.forEach((image) => {
           formData.append("images", image);
         });
 
-        // Add image details - structure as form fields for proper validation
+        // Add image details
         if (imageDetails.length > 0) {
           imageDetails.forEach((detail, index) => {
             if (detail.caption) {
@@ -260,7 +298,7 @@ const EditHouse = () => {
       }
 
       const response = await axios.patch(
-        `https://jglobalproperties-api.onrender.com/api/v1/houses/${id}`,
+        `https://jglobalproperties-api.onrender.com/api/v1/blogs/${id}`,
         formData,
         {
           headers: {
@@ -270,10 +308,9 @@ const EditHouse = () => {
         }
       );
 
-      // Handle boolean or object response
       if (response.data.success) {
-        toast.success("House updated successfully!");
-        router.push("/admin/houses");
+        toast.success("Blog updated successfully!");
+        router.push("/admin/blogs");
       }
 
       setLoading(false);
@@ -281,8 +318,9 @@ const EditHouse = () => {
       setLoading(false);
       const message =
         error.response?.data?.message ||
-        "An error occurred while updating the house";
+        "An error occurred while updating the blog";
       toast.error(message);
+      console.error("Error updating blog:", error);
     }
   };
 
@@ -316,9 +354,9 @@ const EditHouse = () => {
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
             >
               <MdArrowBack className="h-5 w-5" />
-              Back to houses
+              Back to blogs
             </button>
-            <h1 className="text-xl font-semibold">Edit house Information</h1>
+            <h1 className="text-xl font-semibold">Edit Blog Information</h1>
           </div>
 
           {/* Basic Information */}
@@ -330,93 +368,104 @@ const EditHouse = () => {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="House title"
+                placeholder="Blog title"
                 className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
 
-            {/* Overview */}
+            {/* Excerpt */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Overview</h1>
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Excerpt</h1>
+              <textarea
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                placeholder="Brief description of the blog post..."
+                rows={3}
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
+              />
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Content</h1>
               <div className="lg:w-[539px] w-full">
                 <MdEditor
-                  value={overview}
-                  style={{ height: "300px" }}
+                  value={content}
+                  style={{ height: "400px" }}
                   renderHTML={(text) => mdParser.render(text)}
-                  onChange={({ text }) => setOverview(text)}
-                  placeholder="Write detailed house overview and description..."
+                  onChange={({ text }) => setContent(text)}
+                  placeholder="Write your blog content here..."
                 />
               </div>
-            </div>
-
-            {/* Location */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Location</h1>
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="e.g., Victoria Island"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
-            </div>
-
-            {/* State */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">State</h1>
-              <input
-                type="text"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                placeholder="e.g., Lagos"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
-            </div>
-
-            {/* Country */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Country</h1>
-              <input
-                type="text"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                placeholder="Country"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
             </div>
 
             {/* Category */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Category</h1>
               <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
                 className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
                 required
               >
-                {categoriesOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
                   </option>
                 ))}
               </select>
             </div>
 
-            {/* Price */}
+            {/* Tags */}
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Tags</h1>
+              <div className="lg:w-[539px] w-full">
+                <div className="border border-[#EFEFEF] bg-[#F9F9F6] rounded-[5px] p-3 max-h-40 overflow-y-auto">
+                  {availableTags.length > 0 ? (
+                    <div className="space-y-2">
+                      {availableTags.map((tag) => (
+                        <label
+                          key={tag.id}
+                          className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-1 rounded"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedTagIds.includes(tag.id)}
+                            onChange={() => handleTagToggle(tag.id)}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                          />
+                          <span className="text-sm text-[#4A5568]">
+                            {tag.name}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500">No tags available</p>
+                  )}
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Select multiple tags for your blog post
+                </p>
+              </div>
+            </div>
+
+            {/* Status */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Price</h1>
-              <input
-                type="text"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="Price"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Status</h1>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
+              >
+                {statusOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Meta Title */}
@@ -446,122 +495,6 @@ const EditHouse = () => {
                 className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
               />
             </div>
-          </div>
-
-          {/* Units Section */}
-          <div className="mt-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[#4A5568]">
-                House Units
-              </h2>
-              <button
-                type="button"
-                onClick={addUnit}
-                className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
-              >
-                <MdAdd className="h-4 w-4" />
-                Add Unit
-              </button>
-            </div>
-
-            {units.map((unit, index) => (
-              <div
-                key={index}
-                className="border border-gray-300 rounded-lg p-4 mb-4 bg-white"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-medium text-gray-700">
-                    Unit #{index + 1}
-                  </h3>
-                  {units.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeUnit(index)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <MdClose className="h-5 w-5" />
-                    </button>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Size
-                    </label>
-                    <input
-                      type="number"
-                      value={unit.size || ""}
-                      onChange={(e) =>
-                        updateUnit(
-                          index,
-                          "size",
-                          parseFloat(e.target.value) || 0
-                        )
-                      }
-                      placeholder="e.g., 1000"
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Unit Type
-                    </label>
-                    <select
-                      value={unit.unit}
-                      onChange={(e) =>
-                        updateUnit(index, "unit", e.target.value)
-                      }
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                    >
-                      {unitOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Price (₦)
-                    </label>
-                    <input
-                      type="text"
-                      value={unit.price}
-                      onChange={(e) =>
-                        updateUnit(index, "price", e.target.value)
-                      }
-                      placeholder="e.g., 2400000"
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Available
-                    </label>
-                    <select
-                      value={unit.available.toString()}
-                      onChange={(e) =>
-                        updateUnit(
-                          index,
-                          "available",
-                          e.target.value === "true"
-                        )
-                      }
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                    >
-                      <option value="true">Available</option>
-                      <option value="false">Not Available</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
 
           {/* Existing Images */}
@@ -747,7 +680,7 @@ const EditHouse = () => {
             disabled={loading}
             className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Updating..." : "Update House"}
+            {loading ? "Updating..." : "Update Blog"}
           </button>
         </div>
       </form>
@@ -755,4 +688,4 @@ const EditHouse = () => {
   );
 };
 
-export default EditHouse;
+export default EditBlog;

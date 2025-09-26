@@ -179,7 +179,7 @@ const HouseId = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => router.push(`/admin/houses/edit/${house.id}`)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm cursor-pointer"
+                className="px-4 py-2 bg-[#941A1A] text-white rounded hover:bg-[#941A1A]/80 text-sm cursor-pointer transition-all ease-in-out duration-500"
               >
                 Edit House
               </button>
@@ -230,7 +230,9 @@ const HouseId = () => {
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Price</td>
-                    <td className="p-3 text-gray-700">{formatPrice(house.price)}</td>
+                    <td className="p-3 text-gray-700">
+                      {formatPrice(house.price)}
+                    </td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">
