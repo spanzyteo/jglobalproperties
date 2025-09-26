@@ -101,7 +101,6 @@ const EditLand = () => {
         );
 
         const { data } = response.data;
-        console.log("Fetched land data:", data);
 
         // Set basic information
         setTitle(data.title || "");
@@ -282,7 +281,6 @@ const EditLand = () => {
         }
       );
 
-      // Handle boolean or object response
       if (response.data.success) {
         toast.success("Land updated successfully!");
         router.push("/admin/lands");
