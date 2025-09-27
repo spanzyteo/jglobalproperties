@@ -8,57 +8,53 @@ import { toast } from "react-toastify";
 import { ThreeCircles } from "react-loader-spinner";
 import { MdArrowBack } from "react-icons/md";
 
-type CategoriesType = {
+type TagsType = {
   id: string;
   name: string;
-  slug: string;
-  description: string;
   createdAt: string;
   updatedAt: string;
-  _count: {
-    blogs: number;
-  };
 };
 
 type ApiResponse = {
   success: boolean;
-  data: CategoriesType;
+  data: TagsType;
 };
 
-const CategoriesId = () => {
-  const { id: categoryId } = useParams();
+const TagsId = () => {
+  const { id: tagsId } = useParams();
   const router = useRouter();
-  const [category, setCategory] = useState<CategoriesType | null>(null);
+  const [tags, setTags] = useState<TagsType | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCategory = async () => {
+    const fetchTag = async () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/categories/${categoryId}`,
+          `https://jglobalproperties-api.onrender.com/api/v1/tags/${tagsId}`,
           {
             withCredentials: true,
           }
         );
 
         const { data } = response.data;
-        setCategory(data);
+        console.log(data);
+        setTags(data);
         setLoading(false);
       } catch (error: any) {
         setLoading(false);
         const message =
           error.response?.data?.message ||
-          "An error occurred while fetching category details";
+          "An error occurred while fetching tags details";
         toast.error(message);
         console.log(message);
       }
     };
 
-    if (categoryId) {
-      fetchCategory();
+    if (tagsId) {
+      fetchTag();
     }
-  }, [categoryId]);
+  }, [tagsId]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString("en-NG", {
@@ -90,7 +86,7 @@ const CategoriesId = () => {
     );
   }
 
-  if (!category) {
+  if (!tags) {
     return (
       <div className="bg-white flex flex-col h-[100vh]">
         <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
@@ -103,14 +99,13 @@ const CategoriesId = () => {
               Back
             </button>
             <h1 className="text-gray-600 text-lg text-center mt-8">
-              Category not found.
+              Tag not found.
             </h1>
           </div>
         </div>
       </div>
     );
   }
-
   return (
     <div className="bg-white flex flex-col min-h-screen">
       <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
@@ -120,20 +115,18 @@ const CategoriesId = () => {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4 cursor-pointer"
           >
             <MdArrowBack className="h-5 w-5" />
-            Back to Categories
+            Back to Tags
           </button>
           <div className="flex items-center justify-between">
             <h1 className="font-semibold sm:text-xl text-lg">
-              Category Details - {category.name}
+              Tags Details - {tags.name}
             </h1>
             <div className="flex gap-2">
               <button
-                onClick={() =>
-                  router.push(`/admin/categories/edit/${category.id}`)
-                }
+                onClick={() => router.push(`/admin/tags/edit/${tags.id}`)}
                 className="px-4 py-2 bg-[#941A1A] text-white rounded hover:bg-[#941A1A]/80 text-sm cursor-pointer transition-all ease-in-out duration-500"
               >
-                Edit Category
+                Edit Tags
               </button>
             </div>
           </div>
@@ -150,30 +143,19 @@ const CategoriesId = () => {
                 <tbody>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200 w-1/4">ID</td>
-                    <td className="p-3 text-gray-700">{category.id}</td>
+                    <td className="p-3 text-gray-700">{tags.id}</td>
                   </tr>
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">Name</td>
-                    <td className="p-3 text-gray-700">{category.name}</td>
+                    <td className="p-3 text-gray-700">{tags.name}</td>
                   </tr>
-                  <tr className="border border-gray-300">
-                    <td className="p-3 font-semibold bg-gray-200">Slug</td>
-                    <td className="p-3 text-gray-700">{category.slug}</td>
-                  </tr>
-                  <tr className="border border-gray-300">
-                    <td className="p-3 font-semibold bg-gray-200">
-                      Description
-                    </td>
-                    <td className="p-3 text-gray-700">
-                      {category.description}
-                    </td>
-                  </tr>
+
                   <tr className="border border-gray-300">
                     <td className="p-3 font-semibold bg-gray-200">
                       Created At
                     </td>
                     <td className="p-3 text-gray-700">
-                      {formatDate(category.createdAt)}
+                      {formatDate(tags.createdAt)}
                     </td>
                   </tr>
                   <tr className="border border-gray-300">
@@ -181,7 +163,7 @@ const CategoriesId = () => {
                       Updated At
                     </td>
                     <td className="p-3 text-gray-700">
-                      {formatDate(category.updatedAt)}
+                      {formatDate(tags.updatedAt)}
                     </td>
                   </tr>
                 </tbody>
@@ -194,4 +176,4 @@ const CategoriesId = () => {
   );
 };
 
-export default CategoriesId;
+export default TagsId;

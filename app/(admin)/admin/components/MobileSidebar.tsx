@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { TailSpin } from "react-loader-spinner";
+import TagDropdown from "./tags/TagDropdown";
 
 const MobileSidebar = () => {
   const [loading, setLoading] = useState(false);
@@ -86,6 +87,7 @@ const MobileSidebar = () => {
             <CategoriesDropdown />
             <HouseDropdown />
             <ReviewDropdown />
+            <TagDropdown />
             <button
               className={`flex items-center gap-8 cursor-pointer w-[230px] transition-all duration-200 ${
                 loading
