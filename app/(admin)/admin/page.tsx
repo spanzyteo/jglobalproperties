@@ -1,12 +1,156 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import React, { useEffect, useState } from "react";
 import { FaMapMarkedAlt } from "react-icons/fa"; // For Lands
 import { HiOutlineDocumentText } from "react-icons/hi"; // For Blogs
 import { BiCategory } from "react-icons/bi"; // For Categories
 import { FaHome } from "react-icons/fa"; // For Houses
 import { MdOutlineRateReview } from "react-icons/md"; // For Reviews
 import { FaTags } from "react-icons/fa"; // For Tags
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Admin = () => {
+  const [reviews, setReviews] = useState([]);
+  const [lands, setLands] = useState([]);
+  const [houses, setHouses] = useState([]);
+  const [categories, setCategories] = useState([])
+  const [blogs, setBlogs] = useState([])
+  const [tags, setTags] = useState([])
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jglobalproperties-api.onrender.com/api/v1/reviews",
+          { withCredentials: true }
+        );
+
+        const { data } = response.data;
+        setReviews(data.reviews || data);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        const message =
+          error.response?.data?.message ||
+          "An error occurred while fetching reviews";
+        toast.error(message);
+      }
+    };
+    fetchReviews();
+  }, []);
+  useEffect(() => {
+    const fetchLands = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jglobalproperties-api.onrender.com/api/v1/lands",
+          { withCredentials: true }
+        );
+
+        const { data } = response.data;
+        setLands(data.lands || data);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        const message =
+          error.response?.data?.message ||
+          "An error occurred while fetching lands";
+        toast.error(message);
+      }
+    };
+    fetchLands();
+  }, []);
+  useEffect(() => {
+    const fetchHouses = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jglobalproperties-api.onrender.com/api/v1/houses",
+          { withCredentials: true }
+        );
+
+        const { data } = response.data;
+        setHouses(data.house || data);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        const message =
+          error.response?.data?.message ||
+          "An error occurred while fetching houses";
+        toast.error(message);
+      }
+    };
+    fetchHouses();
+  }, []);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jglobalproperties-api.onrender.com/api/v1/categories",
+          { withCredentials: true }
+        );
+
+        const { data } = response.data;
+        setCategories(data);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        const message =
+          error.response?.data?.message ||
+          "An error occurred while fetching categories";
+        toast.error(message);
+      }
+    };
+    fetchCategories();
+  }, []);
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jglobalproperties-api.onrender.com/api/v1/blogs",
+          { withCredentials: true }
+        );
+
+        const { data } = response.data;
+        setBlogs(data.blogs);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        const message =
+          error.response?.data?.message ||
+          "An error occurred while fetching blogs";
+        toast.error(message);
+      }
+    };
+    fetchBlogs();
+  }, []);
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jglobalproperties-api.onrender.com/api/v1/tags",
+          { withCredentials: true }
+        );
+
+        const { data } = response.data;
+        setTags(data);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        const message =
+          error.response?.data?.message ||
+          "An error occurred while fetching tags";
+        toast.error(message);
+      }
+    };
+    fetchTags();
+  }, []);
   return (
     <div className="bg-white flex flex-col pb-[5rem]">
       <div
@@ -20,7 +164,7 @@ const Admin = () => {
             <div className="flex flex-col ml-4 ">
               <h1 className="text-[#9A9A9A]">Total Lands</h1>
               <h1 className="text-[#4A5568] font-semibold text-2xl">
-                {/* {lands?.totalLands} */}
+                {lands.length}
               </h1>
             </div>
           </div>
@@ -39,7 +183,7 @@ const Admin = () => {
             <div className="flex flex-col ml-4 ">
               <h1 className="text-[#9A9A9A]">Total Blogs</h1>
               <h1 className="text-[#4A5568] font-semibold text-2xl">
-                {/* {blogs?.totalBlogs} */}
+                {blogs?.length}
               </h1>
             </div>
           </div>
@@ -58,7 +202,7 @@ const Admin = () => {
             <div className="flex flex-col ml-4 ">
               <h1 className="text-[#9A9A9A]">Total Categories</h1>
               <h1 className="text-[#4A5568] font-semibold text-2xl">
-                {/* {categories?.totalCategories} */}
+                {categories?.length}
               </h1>
             </div>
           </div>
@@ -77,7 +221,7 @@ const Admin = () => {
             <div className="flex flex-col ml-4 ">
               <h1 className="text-[#9A9A9A]">Total Houses</h1>
               <h1 className="text-[#4A5568] font-semibold text-2xl">
-                {/* {houses?.totalHouses} */}
+                {houses?.length}
               </h1>
             </div>
           </div>
@@ -96,7 +240,7 @@ const Admin = () => {
             <div className="flex flex-col ml-4 ">
               <h1 className="text-[#9A9A9A]">Total Reviews</h1>
               <h1 className="text-[#4A5568] font-semibold text-2xl">
-                {/* {reviews?.totalReviews} */}
+                {reviews?.length}
               </h1>
             </div>
           </div>
@@ -115,7 +259,7 @@ const Admin = () => {
             <div className="flex flex-col ml-4 ">
               <h1 className="text-[#9A9A9A]">Total Tags</h1>
               <h1 className="text-[#4A5568] font-semibold text-2xl">
-                {/* {tags?.totalTags} */}
+                {tags?.length}
               </h1>
             </div>
           </div>
