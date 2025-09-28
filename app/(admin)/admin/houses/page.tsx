@@ -90,7 +90,6 @@ const Houses = () => {
         );
 
         const { data } = response.data;
-        console.log("Houses data:", data);
 
         setHouses(data.house);
         setTotalPages(data.pagination.totalPages);
@@ -100,7 +99,6 @@ const Houses = () => {
         const message =
           error.response?.data?.message ||
           "An error occurred while fetching houses";
-        console.error(message);
         toast.error(message);
       }
     };

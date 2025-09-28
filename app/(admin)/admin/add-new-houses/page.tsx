@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { MdClose, MdAdd } from "react-icons/md";
-import Image from "next/image";
 
 type ImageDetail = {
   caption: string;
@@ -24,17 +24,18 @@ type Unit = {
   available: boolean;
 };
 
-const AddNewLand = () => {
+const AddNewHouse = () => {
   const router = useRouter();
   const mdParser = new MarkdownIt();
 
-  // Basic land information
+  // Basic house information
   const [title, setTitle] = useState("");
   const [overview, setOverview] = useState("");
   const [location, setLocation] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("Nigeria");
-  const [status, setStatus] = useState("FOR_SALE");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("FINISHED_HOMES");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
 
@@ -49,13 +50,12 @@ const AddNewLand = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const statusOptions = [
-    { value: "FOR_SALE", label: "For Sale" },
-    { value: "SOLD", label: "Sold" },
-    { value: "RESERVED", label: "Reserved" },
+  const categoryOptions = [
+    { value: "FINISHED_HOMES", label: "Finished Homes" },
+    { value: "OFF_PLAN_HOMES", label: "Off Plan Homes" },
   ];
 
-  const unitOptions = ["sqm", "sqft", "acres", "hectares"];
+  const unitOptions = ["sqm", "sqft", "rooms", "bedrooms"];
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -127,13 +127,14 @@ const AddNewLand = () => {
     try {
       const formData = new FormData();
 
-      // Add basic land data
+      // Add basic house data
       formData.append("title", title);
       formData.append("overview", overview);
       formData.append("location", location);
       formData.append("state", state);
       formData.append("country", country);
-      formData.append("status", status);
+      formData.append("price", price);
+      formData.append("category", category);
 
       if (metaTitle) formData.append("metaTitle", metaTitle);
       if (metaDescription) formData.append("metaDescription", metaDescription);
@@ -170,7 +171,7 @@ const AddNewLand = () => {
       });
 
       const response = await axios.post(
-        "https://jglobalproperties-api.onrender.com/api/v1/lands",
+        "https://jglobalproperties-api.onrender.com/api/v1/houses",
         formData,
         {
           headers: {
@@ -181,8 +182,8 @@ const AddNewLand = () => {
       );
 
       if (response.data.success) {
-        toast.success("Land added successfully!");
-        router.push("/admin/lands");
+        toast.success("House added successfully!");
+        router.push("/admin/houses");
       }
 
       setLoading(false);
@@ -190,7 +191,7 @@ const AddNewLand = () => {
       setLoading(false);
       const message =
         error.response?.data?.message ||
-        "An error occurred while adding the land";
+        "An error occurred while adding the house";
       toast.error(message);
     }
   };
@@ -199,7 +200,7 @@ const AddNewLand = () => {
     <div className="bg-white flex flex-col pb-[3rem]">
       <form onSubmit={handleSubmit}>
         <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
-          <h1 className="text-xl font-semibold mt-4">Land Information</h1>
+          <h1 className="text-xl font-semibold mt-4">House Information</h1>
 
           {/* Title */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-3 lg:gap-0">
@@ -208,7 +209,7 @@ const AddNewLand = () => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Land title"
+              placeholder="House title"
               className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
               required
             />
@@ -223,7 +224,7 @@ const AddNewLand = () => {
                 style={{ height: "300px" }}
                 renderHTML={(text) => mdParser.render(text)}
                 onChange={({ text }) => setOverview(text)}
-                placeholder="Write detailed land overview and description..."
+                placeholder="Write detailed house overview and description..."
               />
             </div>
           </div>
@@ -267,15 +268,28 @@ const AddNewLand = () => {
             />
           </div>
 
-          {/* Status */}
+          {/* Price */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-3 lg:gap-0">
-            <h1 className="font-semibold text-[#4A5568]">Status</h1>
+            <h1 className="font-semibold text-[#4A5568]">Price</h1>
+            <input
+              type="text"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="e.g., 2300000"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+              required
+            />
+          </div>
+
+          {/* Category */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-3 lg:gap-0">
+            <h1 className="font-semibold text-[#4A5568]">Category</h1>
             <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
               className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
             >
-              {statusOptions.map((option) => (
+              {categoryOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -287,7 +301,7 @@ const AddNewLand = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-[#4A5568]">
-                Land Units
+                House Units
               </h2>
               <button
                 type="button"
@@ -334,7 +348,7 @@ const AddNewLand = () => {
                           parseFloat(e.target.value) || 0
                         )
                       }
-                      placeholder="e.g., 1000"
+                      placeholder="e.g., 300"
                       className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                       required
                     />
@@ -369,7 +383,7 @@ const AddNewLand = () => {
                       onChange={(e) =>
                         updateUnit(index, "price", e.target.value)
                       }
-                      placeholder="e.g., 2400000"
+                      placeholder="e.g., 5000000"
                       className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                       required
                     />
@@ -561,4 +575,4 @@ const AddNewLand = () => {
   );
 };
 
-export default AddNewLand;
+export default AddNewHouse;
