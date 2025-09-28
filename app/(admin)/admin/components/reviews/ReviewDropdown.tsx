@@ -51,12 +51,6 @@ const ReviewDropdown = () => {
             <Link href={"/admin/reviews"} onClick={() => handleCloseSidebar()}>
               Reviews
             </Link>
-            <Link
-              href={"/admin/add-new-reviews"}
-              onClick={() => handleCloseSidebar()}
-            >
-              Add New Reviews
-            </Link>
           </motion.div>
         )}
       </AnimatePresence>

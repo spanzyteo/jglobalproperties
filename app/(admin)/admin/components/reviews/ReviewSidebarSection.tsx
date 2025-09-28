@@ -43,7 +43,6 @@ const ReviewSidebarSection = () => {
             className="overflow-hidden flex flex-col gap-4 mt-2 ml-14"
           >
             <Link href={"/admin/reviews"}>Reviews</Link>
-            <Link href={"/admin/add-new-reviews"}>Add New Reviews</Link>
           </motion.div>
         )}
       </AnimatePresence>
