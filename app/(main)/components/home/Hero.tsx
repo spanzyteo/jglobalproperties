@@ -234,9 +234,9 @@ const Hero = () => {
             className="text-white text-[18px] font-medium text-center md:text-left"
             variants={titleVariants}
           >
-            Explore Portland&apos;s real estate opportunities and discover your
-            next home in one of the Pacific Northwest&apos;s most dynamic
-            cities.
+            Explore Nigeria&apos;s real estate opportunities and discover your
+            next home in one of West Africa&apos;s most vibrant and rapidly
+            growing property markets.
           </motion.p>
           <div className="flex gap-6 items-center">
             <div className="flex items-center justify-center w-[73px] h-[73px] rounded-full bg-[#941A1A]/65 cursor-pointer">
