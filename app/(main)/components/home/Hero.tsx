@@ -1,12 +1,50 @@
 "use client";
-import Image from "next/image";
-import { IoSearchOutline } from "react-icons/io5";
-import { MdOutlineFlag } from "react-icons/md";
-import { SlLocationPin } from "react-icons/sl";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, AnimatePresence } from "framer-motion";
+import { Playfair_Display } from "next/font/google";
+import { FaPlay } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import Search from "./Search";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const Hero = () => {
-  // Animation variants
+
+  // Background images array
+  const backgroundImages = ["/bg1.webp", "/bg2.jpg"];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [transitionEffect, setTransitionEffect] = useState(0);
+
+  // Duration for each image display (in milliseconds)
+  const IMAGE_DISPLAY_DURATION = 9000; // 6 seconds
+
+  // Array of different transition effects
+  const transitionEffects = [
+    "fade",
+    "slideLeft",
+    "slideRight",
+    "zoomOut",
+    "rotate",
+    "blur",
+  ];
+
+  // Auto-rotate background images with random effects
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Pick a random transition effect
+      setTransitionEffect(Math.floor(Math.random() * transitionEffects.length));
+
+      setCurrentImageIndex(
+        (prevIndex) => (prevIndex + 1) % backgroundImages.length
+      );
+    }, IMAGE_DISPLAY_DURATION);
+
+    return () => clearInterval(interval);
+  }, );
+
+  // Animation variants for content
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -30,199 +68,188 @@ const Hero = () => {
       scale: 1,
       transition: {
         duration: 1,
-        ease: [0.22, 1, 0.36, 1], // Custom cubic-bezier for smooth effect
-      },
-    },
-  };
-
-  const shadowVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 1.2,
-        ease: [0.25, 0.46, 0.45, 0.94], // easeOut equivalent
-      },
-    },
-  };
-
-  const buttonVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-      scale: 0.9,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94], // easeOut equivalent
-        delay: 0.3,
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
-        ease: [0.42, 0, 0.58, 1], // easeInOut equivalent
-      },
-    },
-    tap: {
-      scale: 0.98,
-    },
-  };
-
-  const searchBoxVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 40,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.9,
         ease: [0.22, 1, 0.36, 1],
-        delay: 0.4,
       },
     },
   };
 
-  const searchItemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      x: -20,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94], // easeOut equivalent
+  // Background image animation variants with multiple effects
+  const getBackgroundVariants = (effect: number) => {
+    const effects = [
+      // Fade effect
+      {
+        initial: { scale: 1, opacity: 0 },
+        animate: {
+          scale: 1.1,
+          opacity: 1,
+          transition: {
+            duration: IMAGE_DISPLAY_DURATION / 1000,
+            scale: { duration: IMAGE_DISPLAY_DURATION / 1000 },
+            opacity: { duration: 1 },
+          },
+        },
+        exit: {
+          opacity: 0,
+          transition: { duration: 1 },
+        },
       },
-    },
-  };
+      // Slide from left
+      {
+        initial: { scale: 1, opacity: 0, x: -100 },
+        animate: {
+          scale: 1.1,
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: IMAGE_DISPLAY_DURATION / 1000,
+            scale: { duration: IMAGE_DISPLAY_DURATION / 1000 },
+            opacity: { duration: 0.8 },
+            x: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+          },
+        },
+        exit: {
+          opacity: 0,
+          x: 100,
+          transition: { duration: 0.8 },
+        },
+      },
+      // Slide from right
+      {
+        initial: { scale: 1, opacity: 0, x: 100 },
+        animate: {
+          scale: 1.1,
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: IMAGE_DISPLAY_DURATION / 1000,
+            scale: { duration: IMAGE_DISPLAY_DURATION / 1000 },
+            opacity: { duration: 0.8 },
+            x: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+          },
+        },
+        exit: {
+          opacity: 0,
+          x: -100,
+          transition: { duration: 0.8 },
+        },
+      },
+      // Zoom out effect
+      {
+        initial: { scale: 1.5, opacity: 0 },
+        animate: {
+          scale: 1.1,
+          opacity: 1,
+          transition: {
+            duration: IMAGE_DISPLAY_DURATION / 1000,
+            scale: { duration: IMAGE_DISPLAY_DURATION / 1000 },
+            opacity: { duration: 1 },
+          },
+        },
+        exit: {
+          scale: 0.8,
+          opacity: 0,
+          transition: { duration: 1 },
+        },
+      },
+      // Rotate effect
+      {
+        initial: { scale: 1.2, opacity: 0, rotate: -5 },
+        animate: {
+          scale: 1.1,
+          opacity: 1,
+          rotate: 0,
+          transition: {
+            duration: IMAGE_DISPLAY_DURATION / 1000,
+            scale: { duration: IMAGE_DISPLAY_DURATION / 1000 },
+            opacity: { duration: 1 },
+            rotate: { duration: 1.5, ease: [0.22, 1, 0.36, 1] },
+          },
+        },
+        exit: {
+          opacity: 0,
+          rotate: 5,
+          transition: { duration: 0.8 },
+        },
+      },
+      // Blur to focus effect
+      {
+        initial: { scale: 1, opacity: 0, filter: "blur(20px)" },
+        animate: {
+          scale: 1.1,
+          opacity: 1,
+          filter: "blur(0px)",
+          transition: {
+            duration: IMAGE_DISPLAY_DURATION / 1000,
+            scale: { duration: IMAGE_DISPLAY_DURATION / 1000 },
+            opacity: { duration: 1 },
+            filter: { duration: 1.5 },
+          },
+        },
+        exit: {
+          opacity: 0,
+          filter: "blur(20px)",
+          transition: { duration: 0.8 },
+        },
+      },
+    ];
 
-  const searchItemsContainer: Variants = {
-    hidden: { opacity: 1 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.6,
-      },
-    },
+    return effects[effect] || effects[0];
   };
 
   return (
-    <motion.div
-      className="lg:h-[44.8125rem] h-[41.562rem] bg-center bg-cover bg-no-repeat bg-[url(/hero.png)] lg:mt-[6rem] flex flex-col"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <div className="flex flex-col items-center gap-[3.0625rem] lg:gap-30 mt-[13.1rem] lg:mt-[8.19rem]">
-        <div className="flex flex-col items-center gap-6 lg:gap-0 lg:w-[47.75rem] w-[90%] relative">
-          <motion.div variants={shadowVariants}>
-            <Image
-              width={917}
-              height={264}
-              src={"/shadow.png"}
-              alt="shadow"
-              className="w-[57.3125rem] h-[16.5rem] hidden lg:block"
-            />
-          </motion.div>
+    <div className="lg:h-[44.8125rem] h-[41.562rem flex flex-col relative px-5 md:px-10 pb-6 overflow-hidden">
+      {/* Animated Background Images */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentImageIndex}
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: `url(${backgroundImages[currentImageIndex]})`,
+          }}
+          variants={getBackgroundVariants(transitionEffect)}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        />
+      </AnimatePresence>
 
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
+
+      {/* Content */}
+      <motion.div
+        className="z-10 flex flex-col md:flex-row gap-[3.0625rem] md:gap-0 mt-[13.1rem] lg:mt-[12rem] items-center md:justify-between"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <div className="flex flex-col items-center md:items-start gap-6 lg:gap-10 max-w-[759px]">
           <motion.h1
-            className="lg:leading-[4.5rem] leading-[2.5rem] lg:absolute lg:top-0 text-white text-[2rem] lg:text-[4rem] font-bold text-center"
+            className={`${playfair.className} lg:leading-[4.5rem] md:leading-[3.5rem] leading-[2.5rem] text-white text-[2rem] md:text-[3rem] lg:text-[4rem] font-normal text-center md:text-left`}
             variants={titleVariants}
           >
             Leveraging Real Estate Market Opportunities
           </motion.h1>
-
-          <motion.button
-            className="flex items-center justify-center lg:py-4 py-3 lg:px-8 px-6 rounded-[0.5rem] bg-[#941A1A] text-white cursor-pointer lg:mt-[-4rem]"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
+          <motion.p
+            className="text-white text-[18px] font-medium text-center md:text-left"
+            variants={titleVariants}
           >
-            <p
-              className={`text-[0.875rem] lg:text-[1rem] font-medium leading-[1.125rem] lg:leading-[1.25rem] `}
-            >
-              Get Started
-            </p>
-          </motion.button>
+            Explore Portland&apos;s real estate opportunities and discover your
+            next home in one of the Pacific Northwest&apos;s most dynamic
+            cities.
+          </motion.p>
+          <div className="flex gap-6 items-center">
+            <div className="flex items-center justify-center w-[73px] h-[73px] rounded-full bg-[#941A1A]/65 cursor-pointer">
+              <FaPlay className="text-white h-[25px] w-[25px]" />
+            </div>
+            <h3 className="font-medium text-white hover:text-[#941A1A] text-[1.2rem] cursor-pointer">
+              Watch Video
+            </h3>
+          </div>
         </div>
-
-        <motion.div
-          className="flex flex-wrap justify-center items-center w-[90%] lg:w-[55rem] max-w-full h-auto px-4 py-3 gap-2 lg:gap-4 rounded-md lg:rounded-xl bg-[#F8F8F8] search-box"
-          variants={searchBoxVariants}
-        >
-          <motion.div
-            variants={searchItemsContainer}
-            initial="hidden"
-            animate="visible"
-            className="contents"
-          >
-            {/* Location */}
-            <motion.div
-              className="flex flex-1 min-w-[6rem] lg:min-w-[12rem] h-[2.5rem] lg:h-[3rem] p-1 lg:p-2 items-center gap-1 lg:gap-2 bg-white rounded-md"
-              variants={searchItemVariants}
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                transition: { duration: 0.2 },
-              }}
-            >
-              <SlLocationPin className="w-3 lg:w-4 h-3 lg:h-4" />
-              <p className="text-[0.75rem] lg:text-[1rem] font-normal">
-                Location
-              </p>
-            </motion.div>
-
-            {/* Property Type */}
-            <motion.div
-              className="flex flex-1 min-w-[6rem] lg:min-w-[12rem] h-[2.5rem] lg:h-[3rem] p-1 lg:p-2 items-center gap-1 lg:gap-2 bg-white rounded-md"
-              variants={searchItemVariants}
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                transition: { duration: 0.2 },
-              }}
-            >
-              <MdOutlineFlag className="w-3 lg:w-4 h-3 lg:h-4" />
-              <p className="text-[0.75rem] lg:text-[1rem] font-normal">
-                Property Type
-              </p>
-            </motion.div>
-
-            {/* Search */}
-            <motion.div
-              className="flex-1 min-w-[10rem] lg:min-w-[20rem] h-[2.5rem] lg:h-[3rem] relative"
-              variants={searchItemVariants}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.2 },
-              }}
-            >
-              <input
-                placeholder="Search Property"
-                className="w-full h-full px-2 lg:px-4 py-1 lg:py-2 rounded-md bg-white focus:outline-none text-[0.75rem] lg:text-[1rem] transition-all duration-200 focus:ring-2 focus:ring-[#941A1A]/20 focus:shadow-lg"
-              />
-              <IoSearchOutline className="absolute right-2 lg:right-3 top-2 lg:top-3 w-3 lg:w-4 h-3 lg:h-4" />
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </div>
-    </motion.div>
+        <Search />
+      </motion.div>
+    </div>
   );
 };
 

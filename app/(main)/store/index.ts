@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import mobileSidebarReducer from './mobileSidebarSlice'
+import searchReducer from './searchSlice'
 
 export const store = configureStore({
   reducer: {
-    mobileSidebar: mobileSidebarReducer
+    mobileSidebar: mobileSidebarReducer,
+    search: searchReducer
   }
 })
 
