@@ -2,6 +2,7 @@
 
 import About from "./components/home/About";
 import Hero from "./components/home/Hero";
+import OurServices from "./components/home/OurServices";
 import Properties from "./components/home/Properties";
 import Review from "./components/home/Review";
 import Modal from "./components/Modal";
@@ -11,7 +12,8 @@ const Home = () => {
     <div className="relative">
       <Modal />
       <Hero />
-      <About />
+      <OurServices />
+      {/* <About /> */}
       <Properties />
       <Review />
     </div>
