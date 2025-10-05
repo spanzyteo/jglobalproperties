@@ -1,7 +1,7 @@
 'use client'
 
-import About from "./components/home/About";
 import Hero from "./components/home/Hero";
+import Info from "./components/home/Info";
 import OurServices from "./components/home/OurServices";
 import Properties from "./components/home/Properties";
 import Review from "./components/home/Review";
@@ -13,6 +13,7 @@ const Home = () => {
       <Modal />
       <Hero />
       <OurServices />
+      <Info />
       {/* <About /> */}
       <Properties />
       <Review />
