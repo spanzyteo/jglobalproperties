@@ -60,7 +60,7 @@ const Navbar = () => {
       className={`flex h-[4.1875rem] lg:h-[6rem] px-4 py-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] fixed z-50 transition-all duration-300 ease-in-out bg-black 
         ${
           isScrolled
-            ? "top-0 left-0 right-0 bg-black backdrop-blur-md "
+            ? "top-0 left-0 right-0 bg-black/90 backdrop-blur-md "
             : "top-0 w-full lg:bg-black/0"
         }
       `}

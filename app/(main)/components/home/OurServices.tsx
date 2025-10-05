@@ -13,7 +13,7 @@ const roboto = Roboto({
 
 const OurServices = () => {
   return (
-    <div className="flex flex-col md:flex-row py-20 px-5 md:px-10 items-center md:justify-between gap-4">
+    <div className="flex flex-col md:flex-row py-20 px-5 md:px-6 items-center md:justify-between gap-4">
       <div className="flex flex-col items-center md:items-start gap-8">
         <div className="flex items-center gap-3 text-[15px]">
           <div className="h-3 w-3 rounded-full border-2 border-[#941A1A]"></div>

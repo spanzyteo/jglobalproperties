@@ -20,7 +20,7 @@ const robotoSlab = Roboto_Slab({
 
 const WithUs = () => {
   return (
-    <div className="py-20 px-5 md:px-10 flex flex-col md:flex-row items-center md:justify-between gap-8 bg-gray-50">
+    <div className="py-20 px-5 md:px-6 flex flex-col md:flex-row items-center md:justify-between gap-8 bg-gray-50">
       <div className="flex flex-col items-center md:items-start gap-8">
         <div className="flex items-center gap-3 text-[15px]">
           <div className="h-3 w-3 rounded-full border-2 border-[#941A1A]"></div>

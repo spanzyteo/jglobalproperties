@@ -18,7 +18,7 @@ const roboto = Roboto({
 
 const Info = () => {
   return (
-    <div className="px-5 md:px-10 grid md:grid-cols-3 grid-cols-1 gap-4 pb-10">
+    <div className="px-5 md:px-6 grid md:grid-cols-3 grid-cols-1 gap-4 pb-10">
       {info.map((item) => (
         <div
           key={item.id}
