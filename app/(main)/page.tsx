@@ -5,6 +5,7 @@ import Info from "./components/home/Info";
 import OurServices from "./components/home/OurServices";
 import Properties from "./components/home/Properties";
 import Review from "./components/home/Review";
+import WithUs from "./components/home/WithUs";
 import Modal from "./components/Modal";
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       <Hero />
       <OurServices />
       <Info />
+      <WithUs />
       {/* <About /> */}
       <Properties />
       <Review />

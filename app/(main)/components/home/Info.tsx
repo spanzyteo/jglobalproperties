@@ -18,11 +18,11 @@ const roboto = Roboto({
 
 const Info = () => {
   return (
-    <div className="px-5 md:px-10 grid md:grid-cols-3 grid-cols-1 gap-4">
+    <div className="px-5 md:px-10 grid md:grid-cols-3 grid-cols-1 gap-4 pb-10">
       {info.map((item) => (
         <div
           key={item.id}
-          className="flex flex-col items-center md:items-start gap-4"
+          className="flex flex-col items-center md:items-start gap-6"
         >
           <div className="h-[260px] md:h-[480px] w-full ">
             <Image
