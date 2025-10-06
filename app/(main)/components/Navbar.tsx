@@ -60,7 +60,7 @@ const Navbar = () => {
       className={`flex h-[4.1875rem] lg:h-[6rem] px-4 py-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] fixed z-50 transition-all duration-300 ease-in-out bg-black 
         ${
           isScrolled
-            ? "top-0 left-0 right-0 bg-black/90 backdrop-blur-md "
+            ? "top-0 left-0 right-0 bg-black/85 backdrop-blur-md "
             : "top-0 w-full lg:bg-black/0"
         }
       `}
@@ -92,7 +92,7 @@ const Navbar = () => {
             ></div>
           </Link>
           <div
-            className="relative"
+            className="relative h-[6rem] flex items-center"
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
@@ -112,7 +112,7 @@ const Navbar = () => {
             <AnimatePresence>
               {isDropdownOpen && (
                 <motion.div
-                  className="absolute py-2 top-[3rem] left-0 bg-black rounded-sm w-[14rem] z-[60] shadow-lg overflow-hidden"
+                  className="absolute py-2 top-[6rem] left-0 bg-black rounded-sm w-[14rem] z-[60] shadow-lg overflow-hidden"
                   variants={dropdownVariants}
                   initial="hidden"
                   animate="visible"
@@ -133,7 +133,7 @@ const Navbar = () => {
                   >
                     <Link
                       href="/properties/land"
-                      className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:text-[#941A1A] hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
+                      className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
                     >
                       <span className="relative z-10">Land</span>
                       <motion.div
@@ -158,7 +158,7 @@ const Navbar = () => {
                   >
                     <Link
                       href="/properties/houses"
-                      className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:text-[#941A1A] hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
+                      className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
                     >
                       <span className="relative z-10">Houses</span>
                       <motion.div

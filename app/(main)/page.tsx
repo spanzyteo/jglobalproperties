@@ -6,6 +6,7 @@ import Info from "./components/home/Info";
 import OurServices from "./components/home/OurServices";
 import PopularAreas from "./components/home/PopularAreas";
 import Review from "./components/home/Review";
+import Team from "./components/home/Team";
 import WithUs from "./components/home/WithUs";
 import Modal from "./components/Modal";
 
@@ -19,6 +20,7 @@ const Home = () => {
       <WithUs />
       <Featured />
       <PopularAreas />
+      <Team />
       <Review />
     </div>
   );

@@ -65,11 +65,11 @@ const WithUs = () => {
       </div>
       <div className="lg:h-[546px] md:h-[503px] h-[452px]">
         <Image
-          src={"/ceo1.png"}
+          src={"/team/joan.webp"}
           alt="ceo"
           width={520}
           height={546}
-          className="bg-[#F4E8E8] h-full object-cover rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] rounded-bl-[5px]"
+          className="bg-[#F4E8E8] h-full w-full md:max-w-[520px] object-cover rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] rounded-bl-[5px]"
         />
       </div>
     </div>

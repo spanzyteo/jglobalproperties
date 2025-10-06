@@ -26,7 +26,7 @@ const OurServices = () => {
         </h1>
       </div>
       <div className="hidden md:block w-[0.1rem] h-44 bg-[#941A1A]"></div>
-      <div className="flex justify-center max-w-[597px] text-[18px] font-medium md:pl-8">
+      <div className="flex justify-center max-w-[597px] text-[18px] md:pl-8">
         <h3 className={`${roboto.className} md:leading-[28px] leading-[25px] max-w-[597px] text-center md:text-left`}>
           jglobalproperties stands out to all—clients, developers, vendors, and industry
           professionals alike—for her exceptional talents, innovative spirit,

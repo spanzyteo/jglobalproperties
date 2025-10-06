@@ -32,14 +32,15 @@ const PopularAreas = () => {
           Popular Areas
         </h1>
         <p
-          className={`${roboto.className} max-w-[650px] text-[18px] leading-[32px] text-center md:text-left`}
+          className={`${roboto.className} max-w-[480px] text-[18px] leading-[32px] text-center md:text-left`}
         >
-          Dynamic approach, and tireless commitment to facilitating transactions
-          for buyers and sellers.
+          Our dynamic approach and tireless commitment to facilitating
+          transactions for buyers and sellers sets us apart.
           <br />
-          In the vibrant neighborhood of Portland, Maryland, Sam is renowned
-          among residents, property developers, local businesses, and
-          professionals in the.
+          Across Nigeria&apos;s thriving cities and emerging neighborhoods, we
+          are trusted by residents, property developers, local businesses, and
+          real estate professionals for our expertise and dedication to
+          excellence.
         </p>
         <Link
           href={"/contact"}
@@ -55,12 +56,12 @@ const PopularAreas = () => {
               alt="popular"
               src={item.image}
               height={480}
-              width={250}
+              width={600}
               className="h-[260px] md:h-[480px] w-full md:max-w-[270px] object-cover rounded-tl-[5px] rounded-tr-[50px] rounded-bl-[50px] rounded-br-[5px] relative bg-no-repeat bg-center"
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/30 z-0" />
+            <div className="absolute inset-0 bg-black/25 z-0" />
             <h3
               className={`${bodoni.className} absolute inset-0 flex items-center justify-center text-center font-semibold text-[18px] text-white z-10`}
             >
