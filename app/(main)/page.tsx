@@ -1,5 +1,6 @@
 'use client'
 
+import Blogs from "./components/home/Blogs";
 import Featured from "./components/home/Featured";
 import Hero from "./components/home/Hero";
 import Info from "./components/home/Info";
@@ -24,6 +25,7 @@ const Home = () => {
       <Team />
       <Records />
       <Reviews />
+      <Blogs />
     </div>
   );
 };
