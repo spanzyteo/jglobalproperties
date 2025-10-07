@@ -6,7 +6,7 @@ import Info from "./components/home/Info";
 import OurServices from "./components/home/OurServices";
 import PopularAreas from "./components/home/PopularAreas";
 import Records from "./components/home/Records";
-import Review from "./components/home/Review";
+import Reviews from "./components/home/Reviews";
 import Team from "./components/home/Team";
 import WithUs from "./components/home/WithUs";
 import Modal from "./components/Modal";
@@ -23,7 +23,7 @@ const Home = () => {
       <PopularAreas />
       <Team />
       <Records />
-      <Review />
+      <Reviews />
     </div>
   );
 };

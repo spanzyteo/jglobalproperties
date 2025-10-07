@@ -20,7 +20,7 @@ const Records = () => {
         >
           500+
         </h2>
-        <p className={`${robotoSlab} text-[14px] leading-[35px] uppercase`}>
+        <p className={`${robotoSlab.className} text-[14px] leading-[35px] uppercase`}>
           Active properties listed across Nigeria
         </p>
       </div>
@@ -31,7 +31,7 @@ const Records = () => {
         >
           99%
         </h2>
-        <p className={`${robotoSlab} text-[14px] leading-[35px] uppercase`}>
+        <p className={`${robotoSlab.className} text-[14px] leading-[35px] uppercase`}>
           User satisfaction with our services
         </p>
       </div>
@@ -42,7 +42,7 @@ const Records = () => {
         >
           50+
         </h2>
-        <p className={`${robotoSlab} text-[14px] leading-[35px] uppercase`}>
+        <p className={`${robotoSlab.className} text-[14px] leading-[35px] uppercase`}>
           Consultations booked each month
         </p>
       </div>
