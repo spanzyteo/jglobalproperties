@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { team, TeamData } from "../utils/team";
-import Review from "../components/home/Review";
 import ViewProperties from "../components/ViewProperties";
 import Link from "next/link";
 import { MdChevronRight } from "react-icons/md";
@@ -163,7 +162,6 @@ const About = () => {
           </div>
         </div>
       </div>
-      <Review />
       <div className="mt-24"></div>
       <ViewProperties />
     </>
