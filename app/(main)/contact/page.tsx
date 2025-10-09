@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import ViewProperties from "../components/ViewProperties";
-
 // TypeScript declaration for Leaflet global object
 
 const Contact = () => {
@@ -209,7 +207,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      <ViewProperties />
     </>
   );
 };
