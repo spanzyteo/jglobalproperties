@@ -1,5 +1,5 @@
 "use client";
-import { Playfair_Display, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
 import {
   FaFacebookF,
@@ -8,12 +8,6 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
-import { Parallax } from "react-parallax";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -67,7 +61,7 @@ const ContactBody = () => {
             </p>
             <p>
               We offer our clients a wealth of knowledge regarding all aspects
-              of purchasing or selling property. Whether it's helping you find
+              of purchasing or selling property. Whether it&apos;s helping you find
               your dream home, exploring lucrative investment opportunities, or
               providing expert guidance on property sales, we&apos;re committed to
               your success. Please feel free to contact us with any questions
