@@ -58,19 +58,20 @@ const ContactBody = () => {
           </div>
           <div className="flex flex-col gap-5 text-[14px] leading-[23px]">
             <p>
-              Whether you’re looking for property for sale in New York area or
-              property for rent, WP Residence makes searching easy. Use our
-              unique geolocation mapping feature to root-out your ideal villa,
-              townhouse or apartment and contact the owners direct. We will help
-              you find your dream house in just a few seconds.
+              Whether you&apos;re looking for property for sale in Lagos or property
+              for rent, Jglobal Properties makes searching easy. We specialize
+              in helping you identify prime real estate opportunities that align
+              with your investment goals. From luxury apartments to commercial
+              properties, we connect you with the perfect property to build your
+              wealth and secure your future.
             </p>
             <p>
               We offer our clients a wealth of knowledge regarding all aspects
-              of purchasing or selling a home. Whether it is helping you search
-              for your dream home, discussing new New York real estate
-              developments, or assisting with the sale of your property, we
-              would love the opportunity to help. Please feel free to contact us
-              with any questions!
+              of purchasing or selling property. Whether it's helping you find
+              your dream home, exploring lucrative investment opportunities, or
+              providing expert guidance on property sales, we&apos;re committed to
+              your success. Please feel free to contact us with any questions
+              about navigating the real estate market!
             </p>
           </div>
           <Image
@@ -103,8 +104,13 @@ const ContactBody = () => {
                 className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out"
               />
             </div>
-            <textarea className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out" rows={7}></textarea>
-            <button className="bg-black rounded-[5px] text-white w-full md:w-[139px] py-3 font-medium hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out cursor-pointer">Send Email</button>
+            <textarea
+              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out"
+              rows={7}
+            ></textarea>
+            <button className="bg-black rounded-[5px] text-white w-full md:w-[139px] py-3 font-medium hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out cursor-pointer">
+              Send Email
+            </button>
           </form>
         </div>
       </div>
