@@ -18,7 +18,7 @@ const Hero = () => {
   const [transitionEffect, setTransitionEffect] = useState(0);
 
   // Duration for each image display (in milliseconds)
-  const IMAGE_DISPLAY_DURATION = 9000; // 6 seconds
+  const IMAGE_DISPLAY_DURATION = 6000; // 6 seconds
 
   // Array of different transition effects
   const transitionEffects = [

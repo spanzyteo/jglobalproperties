@@ -51,12 +51,12 @@ const WithUs = () => {
           />
           <div className="flex flex-col">
             <h3
-              className={`${playfair} text-[18px] font-medium leading-[27px]`}
+              className={`${playfair.className} text-[18px] font-medium leading-[27px]`}
             >
               Joan Obi-Okuhon
             </h3>
             <h3
-              className={`${robotoSlab} text-[#941A1A] leading-[31px] text-[15px]`}
+              className={`${robotoSlab.className} text-[#941A1A] leading-[31px] text-[15px]`}
             >
               CEO, Jglobalproperties
             </h3>
