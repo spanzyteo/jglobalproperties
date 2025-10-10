@@ -12,11 +12,11 @@ const roboto = Roboto({
   weight: ["400", "500", "600", "700"],
 });
 
-const HouseHero = () => {
+const LandHero = () => {
   return (
     <Parallax
       strength={800}
-      bgImage="/house-bg.webp"
+      bgImage="/bg1.webp"
       bgImageStyle={{
         objectFit: "cover",
         objectPosition: "center",
@@ -30,16 +30,16 @@ const HouseHero = () => {
         <h1
           className={`${playfair.className} text-[31px] md:text-[55px] lg:text-[65px] leading-[38px] md:leading-[60px] lg:leading-[71px] text-center max-w-[90%] md:max-w-[80%]`}
         >
-          Find Your Dream Home in Nigeria
+          Premium Land Opportunities Across Nigeria
         </h1>
         <h3
           className={`${roboto.className} text-[19px] leading-[23px] md:leading-[30px] text-center max-w-[285px] md:max-w-[400px] font-normal`}
         >
-          Explore finished and off-plan homes tailored to your lifestyle
+          Discover prime land investments in Lagos, Abuja, and beyond
         </h3>
       </div>
     </Parallax>
   );
 };
 
-export default HouseHero;
+export default LandHero;

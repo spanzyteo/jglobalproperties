@@ -132,7 +132,7 @@ const Navbar = () => {
                     }}
                   >
                     <Link
-                      href="/properties/land"
+                      href="/properties/lands"
                       className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
                     >
                       <span className="relative z-10">Land</span>
