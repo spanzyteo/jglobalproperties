@@ -8,6 +8,7 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
+import ContactSection2 from "./ContactSection2";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -16,7 +17,7 @@ const roboto = Roboto({
 
 const ContactBody = () => {
   return (
-    <div className="bg-[#fffcfc] px-4 md:px-8 py-8 flex flex-col lg:flex-row">
+    <div className="bg-[#fffcfc] px-4 md:px-8 py-8 flex flex-col md:flex-row gap-4">
       <div className="flex flex-col gap-6 w-full lg:max-w-[873px]">
         <div
           className={`${roboto.className} bg-white rounded-[5px] flex flex-col gap-10 py-12 px-6 shadow-sm`}
@@ -108,6 +109,7 @@ const ContactBody = () => {
           </form>
         </div>
       </div>
+      <ContactSection2 />
     </div>
   );
 };
