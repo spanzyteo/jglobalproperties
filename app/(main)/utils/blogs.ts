@@ -1,4 +1,4 @@
-interface BlogsData {
+export interface BlogsData {
   id: number;
   createdAt: string;
   title: string;
@@ -75,7 +75,7 @@ const blogs: BlogsData[] = [
     id: 8,
     createdAt: "2025-04-25",
     title: "The Growing Demand for Short-Let Apartments",
-    category: "Hospitality",
+    category: "Architecture",
     content:
       "Short-let apartments have become a booming segment in Nigeria’s real estate market, especially in cities like Lagos and Abuja. With the rise of business tourism and remote work, travelers now prefer flexible, home-like accommodations over traditional hotels. Property owners are capitalizing on this demand by converting residential apartments into luxury short-let units. Beyond providing higher returns, this model allows for easy maintenance and scalability. As digital booking platforms continue to expand, the short-let market shows no sign of slowing down.",
     image: "/blogs/house8.webp",
