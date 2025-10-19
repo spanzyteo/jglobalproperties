@@ -1,30 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Playfair_Display, Roboto } from "next/font/google";
-import Image from "next/image";
-import { useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useMemo, useState } from "react";
+import { useAppSelector } from "../../store/hooks";
 import houses from "../../utils/houses";
+import Image from "next/image";
 import Link from "next/link";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Roboto } from "next/font/google";
+import { AnimatePresence, motion } from "framer-motion";
 
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const HouseBody = () => {
-  const finishedHomes = houses.filter(
-    (item) => item.category === "Finished Homes"
-  );
-  const offPlanHomes = houses.filter(
-    (item) => item.category === "Off Plan Homes"
-  );
+
+const SimilarHouses = () => {
+  const house = useAppSelector((state) => state.house.currentHouse);
+  const similarHouses = useMemo(() => {
+    if (!house) return [];
+    return houses.filter(
+      (item) => item.category === house.category && item.id !== house.id
+    );
+  }, [house]);
+  console.log(similarHouses)
 
   // State to track current image index for each house
   const [currentImageIndex, setCurrentImageIndex] = useState<{
@@ -72,7 +71,7 @@ const HouseBody = () => {
     return (
       <div key={item.id} className="flex flex-col gap- rounded-[5px] shadow-lg">
         {currentImage && (
-          <div className="relative group overflow-hidden h-[220px]">
+          <div className="relative group overflow-hidden h-[265px]">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -114,14 +113,14 @@ const HouseBody = () => {
             {/* Navigation Arrows */}
             <button
               onClick={() => handlePrevImage(item.id, item.image.length)}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
               aria-label="Previous image"
             >
               <FaChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => handleNextImage(item.id, item.image.length)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
               aria-label="Next image"
             >
               <FaChevronRight className="w-4 h-4" />
@@ -144,7 +143,7 @@ const HouseBody = () => {
         >
           <Link
             href={`/properties/houses/${item.id}`}
-            className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] hover:underline transition-all duration-500 ease-in-out"
+            className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] transition-colors duration-500 ease-in-out"
           >
             {item.title}
           </Link>
@@ -168,28 +167,20 @@ const HouseBody = () => {
         </div>
       </div>
     );
-  };
-
-  return (
-    <div className="px-4 md:px-8 py-12 flex flex-col gap-4">
-      <h1
-        className={`${playfair.className} text-[34px] font-medium leading-[44px]`}
-      >
-        Finished Homes
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-4">
-        {finishedHomes.map((item) => renderHouseCard(item))}
-      </div>
-      <h1
-        className={`${playfair.className} text-[34px] font-medium leading-[44px] mt-10`}
-      >
-        Off Plan Homes
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-4">
-        {offPlanHomes.map((item) => renderHouseCard(item))}
-      </div>
-    </div>
-  );
+  }
+  return <div>
+     {/* Similar houses */}
+      {similarHouses.length > 0 && (
+        <div className={`${roboto.className} flex flex-col gap-4`}>
+          <h1 className="text-[24px] font-medium leading-[31px]">
+            Related Houses
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+            {similarHouses.slice(0, 2).map((item) => renderHouseCard(item))}
+          </div>
+        </div>
+      )}
+  </div>;
 };
 
-export default HouseBody;
+export default SimilarHouses;

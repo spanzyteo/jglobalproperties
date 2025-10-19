@@ -3,10 +3,10 @@ import { notFound, useParams } from "next/navigation";
 import BlogIdHero from "../../components/blogId/BlogIdHero";
 import BlogIdContent from "../../components/blogId/BlogIdContent";
 import ContactSection2 from "../../components/contact/ContactSection2";
+import Contact from "../../components/home/Contact";
 
 const BlogId = () => {
   const { id: blogId } = useParams()
-  console.log(`BlogId: ${blogId}`)
 
   // If blog not found, show 404
   if (!blogId) {
@@ -19,6 +19,7 @@ const BlogId = () => {
         <BlogIdContent currentBlogId={blogId} />
         <ContactSection2 />
       </div>
+      <Contact />
     </>
   );
 };

@@ -104,16 +104,20 @@ const ContactSection2 = () => {
             const images = item.image[0];
             return (
               <div key={item.id} className="flex gap-2 items-center">
-                {images && (
-                  <Image
-                    src={images.url}
-                    alt="image"
-                    height={70}
-                    width={105}
-                    className="rounded-[5px]"
-                  />
-                )}
-                <div className="flex flex-col gap- text-[14px] font-medium">
+                <div className="h-[70px] w-[105px]">
+                  {images && (
+                    <div className="h-full w-full">
+                      <Image
+                        src={images.url}
+                        alt="image"
+                        height={70}
+                        width={105}
+                        className="rounded-[5px] h-full w-full object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col gap- text-[14px] font-medium max-w-[150px] md:max-w-[190px]">
                   <h4 className="">{item.title}</h4>
                   <h4 className="">₦{item.price.toLocaleString()}</h4>
                 </div>

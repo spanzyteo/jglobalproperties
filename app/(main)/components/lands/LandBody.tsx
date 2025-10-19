@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import lands from "../../utils/lands";
+import Link from "next/link";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -67,7 +68,7 @@ const LandBody = () => {
     return (
       <div key={item.id} className="flex flex-col gap- rounded-[5px] shadow-lg">
         {currentImage && (
-          <div className="relative group overflow-hidden">
+          <div className="relative group overflow-hidden h-[220px]">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -109,14 +110,14 @@ const LandBody = () => {
             {/* Navigation Arrows */}
             <button
               onClick={() => handlePrevImage(item.id, item.images.length)}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
               aria-label="Previous image"
             >
               <FaChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => handleNextImage(item.id, item.images.length)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
               aria-label="Next image"
             >
               <FaChevronRight className="w-4 h-4" />
@@ -137,9 +138,12 @@ const LandBody = () => {
         <div
           className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-[100px]`}
         >
-          <h3 className="text-[18px] font-medium leading-[23px]">
+          <Link
+            href={`/properties/lands/${item.id}`}
+            className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] hover:underline transition-all duration-500 ease-in-out"
+          >
             {item.title}
-          </h3>
+          </Link>
           <h4 className={`text-[14px] leading-[23px]`}>{item.status}</h4>
         </div>
         <div

@@ -27,8 +27,8 @@ const houses: HouseData[] = [
     state: "Lagos",
     country: "Nigeria",
     image: [
-      { id: 1, url: "/houses/house1.jpeg" },
-      { id: 2, url: "/houses/house2.webp" },
+      { id: 1, url: "/houses/house1.webp" },
+      { id: 2, url: "/houses/house2.jpg" },
       { id: 3, url: "/houses/house3.webp" },
       { id: 4, url: "/houses/house4.webp" },
       { id: 5, url: "/houses/house5.webp" },
@@ -45,7 +45,7 @@ const houses: HouseData[] = [
     state: "Abuja",
     country: "Nigeria",
     image: [
-      { id: 1, url: "/houses/house2.webp" },
+      { id: 1, url: "/houses/house2.jpg" },
       { id: 2, url: "/houses/house3.webp" },
       { id: 3, url: "/houses/house4.webp" },
       { id: 4, url: "/houses/house5.webp" },
@@ -103,7 +103,7 @@ const houses: HouseData[] = [
       { id: 2, url: "/houses/house6.webp" },
       { id: 3, url: "/houses/house7.webp" },
       { id: 4, url: "/houses/house8.webp" },
-      { id: 5, url: "/houses/house1.jpeg" },
+      { id: 5, url: "/houses/house1.webp" },
     ],
   },
   {
@@ -120,8 +120,8 @@ const houses: HouseData[] = [
       { id: 1, url: "/houses/house6.webp" },
       { id: 2, url: "/houses/house7.webp" },
       { id: 3, url: "/houses/house8.webp" },
-      { id: 4, url: "/houses/house1.jpeg" },
-      { id: 5, url: "/houses/house2.webp" },
+      { id: 4, url: "/houses/house1.webp" },
+      { id: 5, url: "/houses/house2.jpg" },
     ],
   },
   {
@@ -137,8 +137,8 @@ const houses: HouseData[] = [
     image: [
       { id: 1, url: "/houses/house7.webp" },
       { id: 2, url: "/houses/house8.webp" },
-      { id: 3, url: "/houses/house1.jpeg" },
-      { id: 4, url: "/houses/house2.webp" },
+      { id: 3, url: "/houses/house1.webp" },
+      { id: 4, url: "/houses/house2.jpg" },
       { id: 5, url: "/houses/house3.webp" },
     ],
   },
@@ -154,8 +154,8 @@ const houses: HouseData[] = [
     country: "Nigeria",
     image: [
       { id: 1, url: "/houses/house8.webp" },
-      { id: 2, url: "/houses/house1.jpeg" },
-      { id: 3, url: "/houses/house2.webp" },
+      { id: 2, url: "/houses/house1.webp" },
+      { id: 3, url: "/houses/house2.jpg" },
       { id: 4, url: "/houses/house3.webp" },
       { id: 5, url: "/houses/house4.webp" },
     ],
