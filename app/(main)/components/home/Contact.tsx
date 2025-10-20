@@ -42,8 +42,9 @@ const Contact = () => {
         <p
           className={`${roboto.className} text-white max-w-[520px] text-center text-[18px]`}
         >
-          Explore Portland&apos;s real estate opportunities and discover your
-          next home in one of the Pacific Northwest&apos;s most dynamic cities.
+          Explore Nigeria&apos;s finest real estate opportunities across Lagos,
+          Abuja, Port Harcourt and beyond. Discover your dream home in one of
+          Africa&apos;s most vibrant and rapidly growing property markets.
         </p>
 
         <Link

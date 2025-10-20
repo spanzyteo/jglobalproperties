@@ -22,12 +22,21 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50); // Trigger effect after 50px scroll
+      setIsScrolled(scrollTop > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Check if current path is under properties section
+  const isPropertiesActive = pathname.startsWith("/properties");
+  const isBlogActive = pathname.startsWith("/blog")
+
+  // Check if on a dynamic ID page (lands/[id] or houses/[id])
+  const isOnDetailPage =
+    /^\/properties\/lands\/[^/]+$/.test(pathname) ||
+    /^\/properties\/houses\/[^/]+$/.test(pathname);
 
   // Dropdown animation variants
   const dropdownVariants = {
@@ -59,7 +68,7 @@ const Navbar = () => {
     <div
       className={`flex h-[4.1875rem] lg:h-[6rem] px-4 py-4 lg:py-[1.25rem] lg:px-[5rem] justify-center flex-col gap-[0.625rem] fixed z-50 transition-all duration-300 ease-in-out bg-black 
         ${
-          isScrolled
+          isScrolled || isOnDetailPage
             ? "top-0 left-0 right-0 bg-black/85 backdrop-blur-md "
             : "top-0 w-full lg:bg-black/0"
         }
@@ -103,7 +112,7 @@ const Navbar = () => {
               <h1>Properties</h1>
               <div
                 className={`${
-                  pathname === "/properties"
+                  isPropertiesActive
                     ? "opacity-100 w-[2.4375rem] bg-[#941A1A] h-[3px] absolute bottom-[0.4375rem] rounded-4xl"
                     : "opacity-0"
                 }`}
@@ -133,7 +142,11 @@ const Navbar = () => {
                   >
                     <Link
                       href="/properties/lands"
-                      className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
+                      className={`block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group ${
+                        pathname.startsWith("/properties/lands")
+                          ? "bg-gray-900"
+                          : ""
+                      }`}
                     >
                       <span className="relative z-10">Land</span>
                       <motion.div
@@ -158,7 +171,11 @@ const Navbar = () => {
                   >
                     <Link
                       href="/properties/houses"
-                      className="block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group"
+                      className={`block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group ${
+                        pathname.startsWith("/properties/houses")
+                          ? "bg-gray-900"
+                          : ""
+                      }`}
                     >
                       <span className="relative z-10">Houses</span>
                       <motion.div
@@ -196,7 +213,7 @@ const Navbar = () => {
             <h1>Blog</h1>
             <div
               className={`${
-                pathname === "/blog"
+                isBlogActive
                   ? "opacity-100 w-[2.4375rem] bg-[#941A1A] h-[3px] absolute bottom-[0.4375rem] rounded-4xl"
                   : "opacity-0"
               }`}

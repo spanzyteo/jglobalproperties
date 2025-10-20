@@ -37,7 +37,7 @@ const Featured = () => {
               className="flex flex-col gap- rounded-[5px] shadow-lg"
             >
               {firstImage && (
-                <div className="relative">
+                <div className="relative h-[220px]">
                   <Image
                     src={firstImage.url}
                     alt="img"
@@ -45,15 +45,20 @@ const Featured = () => {
                     height={500}
                     width={500}
                   />
-                  <div className={`${roboto} absolute top-4 left-4 text-white bg-[#941A1A] py-[0.1rem] px-2 text-[12px] rounded-[4px]`}>
+                  <div
+                    className={`${roboto} absolute top-4 left-4 text-white bg-[#941A1A] py-[0.1rem] px-2 text-[12px] rounded-[4px]`}
+                  >
                     Featured
                   </div>
                 </div>
               )}
               <div className="py-3 pl-4 flex flex-col gap-2 h-[100px]">
-                <h3 className="text-[18px] font-medium leading-[23px]">
+                <Link
+                  href={`/properties/houses/${item.id}`}
+                  className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] hover:underline"
+                >
                   {item.title}
-                </h3>
+                </Link>
                 <h4 className={`${roboto} text-[14px] leading-[23px]`}>
                   {item.category}
                 </h4>
