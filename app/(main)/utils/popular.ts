@@ -8,12 +8,12 @@ export const popular: PopularTypes[] = [
   {
     id: 0,
     name: "Elegant Studio Apartment",
-    image: "/houses/house1.jpeg",
+    image: "/houses/house4.webp",
   },
   {
     id: 1,
     name: "Beachfront 4-Bedroom Villa",
-    image: "/houses/house2.webp",
+    image: "/houses/house2.jpg",
   },
   {
     id: 2,
