@@ -1,5 +1,6 @@
 import { Playfair_Display, Roboto } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 import {
   FaFacebookF,
   FaInstagram,
@@ -50,11 +51,28 @@ const Footer = () => {
         className="mx-auto"
       />
       <div className="flex items-center justify-center gap-3 text-white">
-        <FaFacebookF />
+        {/* <FaFacebookF /> */}
         <FaWhatsapp />
-        <FaInstagram />
-        <FaLinkedinIn />
-        <FaYoutube />
+        <Link
+          href={
+            "https://www.instagram.com/jglobalproperties?igsh=M2x5NGtieTJkbTI4"
+          }
+          target="_blank"
+        >
+          <FaInstagram />
+        </Link>
+        <Link
+          href={"https://www.linkedin.com/company/jglobal-property-solution/"}
+          target="_blank"
+        >
+          <FaLinkedinIn />
+        </Link>
+        <Link
+          href={"https://youtube.com/@jglobalproperties?si=gtcVve8oTV0uAEWQ"}
+          target="_blank"
+        >
+          <FaYoutube />
+        </Link>
       </div>
       <div
         className={`${roboto.className} flex flex-col md:flex-row items-center gap-3 justify-center w-full border-t border-t-gray-800 text-[#F0F0F0E3] pt-4 px-6 text-[14px] leading-[28px] md:leading-[23px]`}
