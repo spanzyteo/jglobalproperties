@@ -105,8 +105,7 @@ const Navbar = () => {
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            <Link
-              href={"/properties"}
+            <div
               className={`text-[1.05rem] w-[5rem] font-semibold leading-[1.25rem] py-4 flex flex-col items-center justify-center hover:text-gray-300 transition-all duration-500 ease-in-out relative`}
             >
               <h1>Properties</h1>
@@ -117,7 +116,7 @@ const Navbar = () => {
                     : "opacity-0"
                 }`}
               ></div>
-            </Link>
+            </div>
             <AnimatePresence>
               {isDropdownOpen && (
                 <motion.div
