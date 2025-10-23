@@ -1,6 +1,8 @@
 "use client";
 import { Playfair_Display, Roboto } from "next/font/google";
 import { Parallax } from "react-parallax";
+import { easeOut, motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -13,6 +15,70 @@ const roboto = Roboto({
 });
 
 const ContactHero = () => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const titleVariants = {
+    hidden: {
+      opacity: 0,
+      y: 60,
+      scale: 0.9,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 1,
+        ease: easeOut,
+      },
+    },
+  };
+
+  const subtitleVariants = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: easeOut,
+      },
+    },
+  };
+
+  const lineVariants = {
+    hidden: {
+      width: 0,
+      opacity: 0,
+    },
+    visible: {
+      width: "80px",
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: easeOut,
+        delay: 0.8,
+      },
+    },
+  };
+
   return (
     <Parallax
       strength={800}
@@ -25,19 +91,77 @@ const ContactHero = () => {
       }}
       className="relative min-h-[500px] md:min-h-[600px] lg:min-h-[550px]"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/60 via-[#111111]/70 to-[#111111]/80 z-0" />
-      <div className="relative z-10 flex flex-col items-center justify-center h-full min-h-[500px] md:min-h-[600px] lg:min-h-[550px] text-white gap-3 px-5">
-        <h1
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-b from-[#111111]/60 via-[#111111]/70 to-[#111111]/80 z-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      />
+
+      <motion.div
+        ref={ref}
+        className="relative z-10 flex flex-col items-center justify-center h-full min-h-[500px] md:min-h-[600px] lg:min-h-[550px] text-white gap-6 px-5"
+        variants={containerVariants}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+      >
+        <motion.div className="h-[2px] bg-[#941A1A]" variants={lineVariants} />
+
+        <motion.h1
           className={`${playfair.className} text-[31px] md:text-[55px] lg:text-[65px] leading-[38px] md:leading-[60px] lg:leading-[71px] text-center max-w-[90%] md:max-w-[80%]`}
+          variants={titleVariants}
         >
-          How to contact me
-        </h1>
-        <h3
+          {["How", "to", "contact", "me"].map((word, index) => (
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.3 + index * 0.15,
+                ease: "easeOut",
+              }}
+              className="inline-block mr-3"
+            >
+              {word}
+            </motion.span>
+          ))}
+        </motion.h1>
+
+        <motion.h3
           className={`${roboto.className} text-[19px] leading-[23px] md:leading-[30px] text-center max-w-[285px] md:max-w-[400px] font-normal`}
+          variants={subtitleVariants}
         >
           Call or send an email through our form
-        </h3>
-      </div>
+        </motion.h3>
+
+        <motion.div className="h-[2px] bg-[#941A1A]" variants={lineVariants} />
+
+        <motion.div
+          className="absolute bottom-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.8,
+            delay: 1.2,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 0.3,
+          }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-2">
+            <motion.div
+              className="w-1 h-2 bg-white rounded-full"
+              animate={{ y: [0, 12, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
+        </motion.div>
+      </motion.div>
     </Parallax>
   );
 };
