@@ -4,6 +4,7 @@ import searchReducer from "./searchSlice";
 import blogsReducer from "./blogSlice";
 import houseReducer from './houseSlice'
 import landReducer from './landSlice'
+import eventsReducer from './eventSlice'
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     search: searchReducer,
     blogs: blogsReducer,
     house: houseReducer,
-    land: landReducer
+    land: landReducer,
+    events: eventsReducer
   },
 });
 

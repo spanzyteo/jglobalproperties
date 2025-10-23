@@ -29,14 +29,15 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Check if current path is under properties section
-  const isPropertiesActive = pathname.startsWith("/properties");
-  const isBlogActive = pathname.startsWith("/blog")
+  // Check if current path is under pages section
+  const isPagesActive = pathname.startsWith("/pages");
+  const isBlogActive = pathname.startsWith("/blog");
 
   // Check if on a dynamic ID page (lands/[id] or houses/[id])
   const isOnDetailPage =
-    /^\/properties\/lands\/[^/]+$/.test(pathname) ||
-    /^\/properties\/houses\/[^/]+$/.test(pathname);
+    /^\/pages\/lands\/[^/]+$/.test(pathname) ||
+    /^\/pages\/houses\/[^/]+$/.test(pathname) ||
+    /^\/pages\/events\/[^/]+$/.test(pathname);
 
   // Dropdown animation variants
   const dropdownVariants = {
@@ -108,10 +109,10 @@ const Navbar = () => {
             <div
               className={`text-[1.05rem] w-[5rem] font-semibold leading-[1.25rem] py-4 flex flex-col items-center justify-center hover:text-gray-300 transition-all duration-500 ease-in-out relative`}
             >
-              <h1>Properties</h1>
+              <h1>Pages</h1>
               <div
                 className={`${
-                  isPropertiesActive
+                  isPagesActive
                     ? "opacity-100 w-[2.4375rem] bg-[#941A1A] h-[3px] absolute bottom-[0.4375rem] rounded-4xl"
                     : "opacity-0"
                 }`}
@@ -140,14 +141,14 @@ const Navbar = () => {
                     }}
                   >
                     <Link
-                      href="/properties/lands"
+                      href="/pages/lands"
                       className={`block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group ${
-                        pathname.startsWith("/properties/lands")
+                        pathname.startsWith("/pages/lands")
                           ? "bg-gray-900"
                           : ""
                       }`}
                     >
-                      <span className="relative z-10">Land</span>
+                      <span className="relative z-10">Lands</span>
                       <motion.div
                         className="absolute inset-0 bg-[#941A1A] opacity-0"
                         whileHover={{
@@ -169,14 +170,43 @@ const Navbar = () => {
                     }}
                   >
                     <Link
-                      href="/properties/houses"
+                      href="/pages/houses"
                       className={`block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group ${
-                        pathname.startsWith("/properties/houses")
+                        pathname.startsWith("/pages/houses")
                           ? "bg-gray-900"
                           : ""
                       }`}
                     >
                       <span className="relative z-10">Houses</span>
+                      <motion.div
+                        className="absolute inset-0 bg-[#941A1A] opacity-0"
+                        whileHover={{
+                          opacity: 0.1,
+                        }}
+                        transition={{
+                          duration: 0.3,
+                        }}
+                      />
+                    </Link>
+                  </motion.div>
+                  <motion.div
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{
+                      duration: 0.2,
+                      delay: 0.1,
+                    }}
+                  >
+                    <Link
+                      href="/pages/events"
+                      className={`block px-4 py-3 text-[0.875rem] font-medium text-white hover:bg-gray-900 transition-all duration-200 relative overflow-hidden group ${
+                        pathname.startsWith("/pages/events")
+                          ? "bg-gray-900"
+                          : ""
+                      }`}
+                    >
+                      <span className="relative z-10">Events</span>
                       <motion.div
                         className="absolute inset-0 bg-[#941A1A] opacity-0"
                         whileHover={{

@@ -108,11 +108,12 @@ const MobileSidebar = () => {
   const menuItems = [
     { href: "/", label: "Home", type: "link" },
     {
-      label: "Properties",
+      label: "Pages",
       type: "dropdown",
       subItems: [
-        { href: "/properties/lands", label: "Lands" },
-        { href: "/properties/houses", label: "Houses" },
+        { href: "/pages/lands", label: "Lands" },
+        { href: "/pages/houses", label: "Houses" },
+        { href: "/pages/events", label: "Events" },
       ],
     },
     { href: "/about", label: "About us", type: "link" },
@@ -180,7 +181,7 @@ const MobileSidebar = () => {
           </motion.div>
 
           <motion.div className="flex flex-col items-start gap-2 w-full">
-            {menuItems.map((item, index) => (
+            {menuItems.map((item) => (
               <motion.div
                 key={item.label}
                 className="w-full"
