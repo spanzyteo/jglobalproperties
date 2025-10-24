@@ -18,7 +18,7 @@ const roboto = Roboto({
 });
 
 // Individual component for each section with scroll trigger
-const ImageSection = ({ src, alt, className, index }: any) => {
+const ImageSection = ({ src, alt, className }: any) => {
   const { ref, inView } = useInView({
     // triggerOnce: true,
     threshold: 0.3,
@@ -63,9 +63,9 @@ const ImageSection = ({ src, alt, className, index }: any) => {
   );
 };
 
-const TextSection = ({ title, content, className, index }: any) => {
+const TextSection = ({ title, content, className }: any) => {
   const { ref, inView } = useInView({
-    triggerOnce: true,
+    // triggerOnce: true,
     threshold: 0.3,
   });
 
@@ -145,7 +145,7 @@ const TextSection = ({ title, content, className, index }: any) => {
 
 const MissionAndVision = () => {
   const { ref: leftImageRef, inView: leftImageInView } = useInView({
-    triggerOnce: true,
+    // triggerOnce: true,
     threshold: 0.2,
   });
 

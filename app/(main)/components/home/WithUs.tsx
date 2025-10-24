@@ -127,7 +127,7 @@ const WithUs = () => {
           className="flex items-center gap-4"
         >
           <Image
-            src={"/joan.png"}
+            src={"/ceo.jpg"}
             alt="ceo"
             height={60}
             width={60}
@@ -151,30 +151,30 @@ const WithUs = () => {
       {/* DESKTOP IMAGE SECTION */}
       <motion.div
         ref={desktopImageRef}
-        className="hidden md:block lg:h-[546px] md:h-[503px]"
+        className="hidden md:block lg:h-[546px] md:h-[503px] lg:w-[520px]"
         variants={imageVariants}
         initial="hidden"
         animate={desktopImageInView ? "visible" : "hidden"}
       >
         <Image
-          src={"/team/joan.webp"}
+          src={"/ceo.jpg"}
           alt="ceo"
           width={520}
           height={546}
-          className="bg-[#F4E8E8] h-full w-full md:max-w-[520px] object-cover rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] rounded-bl-[5px]"
+          className="bg-[#F4E8E8] h-full w-full object-cover rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] rounded-bl-[5px]"
         />
       </motion.div>
 
       {/* MOBILE IMAGE SECTION */}
       <motion.div
         ref={mobileImageRef}
-        className="block md:hidden h-[452px] w-full"
+        className="block md:hidden h-[452px] sm:h-[700px] w-full"
         variants={mobileImageVariants}
         initial="hidden"
         animate={mobileImageInView ? "visible" : "hidden"}
       >
         <Image
-          src={"/team/joan.webp"}
+          src={"/ceo.jpg"}
           alt="ceo"
           width={520}
           height={546}

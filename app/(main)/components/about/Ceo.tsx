@@ -4,7 +4,7 @@ import { Playfair_Display, Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { easeOut, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -161,10 +161,10 @@ const Ceo = () => {
               hover: { scale: 1.1 },
             }}
             transition={{ duration: 0.5 }}
-            className="h-full w-full"
+            className="h-full w-full lg:w-[520px]"
           >
             <Image
-              src={"/team/joan.webp"}
+              src={"/ceo.jpg"}
               alt="ceo"
               width={520}
               height={546}

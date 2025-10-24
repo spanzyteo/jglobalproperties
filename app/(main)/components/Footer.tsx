@@ -2,7 +2,6 @@ import { Playfair_Display, Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
   FaWhatsapp,
@@ -78,13 +77,13 @@ const Footer = () => {
         className={`${roboto.className} flex flex-col md:flex-row items-center gap-3 justify-center w-full border-t border-t-gray-800 text-[#F0F0F0E3] pt-4 px-6 text-[14px] leading-[28px] md:leading-[23px]`}
       >
         <div className="flex items-center gap-3">
-          <h3>Home</h3>
+          <Link href={"/"}>Home</Link>
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
-          <h3>About</h3>
+          <Link href={"/about"}>About</Link>
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
-          <h3>Properties</h3>
+          <Link href={"/pages/events"}>Events</Link>
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
-          <h3>Blogs</h3>
+          <Link href={"/blog"}>Blogs</Link>
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
         </div>
         <h3>©2024 All Rights Reserved</h3>

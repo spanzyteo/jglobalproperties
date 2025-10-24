@@ -11,7 +11,7 @@ export const team: TeamData[] = [
     id: 0,
     name: "Joan Obi-Okuhon",
     role: "CEO / Lead Consultant",
-    image: "/team/joan.webp",
+    image: "/ceo.jpg",
     description:
       "Joan is a driven professional committed to delivering exceptional service and steadfast support to her clients. Her extensive expertise in the real estate industry and dedication to client satisfaction have garnered her numerous positive referrals from those she served.",
   },
