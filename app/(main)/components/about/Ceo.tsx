@@ -164,7 +164,7 @@ const Ceo = () => {
             className="h-full w-full lg:w-[520px]"
           >
             <Image
-              src={"/ceo.jpg"}
+              src={"/ceo.JPG"}
               alt="ceo"
               width={520}
               height={546}
