@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 .shadow-effect {
   fill: rgba(54, 52, 52, 0.5);

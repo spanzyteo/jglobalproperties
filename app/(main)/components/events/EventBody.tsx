@@ -21,7 +21,7 @@ const EventBody = () => {
       >
         Past Events
       </h1>
-      <PastEventSection />``
+      <PastEventSection />
     </div>
   );
 }

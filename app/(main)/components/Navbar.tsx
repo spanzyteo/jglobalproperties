@@ -37,7 +37,8 @@ const Navbar = () => {
   const isOnDetailPage =
     /^\/pages\/lands\/[^/]+$/.test(pathname) ||
     /^\/pages\/houses\/[^/]+$/.test(pathname) ||
-    /^\/pages\/events\/[^/]+$/.test(pathname);
+    /^\/pages\/events\/[^/]+$/.test(pathname) ||
+    /^\/advanced-search/.test(pathname);
 
   // Dropdown animation variants
   const dropdownVariants = {

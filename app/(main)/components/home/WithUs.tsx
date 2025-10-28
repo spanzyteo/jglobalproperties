@@ -127,7 +127,7 @@ const WithUs = () => {
           className="flex items-center gap-4"
         >
           <Image
-            src={"/ceo.jpg"}
+            src={"/ceo.JPG"}
             alt="ceo"
             height={60}
             width={60}
@@ -157,7 +157,7 @@ const WithUs = () => {
         animate={desktopImageInView ? "visible" : "hidden"}
       >
         <Image
-          src={"/ceo.jpg"}
+          src={"/ceo.JPG"}
           alt="ceo"
           width={520}
           height={546}
@@ -174,7 +174,7 @@ const WithUs = () => {
         animate={mobileImageInView ? "visible" : "hidden"}
       >
         <Image
-          src={"/ceo.jpg"}
+          src={"/ceo.JPG"}
           alt="ceo"
           width={520}
           height={546}
