@@ -93,7 +93,7 @@ const Featured = () => {
 };
 
 // Separate component for each card with its own scroll trigger
-const PropertyCard = ({ item, firstImage, index, roboto }: any) => {
+const PropertyCard = ({ item, firstImage, roboto }: any) => {
   const { ref, inView } = useInView({
     // triggerOnce: true,
     threshold: 0.2,
@@ -169,13 +169,13 @@ const PropertyCard = ({ item, firstImage, index, roboto }: any) => {
         <h2 className="text-[18px] font-medium leading-[18.2px]">
           ₦{item.price.toLocaleString()}
         </h2>
-        <div className="p-[10px] border-l border-l-gray-200">
+        <div className="p-[10px] border-l border-l-gray-200 ">
           <Image
-            src={"/joan.png"}
+            src={"/ceo.JPG"}
             alt="ceo"
-            height={40}
-            width={40}
-            className="rounded-[5px]"
+            height={100}
+            width={100}
+            className="rounded-[5px] h-[60px] w-[60px] object-cover"
           />
         </div>
       </div>

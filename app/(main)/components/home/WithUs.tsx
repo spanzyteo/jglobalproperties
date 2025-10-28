@@ -129,8 +129,8 @@ const WithUs = () => {
           <Image
             src={"/ceo.JPG"}
             alt="ceo"
-            height={60}
-            width={60}
+            height={100}
+            width={100}
             className="h-[60px] w-[60px] object-cover rounded-full"
           />
           <div className="flex flex-col">

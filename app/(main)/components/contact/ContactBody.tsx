@@ -2,10 +2,8 @@
 import { Roboto } from "next/font/google";
 import Image from "next/image";
 import {
-  FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
-  FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
 import ContactSection2 from "./ContactSection2";
@@ -20,12 +18,12 @@ const roboto = Roboto({
 const ContactBody = () => {
   const { ref: leftRef, inView: leftInView } = useInView({
     // triggerOnce: true,
-    threshold: 0.2,
+    threshold: 0.1,
   });
 
   const { ref: rightRef, inView: rightInView } = useInView({
     // triggerOnce: true,
-    threshold: 0.2,
+    threshold: 0.1,
   });
 
   const containerVariants = {
@@ -89,11 +87,20 @@ const ContactBody = () => {
   };
 
   const socialIcons = [
-    { Icon: FaFacebookF, href: "#" },
-    { Icon: FaWhatsapp, href: "#" },
-    { Icon: FaInstagram, href: "#" },
-    { Icon: FaLinkedinIn, href: "#" },
-    { Icon: FaYoutube, href: "#" },
+    // { Icon: FaFacebookF, href: "#" },
+    // { Icon: FaWhatsapp, href: "#" },
+    {
+      Icon: FaInstagram,
+      href: "https://www.instagram.com/jglobalproperties?igsh=M2x5NGtieTJkbTI4",
+    },
+    {
+      Icon: FaLinkedinIn,
+      href: "https://www.linkedin.com/company/jglobal-property-solution/",
+    },
+    {
+      Icon: FaYoutube,
+      href: "https://youtube.com/@jglobalproperties?si=gtcVve8oTV0uAEWQ",
+    },
   ];
 
   return (
@@ -131,6 +138,7 @@ const ContactBody = () => {
                 <motion.a
                   key={index}
                   href={href}
+                  target="_blank"
                   custom={index}
                   variants={socialIconVariants}
                   whileHover={{
@@ -188,9 +196,9 @@ const ContactBody = () => {
 
           <motion.div variants={imageVariants}>
             <Image
-              src={"/team/joan.webp"}
+              src={"/ceo.JPG"}
               alt="ceo"
-              width={819}
+              width={900}
               height={819}
               className="w-full rounded-[5px] object-cover"
             />

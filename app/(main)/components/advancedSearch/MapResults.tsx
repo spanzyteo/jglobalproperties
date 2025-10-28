@@ -118,7 +118,7 @@ const MapResults = ({
   // Separate effect to notify parent - only when results actually change
   useEffect(() => {
     onFilteredResults(filteredResults);
-  }, [filteredResults]); // Only depend on filteredResults, not the callback
+  }, [filteredResults, onFilteredResults]); // Only depend on filteredResults, not the callback
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

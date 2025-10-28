@@ -3,11 +3,13 @@ import { BiSearch } from "react-icons/bi";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { searchState } from "../../store/searchSlice";
 import { useRouter } from "next/navigation";
+import { state as nigeriaState } from "locations-ng";
 
 const Search = () => {
   const search = useAppSelector((state) => state.search.searchOption);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const states = nigeriaState.all()
 
   const [formData, setFormData] = useState({
     propertyName: "",
@@ -15,7 +17,7 @@ const Search = () => {
     state: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -90,14 +92,21 @@ const Search = () => {
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="state">State</label>
-            <input
-              type="text"
+            <select
               name="state"
               value={formData.state}
               onChange={handleInputChange}
-              placeholder="State"
               className="border-b border-b-gray-300 focus:outline-none"
-            />
+            >
+              <option value="" className="text-gray-300">
+                All States
+              </option>
+              {states.map((st) => (
+                <option key={st.name} value={st.name}>
+                  {st.name}
+                </option>
+              ))}
+            </select>
           </div>
           <button
             type="submit"
@@ -137,14 +146,21 @@ const Search = () => {
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="state">State</label>
-            <input
-              type="text"
+            <select
               name="state"
               value={formData.state}
               onChange={handleInputChange}
-              placeholder="State"
               className="border-b border-b-gray-300 focus:outline-none"
-            />
+            >
+              <option value="">
+                All States
+              </option>
+              {states.map((st) => (
+                <option key={st.name} value={st.name}>
+                  {st.name}
+                </option>
+              ))}
+            </select>
           </div>
           <button
             type="submit"

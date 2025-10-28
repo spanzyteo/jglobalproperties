@@ -17,7 +17,7 @@ const roboto = Roboto({
 });
 
 // Separate component for each team member card
-const TeamMemberCard = ({ item, index }: any) => {
+const TeamMemberCard = ({ item }: any) => {
   const { ref, inView } = useInView({
     // triggerOnce: true,
     threshold: 0.3,
