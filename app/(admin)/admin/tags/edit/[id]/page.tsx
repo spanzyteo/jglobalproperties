@@ -5,8 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { ThreeCircles } from "react-loader-spinner";
 import { MdArrowBack } from "react-icons/md";
+import Loader from "@/app/components/shared/Loader";
 
 const EditTag = () => {
   const { id } = useParams();
@@ -86,13 +86,7 @@ const EditTag = () => {
       <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
         <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
-            <ThreeCircles
-              visible={true}
-              height="50"
-              width="50"
-              color="#000000"
-              ariaLabel="three-circles-loading"
-            />
+            <Loader />
           </div>
         </div>
       </div>

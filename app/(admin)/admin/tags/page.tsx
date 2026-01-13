@@ -3,11 +3,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ThreeCircles } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { MdOutlineRemoveRedEye, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import Loader from "@/app/components/shared/Loader";
 
 type TagsType = {
   id: string;
@@ -100,15 +100,7 @@ const Tags = () => {
         <div className="mt-8 overflow-x-auto relative">
           {loading ? (
             <div className="flex items-center justify-center py-8">
-              <ThreeCircles
-                visible={true}
-                height="50"
-                width="50"
-                color="#000000"
-                ariaLabel="three-circles-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              />
+             <Loader />
             </div>
           ) : tags.length === 0 ? (
             <div className="flex items-center justify-center py-8">

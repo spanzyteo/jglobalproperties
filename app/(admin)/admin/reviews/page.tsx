@@ -2,11 +2,11 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ThreeCircles } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import ReviewTableRow from "./components/ReviewTableRow";
 import ReviewFilters from "./components/ReviewFilters";
 import Pagination from "./components/Pagination";
+import Loader from "@/app/components/shared/Loader";
 
 type LandInfo = {
   id: string;
@@ -214,13 +214,7 @@ const Review = () => {
         <div className="mt-8 overflow-x-auto relative">
           {loading ? (
             <div className="flex items-center justify-center py-8">
-              <ThreeCircles
-                visible={true}
-                height="50"
-                width="50"
-                color="#000000"
-                ariaLabel="three-circles-loading"
-              />
+              <Loader />
             </div>
           ) : filteredReviews.length === 0 ? (
             <div className="flex items-center justify-center py-8">

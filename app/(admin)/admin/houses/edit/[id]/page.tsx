@@ -7,11 +7,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdArrowBack, MdClose, MdAdd } from "react-icons/md";
-import { ThreeCircles } from "react-loader-spinner";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Image from "next/image";
+import Loader from "@/app/components/shared/Loader";
 
 type HouseImage = {
   id: string;
@@ -291,13 +291,7 @@ const EditHouse = () => {
       <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
         <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
-            <ThreeCircles
-              visible={true}
-              height="50"
-              width="50"
-              color="#000000"
-              ariaLabel="three-circles-loading"
-            />
+            <Loader />
           </div>
         </div>
       </div>
