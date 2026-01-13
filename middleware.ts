@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   // Handle admin login protection
   if (pathname === "/admin-login") {
     const key = url.searchParams.get("key");
-    if (key !== process.env.ADMIN_KEY) {
+    if (key !== process.env.NEXT_PUBLIC_ADMIN_KEY) {
       return NextResponse.rewrite(new URL("/not-found", request.url));
     }
     return NextResponse.next();

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const backendUrl =
-      process.env.BACKEND_URL || "http://localhost:3000/api/v1";
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api/v1";
     const response = await axios.post(`${backendUrl}/auth/logout`, {
       headers: {
         Cookie: request.headers.get("cookie") || "",

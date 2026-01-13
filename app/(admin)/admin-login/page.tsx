@@ -14,7 +14,7 @@ const AdminLogin = () => {
   const key = searchParams.get("key");
 
   useEffect(() => {
-    if (key !== "password") {
+    if (key !== process.env.NEXT_PUBLIC_ADMIN_KEY) {
       notFound();
     }
   }, [key]);
