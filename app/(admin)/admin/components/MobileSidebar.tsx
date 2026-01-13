@@ -15,7 +15,6 @@ import ReviewDropdown from "./reviews/ReviewDropdown";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { TailSpin } from "react-loader-spinner";
 import TagDropdown from "./tags/TagDropdown";
 
 const MobileSidebar = () => {
@@ -100,16 +99,6 @@ const MobileSidebar = () => {
               <div className="flex items-center gap-3">
                 {loading ? (
                   <div className="flex items-center gap-2">
-                    <TailSpin
-                      height="18"
-                      width="18"
-                      color="#ef4444"
-                      ariaLabel="logging-out"
-                      radius="1"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                      visible={true}
-                    />
                     <span className="text-red-500 font-medium">
                       Logging out...
                     </span>
