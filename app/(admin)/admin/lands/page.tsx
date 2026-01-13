@@ -82,7 +82,7 @@ const Lands = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/lands?search=${search}&page=${page}`,
+          `https://api.jglobalproperties.com/api/v1/lands?search=${search}&page=${page}`,
           {
             withCredentials: true,
           }
