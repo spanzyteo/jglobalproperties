@@ -18,6 +18,7 @@ const AdvancedSearch = () => {
 
   return (
     <div className="mt-[4.1875rem] lg:mt-[6rem] flex flex-col md:flex-row md:justify-between">
+      {/* Testing webhook */}
       <Map properties={filteredProperties} />
       <MapResults onFilteredResults={handleFilteredResults} />
     </div>
