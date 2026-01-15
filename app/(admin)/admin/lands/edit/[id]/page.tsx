@@ -28,21 +28,6 @@ type LandUnit = {
   available: boolean;
 };
 
-type LandsType = {
-  id: string;
-  title: string;
-  slug: string;
-  overview: string;
-  location: string;
-  state: string;
-  country: string;
-  status: string;
-  metaTitle: string | null;
-  metaDescription: string | null;
-  units: LandUnit[];
-  images: LandImage[];
-};
-
 type ImageDetail = {
   caption: string;
   isPrimary: boolean;
@@ -90,7 +75,7 @@ const EditLand = () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
-          `https://jglobalproperties-api.onrender.com/api/v1/lands/${id}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${id}`,
           {
             withCredentials: true,
           }
@@ -241,7 +226,7 @@ const EditLand = () => {
 
       // Add images - only if there are new images to upload
       if (images.length > 0) {
-        images.forEach((image, index) => {
+        images.forEach((image) => {
           formData.append("images", image);
         });
 
@@ -267,7 +252,7 @@ const EditLand = () => {
       }
 
       const response = await axios.patch(
-        `https://jglobalproperties-api.onrender.com/api/v1/lands/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${id}`,
         formData,
         {
           headers: {
@@ -589,8 +574,8 @@ const EditLand = () => {
                 ))}
               </div>
               <p className="text-sm text-gray-500 mt-2">
-                Note: To modify existing images, you&apos;ll need to upload new ones.
-                Existing images will be replaced.
+                Note: To modify existing images, you&apos;ll need to upload new
+                ones. Existing images will be replaced.
               </p>
             </div>
           )}
@@ -727,11 +712,11 @@ const EditLand = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-[27rem] flex justify-center">
+        <div className="xl:ml-108 flex ">
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#941A1A] flex items-center justify-center h-10 w-35 text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Updating..." : "Update Land"}
           </button>

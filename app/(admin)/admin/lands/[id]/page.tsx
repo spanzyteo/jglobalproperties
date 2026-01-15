@@ -78,7 +78,7 @@ const LandId = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/lands/${landId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${landId}`,
           {
             withCredentials: true,
           }
@@ -101,6 +101,29 @@ const LandId = () => {
     }
   }, [landId]);
 
+  const handleDelete = async () => {
+    try {
+      if (!window.confirm("Are you sure you want to delete this land?")) {
+        return;
+      }
+
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${landId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      toast.success("Land deleted successfully!");
+      router.push("/admin/lands");
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        "An error occurred while deleting land";
+      toast.error(message);
+    }
+  };
+
   const formatPrice = (price: string) => {
     return new Intl.NumberFormat("en-NG", {
       style: "currency",
@@ -121,8 +144,8 @@ const LandId = () => {
 
   if (loading) {
     return (
-      <div className="bg-white flex flex-col h-[100vh]">
-        <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white flex flex-col h-screen">
+        <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
             <Loader />
           </div>
@@ -133,8 +156,8 @@ const LandId = () => {
 
   if (!land) {
     return (
-      <div className="bg-white flex flex-col h-[100vh]">
-        <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white flex flex-col h-screen">
+        <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
           <div className="mt-4">
             <button
               onClick={() => router.back()}
@@ -154,7 +177,7 @@ const LandId = () => {
 
   return (
     <div className="bg-white flex flex-col min-h-screen">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="mt-4">
           <button
             onClick={() => router.back()}
@@ -173,6 +196,12 @@ const LandId = () => {
                 className="px-4 py-2 bg-[#941A1A] text-white rounded hover:bg-[#941A1A]/80 text-sm cursor-pointer transition-all ease-in-out duration-500"
               >
                 Edit Land
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm cursor-pointer transition-all ease-in-out duration-500"
+              >
+                Delete Land
               </button>
             </div>
           </div>

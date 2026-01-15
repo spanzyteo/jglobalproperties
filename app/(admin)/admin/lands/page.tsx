@@ -82,7 +82,7 @@ const Lands = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://api.jglobalproperties.com/api/v1/lands?search=${search}&page=${page}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands?search=${search}&page=${page}`,
           {
             withCredentials: true,
           }
@@ -113,12 +113,9 @@ const Lands = () => {
         return;
       }
 
-      await axios.delete(
-        `https://jglobalproperties-api.onrender.com/api/v1/lands/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${id}`, {
+        withCredentials: true,
+      });
 
       setLands((prev) => prev.filter((item) => item.id !== id));
       toast.success("Land deleted successfully");
@@ -150,7 +147,7 @@ const Lands = () => {
 
   return (
     <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="flex items-center justify-between mt-4">
           <h1 className="font-semibold sm:text-xl text-lg">Lands List</h1>
           <button
