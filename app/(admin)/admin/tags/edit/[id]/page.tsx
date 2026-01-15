@@ -21,7 +21,7 @@ const EditTag = () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
-          `https://jglobalproperties-api.onrender.com/api/v1/tags/${id}`,
+          `https://api.jglobalproperties.com/api/v1/tags/${id}`,
           {
             withCredentials: true,
           }
@@ -56,7 +56,7 @@ const EditTag = () => {
       formData.append("name", name);
 
       const response = await axios.patch(
-        `https://jglobalproperties-api.onrender.com/api/v1/tags/${id}`,
+        `https://api.jglobalproperties.com/api/v1/tags/${id}`,
         formData,
         {
           headers: {
@@ -94,9 +94,9 @@ const EditTag = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           {/* Header */}
           <div className="mt-4 mb-6">
             <button

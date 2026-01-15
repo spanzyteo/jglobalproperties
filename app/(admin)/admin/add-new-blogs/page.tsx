@@ -5,9 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import MarkdownIt from "markdown-it";
-import MdEditor from "react-markdown-editor-lite";
-import "react-markdown-editor-lite/lib/index.css";
+import MDEditor from "@uiw/react-markdown-editor";
 import { MdClose } from "react-icons/md";
 
 type ImageDetail = {
@@ -30,7 +28,6 @@ type TagType = {
 
 const AddNewBlog = () => {
   const router = useRouter();
-  const mdParser = new MarkdownIt();
 
   // Basic blog information
   const [title, setTitle] = useState("");
@@ -278,12 +275,11 @@ const AddNewBlog = () => {
           <div className="flex flex-col lg:flex-row lg:items-start justify-between mt-6 gap-3 lg:gap-0">
             <h1 className="font-semibold text-[#4A5568]">Content</h1>
             <div className="lg:w-[539px] w-full">
-              <MdEditor
+              <MDEditor
                 value={content}
-                style={{ height: "400px" }}
-                renderHTML={(text) => mdParser.render(text)}
-                onChange={({ text }) => setContent(text)}
-                placeholder="Write your blog content here..."
+                height="400px"
+                onChange={(val) => setContent(val || "")}
+                enablePreview
               />
             </div>
           </div>

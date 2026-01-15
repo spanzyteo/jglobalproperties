@@ -7,9 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdArrowBack, MdClose, MdAdd } from "react-icons/md";
-import MarkdownIt from "markdown-it";
-import MdEditor from "react-markdown-editor-lite";
-import "react-markdown-editor-lite/lib/index.css";
+import MDEditor from "@uiw/react-markdown-editor";
 import Image from "next/image";
 import Loader from "@/app/components/shared/Loader";
 
@@ -54,8 +52,6 @@ type ImageDetail = {
 const EditLand = () => {
   const { id } = useParams();
   const router = useRouter();
-
-  const mdParser = new MarkdownIt();
 
   // Basic land information
   const [title, setTitle] = useState("");
@@ -344,12 +340,11 @@ const EditLand = () => {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Overview</h1>
               <div className="lg:w-[539px] w-full">
-                <MdEditor
+                <MDEditor
                   value={overview}
-                  style={{ height: "300px" }}
-                  renderHTML={(text) => mdParser.render(text)}
-                  onChange={({ text }) => setOverview(text)}
-                  placeholder="Write detailed land overview and description..."
+                  height="300px"
+                  onChange={(val) => setOverview(val || "")}
+                  enablePreview
                 />
               </div>
             </div>

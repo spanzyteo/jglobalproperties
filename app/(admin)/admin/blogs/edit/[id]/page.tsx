@@ -7,9 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdArrowBack, MdClose } from "react-icons/md";
-import MarkdownIt from "markdown-it";
-import MdEditor from "react-markdown-editor-lite";
-import "react-markdown-editor-lite/lib/index.css";
+import MDEditor from "@uiw/react-markdown-editor";
 import Image from "next/image";
 import Loader from "@/app/components/shared/Loader";
 
@@ -43,8 +41,6 @@ type ImageDetail = {
 const EditBlog = () => {
   const { id } = useParams();
   const router = useRouter();
-
-  const mdParser = new MarkdownIt();
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
@@ -384,12 +380,11 @@ const EditBlog = () => {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Content</h1>
               <div className="lg:w-[539px] w-full">
-                <MdEditor
+                <MDEditor
                   value={content}
-                  style={{ height: "400px" }}
-                  renderHTML={(text) => mdParser.render(text)}
-                  onChange={({ text }) => setContent(text)}
-                  placeholder="Write your blog content here..."
+                  height="400px"
+                  onChange={(val) => setContent(val || "")}
+                  enablePreview
                 />
               </div>
             </div>

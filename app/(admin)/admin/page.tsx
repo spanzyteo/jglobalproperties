@@ -24,7 +24,7 @@ const Admin = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "https://jglobalproperties-api.onrender.com/api/v1/reviews",
+          "https://api.jglobalproperties.com/api/v1/reviews",
           { withCredentials: true }
         );
 
@@ -46,7 +46,7 @@ const Admin = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "https://jglobalproperties-api.onrender.com/api/v1/lands",
+          "https://api.jglobalproperties.com/api/v1/lands",
           { withCredentials: true }
         );
 

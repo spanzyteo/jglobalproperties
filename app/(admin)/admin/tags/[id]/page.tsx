@@ -31,7 +31,7 @@ const TagsId = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/tags/${tagsId}`,
+          `https://api.jglobalproperties.com/api/v1/tags/${tagsId}`,
           {
             withCredentials: true,
           }
