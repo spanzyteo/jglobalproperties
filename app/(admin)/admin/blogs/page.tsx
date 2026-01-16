@@ -87,7 +87,7 @@ const Blogs = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/blogs/admin?search=${search}&page=${page}`,
+          `https://api.jglobalproperties.com/api/v1/blogs/admin?search=${search}&page=${page}`,
           {
             withCredentials: true,
           }
@@ -119,7 +119,7 @@ const Blogs = () => {
       }
 
       await axios.delete(
-        `https://jglobalproperties-api.onrender.com/api/v1/blogs/${id}`,
+        `https://api.jglobalproperties.com/api/v1/blogs/${id}`,
         {
           withCredentials: true,
         }
@@ -146,8 +146,8 @@ const Blogs = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="flex items-center justify-between mt-4">
           <h1 className="font-semibold sm:text-xl text-lg">Blogs List</h1>
           <button
@@ -173,7 +173,7 @@ const Blogs = () => {
                 setSearch(e.target.value);
               }}
               title="search"
-              className="border bg-inherit border-black focus:outline-none pl-2 h-[35px] w-[150px] rounded-[4px]"
+              className="border bg-inherit border-black focus:outline-none pl-2 h-8.75 w-37.5 rounded-sm"
             />
           </div>
         </div>
@@ -190,7 +190,7 @@ const Blogs = () => {
           ) : (
             <table className="min-w-full border-collapse">
               <thead>
-                <tr className="text-left bg-gray-200 rounded-[6px] text-[#4A5568]">
+                <tr className="text-left bg-gray-200 rounded-md text-[#4A5568]">
                   <th className="px-4 py-2 whitespace-nowrap">Title</th>
                   <th className="px-4 py-2 whitespace-nowrap">Excerpt</th>
                   <th className="px-4 py-2 whitespace-nowrap">Content</th>
@@ -219,7 +219,7 @@ const Blogs = () => {
                     </td>
 
                     <td className="px-4 py-3">
-                      <p className="text-sm text-[#4A5568] max-w-[200px]">
+                      <p className="text-sm text-[#4A5568] max-w-50">
                         {item.excerpt || "No excerpt available"}
                       </p>
                     </td>

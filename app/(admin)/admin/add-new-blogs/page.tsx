@@ -62,7 +62,7 @@ const AddNewBlog = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "https://jglobalproperties-api.onrender.com/api/v1/categories",
+          "https://api.jglobalproperties-api.com/api/v1/categories",
           { withCredentials: true }
         );
 
@@ -82,7 +82,7 @@ const AddNewBlog = () => {
     const fetchTags = async () => {
       try {
         const response = await axios.get(
-          "https://jglobalproperties-api.onrender.com/api/v1/tags",
+          "https://api.jglobalproperties-api.com/api/v1/tags",
           { withCredentials: true }
         );
 
@@ -214,7 +214,7 @@ const AddNewBlog = () => {
       });
 
       const response = await axios.post(
-        "https://jglobalproperties-api.onrender.com/api/v1/blogs",
+        "https://api.jglobalproperties.com/api/v1/blogs",
         formData,
         {
           headers: {
@@ -241,9 +241,9 @@ const AddNewBlog = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col pb-[3rem]">
+    <div className="bg-white flex flex-col pb-12">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           <h1 className="text-xl font-semibold mt-4">Blog Information</h1>
 
           {/* Title */}
@@ -254,7 +254,7 @@ const AddNewBlog = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Blog title"
-              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
               required
             />
           </div>
@@ -267,14 +267,14 @@ const AddNewBlog = () => {
               onChange={(e) => setExcerpt(e.target.value)}
               placeholder="Brief description of the blog post..."
               rows={3}
-              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
             />
           </div>
 
           {/* Content */}
           <div className="flex flex-col lg:flex-row lg:items-start justify-between mt-6 gap-3 lg:gap-0">
             <h1 className="font-semibold text-[#4A5568]">Content</h1>
-            <div className="lg:w-[539px] w-full">
+            <div className="lg:w-134.75 w-full">
               <MDEditor
                 value={content}
                 height="400px"
@@ -290,7 +290,7 @@ const AddNewBlog = () => {
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
+              className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 rounded-[5px] text-[#4A5568] pl-3"
               required
             >
               <option value="">Select a category</option>
@@ -305,7 +305,7 @@ const AddNewBlog = () => {
           {/* Tags */}
           <div className="flex flex-col lg:flex-row lg:items-start justify-between mt-6 gap-3 lg:gap-0">
             <h1 className="font-semibold text-[#4A5568]">Tags</h1>
-            <div className="lg:w-[539px] w-full">
+            <div className="lg:w-134.75 w-full">
               <div className="border border-[#EFEFEF] bg-[#F9F9F6] rounded-[5px] p-3 max-h-40 overflow-y-auto">
                 {availableTags.length > 0 ? (
                   <div className="space-y-2">
@@ -342,7 +342,7 @@ const AddNewBlog = () => {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
+              className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 rounded-[5px] text-[#4A5568] pl-3"
             >
               {statusOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -355,7 +355,7 @@ const AddNewBlog = () => {
           {/* Images */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-3 lg:gap-0">
             <h1 className="font-semibold text-[#4A5568]">Images</h1>
-            <div className="custom-file-input-wrapper overflow-hidden lg:w-[539px] w-full">
+            <div className="custom-file-input-wrapper overflow-hidden lg:w-134.75 w-full">
               <input
                 type="file"
                 accept="image/*"
@@ -367,9 +367,9 @@ const AddNewBlog = () => {
               />
               <label
                 htmlFor="images"
-                className="custom-file-label border border-gray-200 bg-[#F9F9F6] w-full h-[40px] focus:outline-none rounded-[5px] text-[#4A5568] flex items-center cursor-pointer"
+                className="custom-file-label border border-gray-200 bg-[#F9F9F6] w-full h-10 focus:outline-none rounded-[5px] text-[#4A5568] flex items-center cursor-pointer"
               >
-                <span className="file-label-text bg-gray-200 h-[40px] px-3 text-black flex items-center whitespace-nowrap">
+                <span className="file-label-text bg-gray-200 h-10 px-3 text-black flex items-center whitespace-nowrap">
                   Choose Images
                 </span>
                 <span className="file-name text-sm text-gray-500 ml-4">
@@ -485,7 +485,7 @@ const AddNewBlog = () => {
               value={metaTitle}
               onChange={(e) => setMetaTitle(e.target.value)}
               placeholder="SEO meta title (optional)"
-              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
             />
           </div>
 
@@ -497,7 +497,7 @@ const AddNewBlog = () => {
               onChange={(e) => setMetaDescription(e.target.value)}
               placeholder="SEO meta description (optional)"
               rows={3}
-              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
             />
           </div>
         </div>
@@ -505,7 +505,7 @@ const AddNewBlog = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold xl:ml-[27rem] mx-auto hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-[#941A1A] flex items-center justify-center h-10 w-35 text-white rounded-[5px] mb-10 text-[14px] font-semibold xl:ml-108 mx-auto hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>

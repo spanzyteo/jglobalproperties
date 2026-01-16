@@ -36,7 +36,7 @@ const Categories = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/categories`,
+          `https://api.jglobalproperties.com/api/v1/categories`,
           {
             withCredentials: true,
           }
@@ -66,7 +66,7 @@ const Categories = () => {
       }
 
       await axios.delete(
-        `https://jglobalproperties-api.onrender.com/api/v1/categories/${id}`,
+        `https://api.jglobalproperties-api.com/api/v1/categories/${id}`,
         {
           withCredentials: true,
         }
@@ -89,8 +89,8 @@ const Categories = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="flex items-center justify-between mt-4">
           <h1 className="font-semibold sm:text-xl text-lg">Categories List</h1>
           <button
@@ -133,7 +133,7 @@ const Categories = () => {
           ) : (
             <table className="min-w-full border-collapse">
               <thead>
-                <tr className="text-left bg-gray-200 rounded-[6px] text-[#4A5568]">
+                <tr className="text-left bg-gray-200 rounded-md text-[#4A5568]">
                   <th className="px-4 py-2 whitespace-nowrap">Name</th>
                   <th className="px-4 py-2 whitespace-nowrap">Description</th>
                   <th className="px-4 py-2 whitespace-nowrap">Blogs</th>
@@ -155,7 +155,7 @@ const Categories = () => {
                     </td>
 
                     <td className="px-4 py-3">
-                      <p className="text-sm text-[#4A5568] max-w-[200px]">
+                      <p className="text-sm text-[#4A5568] max-w-50">
                         {truncateText(item.description, 15)}
                       </p>
                     </td>
