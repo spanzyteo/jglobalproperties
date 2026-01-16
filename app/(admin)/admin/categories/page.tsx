@@ -36,7 +36,7 @@ const Categories = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://api.jglobalproperties.com/api/v1/categories`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/categories`,
           {
             withCredentials: true,
           }
@@ -66,7 +66,7 @@ const Categories = () => {
       }
 
       await axios.delete(
-        `https://api.jglobalproperties-api.com/api/v1/categories/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/categories/${id}`,
         {
           withCredentials: true,
         }
@@ -97,7 +97,7 @@ const Categories = () => {
             onClick={() => router.push("/admin/add-new-categories")}
             className="px-7 py-2 bg-[#941A1A] rounded-[5px] text-white text-[13px] font-semibold hover:opacity-75 active:opacity-60 transition-all duration-500 ease-in-out cursor-pointer"
           >
-            Add Categories
+            Add New Category
           </button>
         </div>
 

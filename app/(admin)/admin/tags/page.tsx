@@ -34,7 +34,7 @@ const Tags = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://api.jglobalproperties.com/api/v1/tags`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/tags`,
           {
             withCredentials: true,
           }
@@ -64,15 +64,12 @@ const Tags = () => {
         return;
       }
 
-      await axios.delete(
-        `https://jglobalproperties-api.onrender.com/api/v1/tags/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tags/${id}`, {
+        withCredentials: true,
+      });
 
       setTags((prev) => prev.filter((item) => item.id !== id));
-      toast.success("Tags deleted successfully");
+      toast.success("Tag deleted successfully");
     } catch (error: any) {
       const message =
         error.response?.data?.message ||
@@ -81,15 +78,15 @@ const Tags = () => {
     }
   };
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="flex items-center justify-between mt-4">
           <h1 className="font-semibold sm:text-xl text-lg">Tags List</h1>
           <button
             onClick={() => router.push("/admin/add-new-tags")}
             className="px-7 py-2 bg-[#941A1A] rounded-[5px] text-white text-[13px] font-semibold hover:opacity-75 active:opacity-60 transition-all duration-500 ease-in-out cursor-pointer"
           >
-            Add Tags
+            Add New Tag
           </button>
         </div>
 
@@ -109,7 +106,7 @@ const Tags = () => {
           ) : (
             <table className="min-w-full border-collapse">
               <thead>
-                <tr className="text-left bg-gray-200 rounded-[6px] text-[#4A5568]">
+                <tr className="text-left bg-gray-200 rounded-md text-[#4A5568]">
                   <th className="px-4 py-2 whitespace-nowrap">Name</th>
                   <th className="px-4 py-2 whitespace-nowrap">Blogs</th>
                   <th className="px-4 py-2 whitespace-nowrap">Created At</th>

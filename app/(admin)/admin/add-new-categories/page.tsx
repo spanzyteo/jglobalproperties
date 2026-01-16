@@ -36,7 +36,7 @@ const AddNewCategory = () => {
       };
 
       const response = await axios.post(
-        "https://jglobalproperties-api.onrender.com/api/v1/categories",
+        "https://api.jglobalproperties.com/api/v1/categories",
         requestData,
         {
           headers: {

@@ -62,7 +62,7 @@ const AddNewBlog = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "https://api.jglobalproperties-api.com/api/v1/categories",
+          "https://api.jglobalproperties.com/api/v1/categories",
           { withCredentials: true }
         );
 
@@ -82,7 +82,7 @@ const AddNewBlog = () => {
     const fetchTags = async () => {
       try {
         const response = await axios.get(
-          "https://api.jglobalproperties-api.com/api/v1/tags",
+          "https://api.jglobalproperties.com/api/v1/tags",
           { withCredentials: true }
         );
 

@@ -21,7 +21,7 @@ const EditTag = () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
-          `https://api.jglobalproperties.com/api/v1/tags/${id}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/tags/${id}`,
           {
             withCredentials: true,
           }
@@ -56,7 +56,7 @@ const EditTag = () => {
       formData.append("name", name);
 
       const response = await axios.patch(
-        `https://api.jglobalproperties.com/api/v1/tags/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/tags/${id}`,
         formData,
         {
           headers: {
@@ -83,8 +83,8 @@ const EditTag = () => {
 
   if (fetchLoading) {
     return (
-      <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
             <Loader />
           </div>
@@ -120,7 +120,7 @@ const EditTag = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Tags title"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
@@ -129,13 +129,13 @@ const EditTag = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-[27rem] flex justify-center">
+        <div className="xl:ml-108 flex justify-center xl:justify-start">
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#941A1A] flex items-center justify-center h-10 w-35 text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Updating..." : "Update Tags"}
+            {loading ? "Updating..." : "Update Tag"}
           </button>
         </div>
       </form>

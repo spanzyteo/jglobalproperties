@@ -663,7 +663,7 @@ const EditBlog = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-108 flex">
+        <div className="xl:ml-108 flex justify-center xl:justify-start">
           <button
             type="submit"
             disabled={loading}
