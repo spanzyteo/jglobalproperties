@@ -79,7 +79,7 @@ const HouseId = () => {
       try {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/houses/${houseId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/houses/${houseId}`,
           {
             withCredentials: true,
           }
@@ -122,8 +122,8 @@ const HouseId = () => {
 
   if (loading) {
     return (
-      <div className="bg-white flex flex-col h-[100vh]">
-        <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white flex flex-col h-screen">
+        <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
             <Loader />
           </div>
@@ -134,8 +134,8 @@ const HouseId = () => {
 
   if (!house) {
     return (
-      <div className="bg-white flex flex-col h-[100vh]">
-        <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white flex flex-col h-screen">
+        <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
           <div className="mt-4">
             <button
               onClick={() => router.back()}
@@ -155,7 +155,7 @@ const HouseId = () => {
 
   return (
     <div className="bg-white flex flex-col min-h-screen">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="mt-4">
           <button
             onClick={() => router.back()}

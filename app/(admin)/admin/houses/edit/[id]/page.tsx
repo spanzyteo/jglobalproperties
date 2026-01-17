@@ -74,7 +74,7 @@ const EditHouse = () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
-          `https://jglobalproperties-api.onrender.com/api/v1/houses/${id}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/houses/${id}`,
           {
             withCredentials: true,
           }
@@ -256,7 +256,7 @@ const EditHouse = () => {
       }
 
       const response = await axios.patch(
-        `https://jglobalproperties-api.onrender.com/api/v1/houses/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/houses/${id}`,
         formData,
         {
           headers: {
@@ -284,8 +284,8 @@ const EditHouse = () => {
 
   if (fetchLoading) {
     return (
-      <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
             <Loader />
           </div>
@@ -295,9 +295,9 @@ const EditHouse = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           {/* Header */}
           <div className="mt-4 mb-6">
             <button
@@ -321,7 +321,7 @@ const EditHouse = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="House title"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
@@ -329,7 +329,7 @@ const EditHouse = () => {
             {/* Overview */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Overview</h1>
-              <div className="lg:w-[539px] w-full">
+              <div className="lg:w-134.75 w-full">
                 <MDEditor
                   value={overview}
                   height="300px"
@@ -347,7 +347,7 @@ const EditHouse = () => {
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="e.g., Victoria Island"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
@@ -360,7 +360,7 @@ const EditHouse = () => {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 placeholder="e.g., Lagos"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
@@ -373,7 +373,7 @@ const EditHouse = () => {
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Country"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
@@ -384,7 +384,7 @@ const EditHouse = () => {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
+                className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 rounded-[5px] text-[#4A5568] pl-3"
                 required
               >
                 {categoriesOptions.map((option) => (
@@ -403,7 +403,7 @@ const EditHouse = () => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
                 required
               />
             </div>
@@ -418,7 +418,7 @@ const EditHouse = () => {
                 value={metaTitle}
                 onChange={(e) => setMetaTitle(e.target.value)}
                 placeholder="SEO meta title (optional)"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
               />
             </div>
 
@@ -432,7 +432,7 @@ const EditHouse = () => {
                 onChange={(e) => setMetaDescription(e.target.value)}
                 placeholder="SEO meta description (optional)"
                 rows={3}
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
+                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
               />
             </div>
           </div>
@@ -605,7 +605,7 @@ const EditHouse = () => {
             </h2>
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Images</h1>
-              <div className="custom-file-input-wrapper overflow-hidden lg:w-[539px] w-full">
+              <div className="custom-file-input-wrapper overflow-hidden lg:w-134.75 w-full">
                 <input
                   type="file"
                   accept="image/*"
@@ -617,9 +617,9 @@ const EditHouse = () => {
                 />
                 <label
                   htmlFor="images"
-                  className="custom-file-label border border-gray-200 bg-[#F9F9F6] w-full h-[40px] focus:outline-none rounded-[5px] text-[#4A5568] flex items-center cursor-pointer"
+                  className="custom-file-label border border-gray-200 bg-[#F9F9F6] w-full h-10 focus:outline-none rounded-[5px] text-[#4A5568] flex items-center cursor-pointer"
                 >
-                  <span className="file-label-text bg-gray-200 h-[40px] px-3 text-black flex items-center whitespace-nowrap">
+                  <span className="file-label-text bg-gray-200 h-10 px-3 text-black flex items-center whitespace-nowrap">
                     Choose Images
                   </span>
                   <span className="file-name text-sm text-gray-500 ml-4">
@@ -730,11 +730,11 @@ const EditHouse = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-[27rem] flex justify-center">
+        <div className="xl:ml-108 flex justify-center xl:justify-start">
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#941A1A] flex items-center justify-center h-10 w-35 text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Updating..." : "Update House"}
           </button>

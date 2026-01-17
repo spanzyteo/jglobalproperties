@@ -62,9 +62,9 @@ const AddNewCategory = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col pb-[3rem]">
+    <div className="bg-white flex flex-col pb-12">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           <h1 className="text-xl font-semibold mt-4">Category Information</h1>
 
           {/* Name */}
@@ -75,7 +75,7 @@ const AddNewCategory = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Category name"
-              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
               required
             />
           </div>
@@ -88,7 +88,7 @@ const AddNewCategory = () => {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Category description"
               rows={4}
-              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
+              className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
               required
             />
           </div>
@@ -105,7 +105,7 @@ const AddNewCategory = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-[#941A1A] flex items-center justify-center h-[40px] w-[140px] text-white rounded-[5px] mb-10 text-[14px] font-semibold xl:ml-[27rem] mx-auto hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-[#941A1A] flex items-center justify-center h-10 w-35 text-white rounded-[5px] mb-10 text-[14px] font-semibold xl:ml-108 mx-auto hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
