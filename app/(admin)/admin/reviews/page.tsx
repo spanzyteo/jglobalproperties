@@ -73,7 +73,7 @@ const Review = () => {
         });
 
         const response = await axios.get<ApiResponse>(
-          `https://jglobalproperties-api.onrender.com/api/v1/reviews?${params}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews?${params}`,
           { withCredentials: true }
         );
 
@@ -117,7 +117,7 @@ const Review = () => {
   const handleApprove = async (id: string) => {
     try {
       await axios.put(
-        `https://jglobalproperties-api.onrender.com/api/v1/reviews/${id}/approve`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${id}/approve`,
         {},
         { withCredentials: true }
       );
@@ -139,7 +139,7 @@ const Review = () => {
   const handleReject = async (id: string) => {
     try {
       await axios.put(
-        `https://jglobalproperties-api.onrender.com/api/v1/reviews/${id}/reject`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${id}/reject`,
         {},
         { withCredentials: true }
       );
@@ -163,7 +163,7 @@ const Review = () => {
       if (!confirm("Are you sure you want to delete this review?")) return;
 
       await axios.delete(
-        `https://jglobalproperties-api.onrender.com/api/v1/reviews/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${id}`,
         { withCredentials: true }
       );
 
@@ -186,8 +186,8 @@ const Review = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-      <div className="xl:ml-[20rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[1014px] rounded-xl mx-auto mb-8 pb-8">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+      <div className="xl:ml-80 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-253.5 rounded-xl mx-auto mb-8 pb-8">
         <div className="flex items-center justify-between mt-4">
           <h1 className="font-semibold sm:text-xl text-lg">
             Reviews Management
@@ -223,7 +223,7 @@ const Review = () => {
           ) : (
             <table className="min-w-full border-collapse">
               <thead>
-                <tr className="text-left bg-gray-200 rounded-[6px] text-[#4A5568]">
+                <tr className="text-left bg-gray-200 rounded-md text-[#4A5568]">
                   <th className="px-4 py-2 whitespace-nowrap">Reviewer</th>
                   <th className="px-4 py-2 whitespace-nowrap">Property</th>
                   <th className="px-4 py-2 whitespace-nowrap">Rating</th>
