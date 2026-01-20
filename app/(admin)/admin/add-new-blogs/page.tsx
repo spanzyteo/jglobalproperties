@@ -184,8 +184,8 @@ const AddNewBlog = () => {
 
       // Add tag IDs
       if (selectedTagIds.length > 0) {
-        selectedTagIds.forEach((tagId, index) => {
-          formData.append(`tagIds[${index}]`, tagId);
+        selectedTagIds.forEach((tagId) => {
+          formData.append("tagIds[]", tagId);
         });
       }
 
