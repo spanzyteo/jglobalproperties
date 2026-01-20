@@ -367,7 +367,7 @@ const EditBlog = () => {
 
             {/* Excerpt */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Excerpt</h1>
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">Description</h1>
               <textarea
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}

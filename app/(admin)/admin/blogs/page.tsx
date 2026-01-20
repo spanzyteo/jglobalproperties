@@ -192,7 +192,7 @@ const Blogs = () => {
               <thead>
                 <tr className="text-left bg-gray-200 rounded-md text-[#4A5568]">
                   <th className="px-4 py-2 whitespace-nowrap">Title</th>
-                  <th className="px-4 py-2 whitespace-nowrap">Excerpt</th>
+                  <th className="px-4 py-2 whitespace-nowrap">Description</th>
                   <th className="px-4 py-2 whitespace-nowrap">Content</th>
                   <th className="px-4 py-2 whitespace-nowrap">Status</th>
                   <th className="px-4 py-2 whitespace-nowrap">View Count</th>
