@@ -220,13 +220,13 @@ const Blogs = () => {
 
                     <td className="px-4 py-3">
                       <p className="text-sm text-[#4A5568] max-w-50">
-                        {item.excerpt || "No excerpt available"}
+                        {truncateText(item.excerpt, 5 ) || "No Description available"}
                       </p>
                     </td>
 
                     <td className="px-4 py-3">
                       <p className="text-sm text-[#4A5568] capitalize">
-                        {truncateText(item.content, 10)}
+                        {truncateText(item.content, 5)}
                       </p>
                     </td>
 
@@ -252,7 +252,7 @@ const Blogs = () => {
 
                     <td className="px-4 py-3">
                       <p className="text-sm text-[#4A5568]">
-                        {item.category.name}
+                        {truncateText(item.category.name, 5)}
                       </p>
                     </td>
 
@@ -262,9 +262,9 @@ const Blogs = () => {
                           {item.tags.map((tagRelation) => (
                             <span
                               key={tagRelation.id}
-                              className="px-2 py-1 text-[#4A5568] text-sm"
+                              className="px-2 py-1 text-[#000000] text-sm"
                             >
-                              {tagRelation.tag.name}
+                              {truncateText(tagRelation.tag.name, 2)}
                             </span>
                           ))}
                         </div>

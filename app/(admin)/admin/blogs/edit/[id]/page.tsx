@@ -256,9 +256,10 @@ const EditBlog = () => {
       formData.append("categoryId", categoryId);
 
       // Add tag IDs
+      // Add tag IDs
       if (selectedTagIds.length > 0) {
         selectedTagIds.forEach((tagId) => {
-          formData.append("tagIds", tagId);
+          formData.append("tagIds[]", tagId);
         });
       }
 
@@ -278,16 +279,16 @@ const EditBlog = () => {
             if (detail.caption) {
               formData.append(
                 `imageDetails[${index}][caption]`,
-                detail.caption
+                detail.caption,
               );
             }
             formData.append(
               `imageDetails[${index}][isPrimary]`,
-              detail.isPrimary.toString()
+              detail.isPrimary.toString(),
             );
             formData.append(
               `imageDetails[${index}][order]`,
-              detail.order.toString()
+              detail.order.toString(),
             );
           });
         }
@@ -301,7 +302,7 @@ const EditBlog = () => {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (response.data.success) {
