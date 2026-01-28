@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdArrowBack, MdClose } from "react-icons/md";
-import MDEditor from "@uiw/react-markdown-editor";
 import Image from "next/image";
 import Loader from "@/app/components/shared/Loader";
+import Editor from "../../../components/editor/TipTapEditor";
 
 type BlogsImage = {
   id: string;
@@ -367,7 +367,9 @@ const EditBlog = () => {
 
             {/* Excerpt */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Description</h1>
+              <h1 className="font-semibold text-[#4A5568] lg:w-32">
+                Description
+              </h1>
               <textarea
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
@@ -381,11 +383,9 @@ const EditBlog = () => {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Content</h1>
               <div className="lg:w-134.75 w-full">
-                <MDEditor
+                <Editor
                   value={content}
-                  height="400px"
                   onChange={(val) => setContent(val || "")}
-                  enablePreview
                 />
               </div>
             </div>
@@ -608,7 +608,7 @@ const EditBlog = () => {
                                 updateImageDetail(
                                   index,
                                   "caption",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               placeholder="Image caption (optional)"
@@ -627,7 +627,7 @@ const EditBlog = () => {
                                 updateImageDetail(
                                   index,
                                   "order",
-                                  parseInt(e.target.value) || index
+                                  parseInt(e.target.value) || index,
                                 )
                               }
                               className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"

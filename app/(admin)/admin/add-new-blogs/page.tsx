@@ -5,8 +5,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import MDEditor from "@uiw/react-markdown-editor";
 import { MdClose } from "react-icons/md";
+import Editor from "../components/editor/TipTapEditor";
+// import Editor from "../components/editor/Editor";
 
 type ImageDetail = {
   caption: string;
@@ -275,12 +276,7 @@ const AddNewBlog = () => {
           <div className="flex flex-col lg:flex-row lg:items-start justify-between mt-6 gap-3 lg:gap-0">
             <h1 className="font-semibold text-[#4A5568]">Content</h1>
             <div className="lg:w-134.75 w-full">
-              <MDEditor
-                value={content}
-                height="400px"
-                onChange={(val) => setContent(val || "")}
-                enablePreview
-              />
+              <Editor value={content} onChange={(val) => setContent(val)} />
             </div>
           </div>
 
@@ -424,7 +420,7 @@ const AddNewBlog = () => {
                               updateImageDetail(
                                 index,
                                 "caption",
-                                e.target.value
+                                e.target.value,
                               )
                             }
                             placeholder="Image caption (optional)"
@@ -443,7 +439,7 @@ const AddNewBlog = () => {
                               updateImageDetail(
                                 index,
                                 "order",
-                                parseInt(e.target.value) || index
+                                parseInt(e.target.value) || index,
                               )
                             }
                             className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"

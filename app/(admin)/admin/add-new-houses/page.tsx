@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import MDEditor from "@uiw/react-markdown-editor";
 import { MdClose, MdAdd } from "react-icons/md";
+import Editor from "../components/editor/TipTapEditor";
 
 type ImageDetail = {
   caption: string;
@@ -216,11 +217,9 @@ const AddNewHouse = () => {
           <div className="flex flex-col lg:flex-row lg:items-start justify-between mt-6 gap-3 lg:gap-0">
             <h1 className="font-semibold text-[#4A5568]">Overview</h1>
             <div className="lg:w-134.75 w-full">
-              <MDEditor
+              <Editor
                 value={overview}
-                height="300px"
                 onChange={(val) => setOverview(val || "")}
-                enablePreview
               />
             </div>
           </div>
@@ -341,7 +340,7 @@ const AddNewHouse = () => {
                         updateUnit(
                           index,
                           "size",
-                          parseFloat(e.target.value) || 0
+                          parseFloat(e.target.value) || 0,
                         )
                       }
                       placeholder="e.g., 300"
@@ -395,7 +394,7 @@ const AddNewHouse = () => {
                         updateUnit(
                           index,
                           "available",
-                          e.target.value === "true"
+                          e.target.value === "true",
                         )
                       }
                       className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
@@ -481,7 +480,7 @@ const AddNewHouse = () => {
                               updateImageDetail(
                                 index,
                                 "caption",
-                                e.target.value
+                                e.target.value,
                               )
                             }
                             placeholder="Image caption (optional)"
@@ -500,7 +499,7 @@ const AddNewHouse = () => {
                               updateImageDetail(
                                 index,
                                 "order",
-                                parseInt(e.target.value) || index
+                                parseInt(e.target.value) || index,
                               )
                             }
                             className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"

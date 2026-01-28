@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdArrowBack, MdClose, MdAdd } from "react-icons/md";
-import MDEditor from "@uiw/react-markdown-editor";
 import Image from "next/image";
 import Loader from "@/app/components/shared/Loader";
+import Editor from "../../../components/editor/TipTapEditor";
 
 type HouseImage = {
   id: string;
@@ -330,11 +330,9 @@ const EditHouse = () => {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
               <h1 className="font-semibold text-[#4A5568] lg:w-32">Overview</h1>
               <div className="lg:w-134.75 w-full">
-                <MDEditor
+                <Editor
                   value={overview}
-                  height="300px"
                   onChange={(val) => setOverview(val || "")}
-                  enablePreview
                 />
               </div>
             </div>
@@ -485,7 +483,7 @@ const EditHouse = () => {
                         updateUnit(
                           index,
                           "size",
-                          parseFloat(e.target.value) || 0
+                          parseFloat(e.target.value) || 0,
                         )
                       }
                       placeholder="e.g., 1000"
@@ -539,7 +537,7 @@ const EditHouse = () => {
                         updateUnit(
                           index,
                           "available",
-                          e.target.value === "true"
+                          e.target.value === "true",
                         )
                       }
                       className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
@@ -674,7 +672,7 @@ const EditHouse = () => {
                                 updateImageDetail(
                                   index,
                                   "caption",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               placeholder="Image caption (optional)"
@@ -693,7 +691,7 @@ const EditHouse = () => {
                                 updateImageDetail(
                                   index,
                                   "order",
-                                  parseInt(e.target.value) || index
+                                  parseInt(e.target.value) || index,
                                 )
                               }
                               className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
