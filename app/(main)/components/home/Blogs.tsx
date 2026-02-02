@@ -2,7 +2,7 @@
 
 import { Playfair_Display, Roboto } from "next/font/google";
 import Link from "next/link";
-import BlogSection from "../Blogs";
+import BlogsSection from "../blogs/BlogsSection";
 import { easeOut, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -82,7 +82,7 @@ const Blogs = () => {
           <h1 className={`${roboto.className}`}>News</h1>
         </motion.div>
         <motion.h1
-          className={`${playfair.className} text-[34px] md:text-[45px] max-w-[625px] text-center md:text-left`}
+          className={`${playfair.className} text-[34px] md:text-[45px] max-w-156.25 text-center md:text-left`}
           variants={titleVariants}
         >
           Our Blog
@@ -90,7 +90,7 @@ const Blogs = () => {
       </motion.div>
 
       {/* Blogs */}
-      <BlogSection />
+      <BlogsSection />
 
       <motion.div
         ref={buttonRef}

@@ -9,7 +9,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "cms.jglobalproperties.com",
+      },
     ],
+    // Optimize image delivery
+    formats: ["image/avif", "image/webp"],
   },
 };
 

@@ -65,7 +65,7 @@ const Featured = () => {
           <h1>EXCLUSIVE</h1>
         </motion.div>
         <motion.h1
-          className={`${playfair.className} text-[34px] md:text-[45px] max-w-[625px] text-center md:text-left`}
+          className={`${playfair.className} text-[34px] md:text-[45px] max-w-156.25 text-center md:text-left`}
           variants={headerVariants}
         >
           Featured Properties
@@ -130,7 +130,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
       }}
     >
       {firstImage && (
-        <div className="relative h-[220px] overflow-hidden">
+        <div className="relative h-55 overflow-hidden">
           <motion.div
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.4 }}
@@ -145,7 +145,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
             />
           </motion.div>
           <motion.div
-            className={`${roboto.className} absolute top-4 left-4 text-white bg-[#941A1A] py-[0.1rem] px-2 text-[12px] rounded-[4px]`}
+            className={`${roboto.className} absolute top-4 left-4 text-white bg-[#941A1A] py-[0.1rem] px-2 text-[12px] rounded-sm`}
             initial={{ x: -100, opacity: 0 }}
             animate={inView ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
@@ -154,14 +154,14 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
           </motion.div>
         </div>
       )}
-      <div className="py-3 pl-4 flex flex-col gap-2 h-[100px]">
+      <div className="py-3 pl-4 flex flex-col gap-2 h-25">
         <Link
-          href={`/properties/houses/${item.id}`}
-          className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] hover:underline transition-colors duration-300"
+          href={`/pages/houses/${item.id}`}
+          className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-colors duration-300"
         >
           {item.title}
         </Link>
-        <h4 className={`${roboto.className} text-[14px] leading-[23px]`}>
+        <h4 className={`${roboto.className} text-[14px] leading-5.75`}>
           {item.category}
         </h4>
       </div>
@@ -169,13 +169,13 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
         <h2 className="text-[18px] font-medium leading-[18.2px]">
           ₦{item.price.toLocaleString()}
         </h2>
-        <div className="p-[10px] border-l border-l-gray-200 ">
+        <div className="p-2.5 border-l border-l-gray-200 ">
           <Image
             src={"/ceo.JPG"}
             alt="ceo"
             height={100}
             width={100}
-            className="rounded-[5px] h-[60px] w-[60px] object-cover"
+            className="rounded-[5px] h-15 w-15 object-cover"
           />
         </div>
       </div>

@@ -1,10 +1,9 @@
 "use client";
 import { Playfair_Display, Roboto } from "next/font/google";
 import { Parallax } from "react-parallax";
-import blogs from "../../utils/blogs";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setCurrentBlog } from "../../store/blogSlice";
+import { useEffect, useState } from "react";
+import { getBlogBySlug } from "../../features/blogs";
+import type { FormattedBlog } from "../../features/blogs";
 
 interface BlogHeroProps {
   currentBlogId: string | string[];
@@ -21,20 +20,33 @@ const roboto = Roboto({
 });
 
 const BlogIdHero = ({ currentBlogId }: BlogHeroProps) => {
-  const dispatch = useAppDispatch();
-  const blog = useAppSelector((state) => state.blogs.currentBlog);
+  const [blog, setBlog] = useState<FormattedBlog | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const filteredBlog = blogs.find(
-      (item) => item.id.toString() === currentBlogId.toString()
-    );
-    if (filteredBlog) {
-      dispatch(setCurrentBlog(filteredBlog));
+    const fetchBlog = async () => {
+      try {
+        setLoading(true);
+        const slug = Array.isArray(currentBlogId)
+          ? currentBlogId[0]
+          : currentBlogId;
+        const blogData = await getBlogBySlug(slug);
+        setBlog(blogData);
+      } catch (error) {
+        console.error("Failed to fetch blog:", error);
+        setBlog(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (currentBlogId) {
+      fetchBlog();
     }
-  }, [currentBlogId, dispatch]);
+  }, [currentBlogId]);
 
   // Show loading or default state if blog is not found yet
-  if (!blog) {
+  if (loading || !blog) {
     return (
       <Parallax
         strength={800}
@@ -52,7 +64,7 @@ const BlogIdHero = ({ currentBlogId }: BlogHeroProps) => {
           <h1
             className={`${playfair.className} text-[31px] md:text-[55px] lg:text-[65px] leading-[38px] md:leading-[60px] lg:leading-[71px] text-center max-w-[90%] md:max-w-[80%]`}
           >
-            Loading...
+            {loading ? "Loading..." : "Blog not found"}
           </h1>
         </div>
       </Parallax>
