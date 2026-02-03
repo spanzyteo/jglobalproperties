@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React from "react";
-import { useParams } from "next/navigation";
+
+import React, { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { MdArrowBack, MdClose, MdAdd } from "react-icons/md";
-import MDEditor from "@uiw/react-markdown-editor";
-import Image from "next/image";
+import { MdArrowBack } from "react-icons/md";
 import Loader from "@/app/components/shared/Loader";
 
-type LandImage = {
+import BasicInfoSection from "./components/BasicInfoSection";
+import UnitsSection from "./components/UnitSection";
+import ImageManagementSection from "./components/ImageManagementSection";
+
+export type LandImage = {
   id: string;
   url: string;
   publicId: string;
@@ -20,18 +21,29 @@ type LandImage = {
   order: number;
 };
 
-type LandUnit = {
-  id: string;
+export type LandUnit = {
+  id?: string;
   size: number;
   unit: string;
   price: string;
   available: boolean;
 };
 
-type ImageDetail = {
+export type ImageDetail = {
   caption: string;
   isPrimary: boolean;
   order: number;
+};
+
+export type ManageImagesData = {
+  keep?: Array<{
+    id: string;
+    caption?: string;
+    isPrimary?: boolean;
+    order?: number;
+  }>;
+  delete?: string[];
+  newImageDetails?: ImageDetail[];
 };
 
 const EditLand = () => {
@@ -49,36 +61,30 @@ const EditLand = () => {
   const [metaDescription, setMetaDescription] = useState("");
 
   // Units state
-  const [units, setUnits] = useState<
-    Array<{ size: number; unit: string; price: string; available: boolean }>
-  >([{ size: 0, unit: "sqm", price: "", available: true }]);
+  const [units, setUnits] = useState<LandUnit[]>([
+    { size: 0, unit: "sqm", price: "", available: true },
+  ]);
 
   // Images state
-  const [images, setImages] = useState<File[]>([]);
-  const [imageDetails, setImageDetails] = useState<ImageDetail[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
+  const [newImageDetails, setNewImageDetails] = useState<ImageDetail[]>([]);
   const [existingImages, setExistingImages] = useState<LandImage[]>([]);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+  const [imagesToKeep, setImagesToKeep] = useState<
+    Array<{ id: string; caption?: string; isPrimary?: boolean; order?: number }>
+  >([]);
 
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
 
-  const statusOptions = [
-    { value: "FOR_SALE", label: "For Sale" },
-    { value: "SOLD", label: "Sold" },
-    { value: "RESERVED", label: "Reserved" },
-    { value: "DRAFT", label: "Draft" },
-  ];
-
-  const unitOptions = ["sqm", "acres", "hectares", "plots"];
-
+  // Fetch land data
   useEffect(() => {
     const fetchLand = async () => {
       try {
         setFetchLoading(true);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${id}`,
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true },
         );
 
         const { data } = response.data;
@@ -95,20 +101,23 @@ const EditLand = () => {
 
         // Set units
         if (data.units && data.units.length > 0) {
-          setUnits(
-            data.units.map((unit: LandUnit) => ({
-              size: unit.size,
-              unit: unit.unit,
-              price: unit.price,
-              available: unit.available,
-            }))
-          );
+          setUnits(data.units);
         }
 
         // Set existing images
         if (data.images && data.images.length > 0) {
-          setExistingImages(
-            data.images.sort((a: LandImage, b: LandImage) => a.order - b.order)
+          const sorted = [...data.images].sort(
+            (a: LandImage, b: LandImage) => a.order - b.order,
+          );
+          setExistingImages(sorted);
+          // Initialize imagesToKeep with all existing images
+          setImagesToKeep(
+            sorted.map((img: LandImage) => ({
+              id: img.id,
+              caption: img.caption || undefined,
+              isPrimary: img.isPrimary,
+              order: img.order,
+            })),
           );
         }
 
@@ -126,73 +135,6 @@ const EditLand = () => {
       fetchLand();
     }
   }, [id]);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const fileArray = Array.from(files);
-      setImages((prev) => [...prev, ...fileArray]);
-
-      // Create image details for new images
-      const newImageDetails = fileArray.map((_, index) => ({
-        caption: "",
-        isPrimary:
-          images.length === 0 && existingImages.length === 0 && index === 0,
-        order: images.length + existingImages.length + index,
-      }));
-
-      setImageDetails((prev) => [...prev, ...newImageDetails]);
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-    setImageDetails((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const updateImageDetail = (
-    index: number,
-    field: keyof ImageDetail,
-    value: any
-  ) => {
-    setImageDetails((prev) =>
-      prev.map((detail, i) =>
-        i === index ? { ...detail, [field]: value } : detail
-      )
-    );
-  };
-
-  const setPrimaryImage = (index: number) => {
-    setImageDetails((prev) =>
-      prev.map((detail, i) => ({
-        ...detail,
-        isPrimary: i === index,
-      }))
-    );
-  };
-
-  const addUnit = () => {
-    setUnits((prev) => [
-      ...prev,
-      { size: 0, unit: "sqm", price: "", available: true },
-    ]);
-  };
-
-  const removeUnit = (index: number) => {
-    if (units.length > 1) {
-      setUnits((prev) => prev.filter((_, i) => i !== index));
-    }
-  };
-
-  const updateUnit = (
-    index: number,
-    field: keyof (typeof units)[0],
-    value: any
-  ) => {
-    setUnits((prev) =>
-      prev.map((unit, i) => (i === index ? { ...unit, [field]: value } : unit))
-    );
-  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -220,36 +162,58 @@ const EditLand = () => {
         formData.append(`units[${index}][price]`, unit.price);
         formData.append(
           `units[${index}][available]`,
-          unit.available.toString()
+          unit.available.toString(),
         );
       });
 
-      // Add images - only if there are new images to upload
-      if (images.length > 0) {
-        images.forEach((image) => {
-          formData.append("images", image);
+      // Add new images to formData (field name is "image" - singular)
+      if (newImages.length > 0) {
+        newImages.forEach((image) => {
+          formData.append("image", image);
         });
+      }
 
-        // Add image details - structure as form fields for proper validation
-        if (imageDetails.length > 0) {
-          imageDetails.forEach((detail, index) => {
-            if (detail.caption) {
-              formData.append(
-                `imageDetails[${index}][caption]`,
-                detail.caption
-              );
-            }
-            formData.append(
-              `imageDetails[${index}][isPrimary]`,
-              detail.isPrimary.toString()
-            );
-            formData.append(
-              `imageDetails[${index}][order]`,
-              detail.order.toString()
-            );
+      // Build manageImages data as JSON object and stringify it
+      const manageImagesData: ManageImagesData = {};
+
+      if (imagesToKeep.length > 0) {
+        const activeImages = imagesToKeep.filter(
+          (img) => !imagesToDelete.includes(img.id),
+        );
+
+        if (activeImages.length > 0) {
+          manageImagesData.keep = activeImages.map((img) => {
+            const keepItem: any = { id: img.id };
+            if (img.caption !== undefined) keepItem.caption = img.caption;
+            if (img.isPrimary !== undefined) keepItem.isPrimary = img.isPrimary;
+            if (img.order !== undefined) keepItem.order = img.order;
+            return keepItem;
           });
         }
       }
+
+      if (imagesToDelete.length > 0) {
+        manageImagesData.delete = imagesToDelete;
+      }
+
+      if (newImageDetails.length > 0) {
+        manageImagesData.newImageDetails = newImageDetails;
+      }
+
+      // Send as JSON string (ONLY way - don't add duplicate nested array notation!)
+      if (
+        manageImagesData.keep ||
+        manageImagesData.delete ||
+        manageImagesData.newImageDetails
+      ) {
+        formData.append("manageImages", JSON.stringify(manageImagesData));
+      }
+
+      console.log("FormData being sent:", {
+        manageImages: manageImagesData,
+        newImagesCount: newImages.length,
+        imagesToDeleteCount: imagesToDelete.length,
+      });
 
       const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/lands/${id}`,
@@ -259,7 +223,7 @@ const EditLand = () => {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (response.data.success) {
@@ -279,8 +243,8 @@ const EditLand = () => {
 
   if (fetchLoading) {
     return (
-      <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+      <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           <div className="flex items-center justify-center py-16">
             <Loader />
           </div>
@@ -290,9 +254,9 @@ const EditLand = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-[3rem]">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-[27rem] mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-[777px] rounded-xl mx-auto mb-8 pb-8">
+        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
           {/* Header */}
           <div className="mt-4 mb-6">
             <button
@@ -301,418 +265,50 @@ const EditLand = () => {
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
             >
               <MdArrowBack className="h-5 w-5" />
-              Back to Lands
+              Back to lands
             </button>
             <h1 className="text-xl font-semibold">Edit Land Information</h1>
           </div>
 
-          {/* Basic Information */}
-          <div className="space-y-6">
-            {/* Title */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Title</h1>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Land title"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
-            </div>
-
-            {/* Overview */}
-            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Overview</h1>
-              <div className="lg:w-[539px] w-full">
-                <MDEditor
-                  value={overview}
-                  height="300px"
-                  onChange={(val) => setOverview(val || "")}
-                  enablePreview
-                />
-              </div>
-            </div>
-
-            {/* Location */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Location</h1>
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="e.g., Victoria Island"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
-            </div>
-
-            {/* State */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">State</h1>
-              <input
-                type="text"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                placeholder="e.g., Lagos"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
-            </div>
-
-            {/* Country */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Country</h1>
-              <input
-                type="text"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                placeholder="Country"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-                required
-              />
-            </div>
-
-            {/* Status */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Status</h1>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] rounded-[5px] text-[#4A5568] pl-3"
-                required
-              >
-                {statusOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Meta Title */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">
-                Meta Title
-              </h1>
-              <input
-                type="text"
-                value={metaTitle}
-                onChange={(e) => setMetaTitle(e.target.value)}
-                placeholder="SEO meta title (optional)"
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
-              />
-            </div>
-
-            {/* Meta Description */}
-            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">
-                Meta Description
-              </h1>
-              <textarea
-                value={metaDescription}
-                onChange={(e) => setMetaDescription(e.target.value)}
-                placeholder="SEO meta description (optional)"
-                rows={3}
-                className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-[539px] w-full py-[10px] pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
-              />
-            </div>
-          </div>
+          {/* Basic Information Section */}
+          <BasicInfoSection
+            title={title}
+            setTitle={setTitle}
+            overview={overview}
+            setOverview={setOverview}
+            location={location}
+            setLocation={setLocation}
+            state={state}
+            setState={setState}
+            country={country}
+            setCountry={setCountry}
+            status={status}
+            setStatus={setStatus}
+            metaTitle={metaTitle}
+            setMetaTitle={setMetaTitle}
+            metaDescription={metaDescription}
+            setMetaDescription={setMetaDescription}
+          />
 
           {/* Units Section */}
-          <div className="mt-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[#4A5568]">
-                Land Units
-              </h2>
-              <button
-                type="button"
-                onClick={addUnit}
-                className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
-              >
-                <MdAdd className="h-4 w-4" />
-                Add Unit
-              </button>
-            </div>
+          <UnitsSection units={units} setUnits={setUnits} />
 
-            {units.map((unit, index) => (
-              <div
-                key={index}
-                className="border border-gray-300 rounded-lg p-4 mb-4 bg-white"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-medium text-gray-700">
-                    Unit #{index + 1}
-                  </h3>
-                  {units.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeUnit(index)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <MdClose className="h-5 w-5" />
-                    </button>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Size
-                    </label>
-                    <input
-                      type="number"
-                      value={unit.size || ""}
-                      onChange={(e) =>
-                        updateUnit(
-                          index,
-                          "size",
-                          parseFloat(e.target.value) || 0
-                        )
-                      }
-                      placeholder="e.g., 1000"
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Unit Type
-                    </label>
-                    <select
-                      value={unit.unit}
-                      onChange={(e) =>
-                        updateUnit(index, "unit", e.target.value)
-                      }
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                    >
-                      {unitOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Price (₦)
-                    </label>
-                    <input
-                      type="text"
-                      value={unit.price}
-                      onChange={(e) =>
-                        updateUnit(index, "price", e.target.value)
-                      }
-                      placeholder="e.g., 2400000"
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Available
-                    </label>
-                    <select
-                      value={unit.available.toString()}
-                      onChange={(e) =>
-                        updateUnit(
-                          index,
-                          "available",
-                          e.target.value === "true"
-                        )
-                      }
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                    >
-                      <option value="true">Available</option>
-                      <option value="false">Not Available</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Existing Images */}
-          {existingImages.length > 0 && (
-            <div className="mt-8">
-              <h2 className="text-lg font-semibold text-[#4A5568] mb-4">
-                Existing Images
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {existingImages.map((image) => (
-                  <div
-                    key={image.id}
-                    className="relative border rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      src={image.url}
-                      alt={image.caption || `Image ${image.order + 1}`}
-                      width={300}
-                      height={200}
-                      className="w-full h-32 object-cover"
-                      unoptimized
-                    />
-                    <div className="absolute top-2 right-2 flex gap-1">
-                      {image.isPrimary && (
-                        <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">
-                          Primary
-                        </span>
-                      )}
-                      <span className="bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-xs">
-                        #{image.order + 1}
-                      </span>
-                    </div>
-                    {image.caption && (
-                      <div className="p-2 bg-gray-50">
-                        <p className="text-sm text-gray-700">{image.caption}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-500 mt-2">
-                Note: To modify existing images, you&apos;ll need to upload new
-                ones. Existing images will be replaced.
-              </p>
-            </div>
-          )}
-
-          {/* Add New Images */}
-          <div className="mt-8">
-            <h2 className="text-lg font-semibold text-[#4A5568] mb-4">
-              Add New Images
-            </h2>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <h1 className="font-semibold text-[#4A5568] lg:w-32">Images</h1>
-              <div className="custom-file-input-wrapper overflow-hidden lg:w-[539px] w-full">
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="images"
-                  name="images"
-                  multiple
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="images"
-                  className="custom-file-label border border-gray-200 bg-[#F9F9F6] w-full h-[40px] focus:outline-none rounded-[5px] text-[#4A5568] flex items-center cursor-pointer"
-                >
-                  <span className="file-label-text bg-gray-200 h-[40px] px-3 text-black flex items-center whitespace-nowrap">
-                    Choose Images
-                  </span>
-                  <span className="file-name text-sm text-gray-500 ml-4">
-                    {images.length > 0
-                      ? `${images.length} file(s) selected`
-                      : "No files chosen"}
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            {/* New Images Preview */}
-            {images.length > 0 && (
-              <div className="mt-6 space-y-4">
-                {images.map((image, index) => (
-                  <div
-                    key={index}
-                    className="border border-gray-300 rounded-lg p-4 bg-white"
-                  >
-                    <div className="flex items-start gap-4">
-                      <Image
-                        src={URL.createObjectURL(image)}
-                        alt={`Preview ${index + 1}`}
-                        width={80}
-                        height={80}
-                        className="w-20 h-20 object-cover rounded"
-                        unoptimized
-                      />
-                      <div className="flex-1 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-medium text-gray-700">
-                            {image.name}
-                          </h4>
-                          <button
-                            type="button"
-                            onClick={() => removeImage(index)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <MdClose className="h-5 w-5" />
-                          </button>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Caption
-                            </label>
-                            <input
-                              type="text"
-                              value={imageDetails[index]?.caption || ""}
-                              onChange={(e) =>
-                                updateImageDetail(
-                                  index,
-                                  "caption",
-                                  e.target.value
-                                )
-                              }
-                              placeholder="Image caption (optional)"
-                              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Order
-                            </label>
-                            <input
-                              type="number"
-                              value={imageDetails[index]?.order || index}
-                              onChange={(e) =>
-                                updateImageDetail(
-                                  index,
-                                  "order",
-                                  parseInt(e.target.value) || index
-                                )
-                              }
-                              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id={`primary-${index}`}
-                            checked={imageDetails[index]?.isPrimary || false}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setPrimaryImage(index);
-                              }
-                            }}
-                            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor={`primary-${index}`}
-                            className="text-sm font-medium text-gray-700"
-                          >
-                            Set as primary image
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Image Management Section */}
+          <ImageManagementSection
+            existingImages={existingImages}
+            imagesToKeep={imagesToKeep}
+            setImagesToKeep={setImagesToKeep}
+            imagesToDelete={imagesToDelete}
+            setImagesToDelete={setImagesToDelete}
+            newImages={newImages}
+            setNewImages={setNewImages}
+            newImageDetails={newImageDetails}
+            setNewImageDetails={setNewImageDetails}
+          />
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-108 flex ">
+        <div className="xl:ml-108 flex justify-center xl:justify-start">
           <button
             type="submit"
             disabled={loading}

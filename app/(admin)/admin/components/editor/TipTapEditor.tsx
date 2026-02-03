@@ -67,7 +67,7 @@ const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
       StarterKit.configure({ heading: false }),
       Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
       Placeholder.configure({
-        placeholder: "Start writing your blog post...",
+        placeholder: "Start writing your post...",
       }),
       Underline,
       TextAlign.configure({
