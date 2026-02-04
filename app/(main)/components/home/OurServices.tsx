@@ -110,7 +110,7 @@ const OurServices = () => {
           <h1>OUR SERVICES</h1>
         </motion.div>
         <motion.h1
-          className={`${playfair.className} text-[34px] md:text-[45px] max-w-[625px] text-center md:text-left`}
+          className={`${playfair.className} text-[34px] md:text-[45px] max-w-156.25 text-center md:text-left`}
           variants={titleVariants}
         >
           Passionate About Being Different & Loyal
@@ -124,11 +124,11 @@ const OurServices = () => {
       />
 
       <motion.div
-        className="flex justify-center max-w-[597px] text-[18px] md:pl-8"
+        className="flex justify-center max-w-149.25 text-[18px] md:pl-8"
         variants={rightSideVariants}
       >
         <h3
-          className={`${roboto.className} md:leading-[28px] leading-[25px] max-w-[597px] text-center md:text-left`}
+          className={`${roboto.className} md:leading-7 leading-6.25 max-w-149.25 text-center md:text-left`}
         >
           jglobalproperties stands out to all—clients, developers, vendors, and
           industry professionals alike—for her exceptional talents, innovative

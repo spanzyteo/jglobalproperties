@@ -12,7 +12,7 @@ export const info: InfoData[] = [
     name: "HOME SEARCH",
     description:
       "Searching for a new home is an exciting journey for buyers and sellers.",
-    link: "/properties/houses",
+    link: "/pages/houses",
     image: "/house.webp",
   },
   {
@@ -20,7 +20,7 @@ export const info: InfoData[] = [
     name: "LAND VALUATION",
     description:
       "Accurate land valuation ensures fair pricing for sellers & appropriate offers for buyers.",
-    link: "/properties/lands",
+    link: "/pages/lands",
     image: "/land.webp",
   },
   {
