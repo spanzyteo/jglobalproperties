@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { HouseData } from "../utils/houses";
+import { FormattedHouse } from "../features/houses";
 
 interface HouseInfo {
-  currentHouse: HouseData | null;
+  currentHouse: FormattedHouse | null;
 }
 
 const initialState: HouseInfo = {
@@ -13,14 +13,14 @@ const houseSlice = createSlice({
   name: "house",
   initialState,
   reducers: {
-    setCurrentHouse: (state, action: PayloadAction<HouseData>) => {
+    setCurrentHouse: (state, action: PayloadAction<FormattedHouse>) => {
       state.currentHouse = action.payload;
     },
     clearCurrentHouse: (state) => {
-      state.currentHouse = null
-    }
+      state.currentHouse = null;
+    },
   },
 });
 
-export const { setCurrentHouse, clearCurrentHouse } = houseSlice.actions
-export default houseSlice.reducer
+export const { setCurrentHouse, clearCurrentHouse } = houseSlice.actions;
+export default houseSlice.reducer;

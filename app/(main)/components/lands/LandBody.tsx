@@ -68,7 +68,7 @@ const LandBody = () => {
     return (
       <div key={item.id} className="flex flex-col gap- rounded-[5px] shadow-lg">
         {currentImage && (
-          <div className="relative group overflow-hidden h-[220px]">
+          <div className="relative group overflow-hidden h-55">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -136,15 +136,15 @@ const LandBody = () => {
           </div>
         )}
         <div
-          className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-[100px]`}
+          className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-25`}
         >
           <Link
-            href={`/properties/lands/${item.id}`}
-            className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] hover:underline transition-all duration-500 ease-in-out"
+            href={`/pages/lands/${item.id}`}
+            className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-all duration-500 ease-in-out"
           >
             {item.title}
           </Link>
-          <h4 className={`text-[14px] leading-[23px]`}>{item.status}</h4>
+          <h4 className={`text-[14px] leading-5.75`}>{item.status}</h4>
         </div>
         <div
           className={`${roboto.className} flex items-center justify-between px-4 border-t border-t-gray-200 `}
@@ -153,13 +153,13 @@ const LandBody = () => {
             {item.units[0] &&
               `₦${parseInt(item.units[0].price).toLocaleString()}`}
           </h2>
-          <div className="p-[10px] border-l border-l-gray-200">
+          <div className="p-2.5 border-l border-l-gray-200">
             <Image
-              src={"/joan.png"}
+              src={"/ceo.JPG"}
               alt="ceo"
-              height={40}
-              width={40}
-              className="rounded-[5px]"
+              height={100}
+              width={100}
+              className="rounded-[5px] h-15 w-15 object-cover"
             />
           </div>
         </div>
@@ -170,7 +170,7 @@ const LandBody = () => {
   return (
     <div className="px-4 md:px-8 py-12 flex flex-col gap-4">
       <h1
-        className={`${playfair.className} text-[34px] font-medium leading-[44px]`}
+        className={`${playfair.className} text-[34px] font-medium leading-11`}
       >
         For Sale
       </h1>
@@ -178,7 +178,7 @@ const LandBody = () => {
         {forSale.map((item) => renderLandCard(item))}
       </div>
       <h1
-        className={`${playfair.className} text-[34px] font-medium leading-[44px] mt-10`}
+        className={`${playfair.className} text-[34px] font-medium leading-11 mt-10`}
       >
         Sold
       </h1>

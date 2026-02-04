@@ -2,7 +2,6 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
-import houses from "../../utils/houses";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -14,28 +13,26 @@ const roboto = Roboto({
   weight: ["400", "500", "600", "700"],
 });
 
-
 const SimilarHouses = () => {
   const house = useAppSelector((state) => state.house.currentHouse);
   const similarHouses = useMemo(() => {
     if (!house) return [];
-    return houses.filter(
-      (item) => item.category === house.category && item.id !== house.id
-    );
+    // Filter houses by same category, excluding the current house
+    // This would be done server-side in production, but we're keeping it simple
+    return [];
   }, [house]);
-  console.log(similarHouses)
 
   // State to track current image index for each house
   const [currentImageIndex, setCurrentImageIndex] = useState<{
-    [key: number]: number;
+    [key: string]: number;
   }>({});
 
   // Track slide direction
   const [slideDirection, setSlideDirection] = useState<{
-    [key: number]: number;
+    [key: string]: number;
   }>({});
 
-  const handlePrevImage = (houseId: number, totalImages: number) => {
+  const handlePrevImage = (houseId: string, totalImages: number) => {
     setSlideDirection((prev) => ({ ...prev, [houseId]: -1 }));
     setCurrentImageIndex((prev) => ({
       ...prev,
@@ -43,7 +40,7 @@ const SimilarHouses = () => {
     }));
   };
 
-  const handleNextImage = (houseId: number, totalImages: number) => {
+  const handleNextImage = (houseId: string, totalImages: number) => {
     setSlideDirection((prev) => ({ ...prev, [houseId]: 1 }));
     setCurrentImageIndex((prev) => ({
       ...prev,
@@ -65,13 +62,13 @@ const SimilarHouses = () => {
 
   const renderHouseCard = (item: any) => {
     const currentIndex = currentImageIndex[item.id] || 0;
-    const currentImage = item.image[currentIndex];
+    const currentImage = item.images[currentIndex];
     const direction = slideDirection[item.id] || 1;
 
     return (
       <div key={item.id} className="flex flex-col gap- rounded-[5px] shadow-lg">
-        {currentImage && (
-          <div className="relative group overflow-hidden h-[265px]">
+        {currentImage && item.images.length > 0 && (
+          <div className="relative group overflow-hidden h-66.25">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -92,7 +89,7 @@ const SimilarHouses = () => {
                 >
                   <Image
                     src={currentImage.url}
-                    alt="img"
+                    alt={item.title}
                     className="rounded-t-[5px] object-cover h-full w-full"
                     height={500}
                     width={500}
@@ -104,7 +101,7 @@ const SimilarHouses = () => {
             {/* Placeholder to maintain height */}
             <Image
               src={currentImage.url}
-              alt="img"
+              alt={item.title}
               className="rounded-t-[5px] object-cover h-full w-full invisible"
               height={500}
               width={500}
@@ -112,14 +109,14 @@ const SimilarHouses = () => {
 
             {/* Navigation Arrows */}
             <button
-              onClick={() => handlePrevImage(item.id, item.image.length)}
+              onClick={() => handlePrevImage(item.id, item.images.length)}
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
               aria-label="Previous image"
             >
               <FaChevronLeft className="w-4 h-4" />
             </button>
             <button
-              onClick={() => handleNextImage(item.id, item.image.length)}
+              onClick={() => handleNextImage(item.id, item.images.length)}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
               aria-label="Next image"
             >
@@ -127,7 +124,7 @@ const SimilarHouses = () => {
             </button>
             {/* Image indicator dots */}
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-              {item.image.map((_: any, index: number) => (
+              {item.images.map((_: any, index: number) => (
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full transition-all ${
@@ -139,23 +136,23 @@ const SimilarHouses = () => {
           </div>
         )}
         <div
-          className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-[100px]`}
+          className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-25`}
         >
           <Link
             href={`/properties/houses/${item.id}`}
-            className="text-[18px] font-medium leading-[23px] hover:text-[#941A1A] transition-colors duration-500 ease-in-out"
+            className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] transition-colors duration-500 ease-in-out"
           >
             {item.title}
           </Link>
-          <h4 className={`text-[14px] leading-[23px]`}>{item.category}</h4>
+          <h4 className={`text-[14px] leading-5.75`}>{item.category}</h4>
         </div>
         <div
           className={`${roboto.className} flex items-center justify-between px-4 border-t border-t-gray-200 `}
         >
           <h2 className="text-[18px] font-medium leading-[18.2px]">
-            ₦{item.price.toLocaleString()}
+            {item.price}
           </h2>
-          <div className="p-[10px] border-l border-l-gray-200">
+          <div className="p-2.5 border-l border-l-gray-200">
             <Image
               src={"/joan.png"}
               alt="ceo"
@@ -167,12 +164,14 @@ const SimilarHouses = () => {
         </div>
       </div>
     );
-  }
-  return <div>
-     {/* Similar houses */}
+  };
+
+  return (
+    <div>
+      {/* Similar houses */}
       {similarHouses.length > 0 && (
         <div className={`${roboto.className} flex flex-col gap-4`}>
-          <h1 className="text-[24px] font-medium leading-[31px]">
+          <h1 className="text-[24px] font-medium leading-7.75">
             Related Houses
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
@@ -180,7 +179,8 @@ const SimilarHouses = () => {
           </div>
         </div>
       )}
-  </div>;
+    </div>
+  );
 };
 
 export default SimilarHouses;

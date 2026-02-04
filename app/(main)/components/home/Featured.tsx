@@ -2,11 +2,12 @@
 "use client";
 
 import { Playfair_Display, Roboto } from "next/font/google";
-import houses from "../../utils/houses";
 import Image from "next/image";
 import Link from "next/link";
 import { easeOut, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useFeaturedHouses } from "../../features/houses";
+import HouseSkeleton from "../skeletons/HouseSkeleton";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -23,6 +24,8 @@ const Featured = () => {
     // triggerOnce: true,
     threshold: 0.2,
   });
+
+  const { houses, loading } = useFeaturedHouses(8);
 
   const headerVariants = {
     hidden: { opacity: 0, y: -30 },
@@ -72,20 +75,24 @@ const Featured = () => {
         </motion.h1>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-4">
-        {houses.map((item, index) => {
-          const firstImage = item.image[0];
-          return (
-            <PropertyCard
-              key={item.id}
-              item={item}
-              firstImage={firstImage}
-              index={index}
-              roboto={roboto}
-            />
-          );
-        })}
-      </div>
+      {loading ? (
+        <HouseSkeleton count={8} />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-4">
+          {houses.map((item, index) => {
+            const firstImage = item.images?.[0];
+            return (
+              <PropertyCard
+                key={item.id}
+                item={item}
+                firstImage={firstImage}
+                index={index}
+                roboto={roboto}
+              />
+            );
+          })}
+        </div>
+      )}
 
       <LoadMoreButton roboto={roboto} />
     </div>
@@ -138,7 +145,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
           >
             <Image
               src={firstImage.url}
-              alt="img"
+              alt={item.title}
               className="rounded-t-[5px] object-cover h-full w-full"
               height={500}
               width={500}
@@ -154,7 +161,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
           </motion.div>
         </div>
       )}
-      <div className="py-3 pl-4 flex flex-col gap-2 h-25">
+      <div className="py-3 pl-4 flex flex-col gap-2 h-35">
         <Link
           href={`/pages/houses/${item.id}`}
           className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-colors duration-300"
@@ -167,7 +174,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
       </div>
       <div className="flex items-center justify-between px-4 border-t border-t-gray-200">
         <h2 className="text-[18px] font-medium leading-[18.2px]">
-          ₦{item.price.toLocaleString()}
+          {item.price}
         </h2>
         <div className="p-2.5 border-l border-l-gray-200 ">
           <Image
@@ -211,7 +218,7 @@ const LoadMoreButton = ({ roboto }: any) => {
       variants={buttonVariants}
     >
       <Link
-        href={"/properties/houses"}
+        href={"/pages/houses"}
         className={`${roboto.className} py-2 px-4 bg-black text-white rounded-[5px] mx-auto mt-10 text-[15px] hover:opacity-85 transition-all duration-500 ease-in-out font-medium block w-fit`}
       >
         Load More Listings
