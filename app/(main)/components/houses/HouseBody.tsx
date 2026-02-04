@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Playfair_Display, Roboto } from "next/font/google";
@@ -9,6 +10,7 @@ import Link from "next/link";
 import { useHousesByCategory } from "../../features/houses";
 import HouseSkeleton from "../skeletons/HouseSkeleton";
 import EmptyState from "./EmptyState";
+import { getOptimizedImageProps } from "@/app/utils/imageOptimization";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -149,11 +151,17 @@ const HouseBody = () => {
                 className="absolute inset-0 w-full h-full"
               >
                 <Image
-                  src={currentImage.url}
-                  alt={`${item.title} - Image ${currentIndex + 1}`}
+                  {...getOptimizedImageProps(
+                    currentImage.url,
+                    `${item.title} - Image ${currentIndex + 1}`,
+                    {
+                      quality: 75,
+                      sizes:
+                        "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px",
+                    },
+                  )}
                   className="w-full h-full object-cover"
                   fill
-                  priority
                 />
               </motion.div>
             </AnimatePresence>

@@ -1,8 +1,6 @@
 "use client";
 import { Roboto } from "next/font/google";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import houses from "../../utils/houses";
-import blogs from "../../utils/blogs";
 import LatestHouseListings from "./LatestHouseListings";
 import LatestLandListings from "./LatestLandListings";
 import lands from "../../utils/lands";
@@ -64,7 +62,7 @@ const ContactSection2 = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:max-w-[365px]">
+    <div className="flex flex-col gap-6 w-full lg:max-w-91.25">
       {/* Advanced Search */}
       <SearchCard
         search={search}
@@ -76,7 +74,6 @@ const ContactSection2 = () => {
 
       {/* Latest Listings */}
       <LatestHouseListings
-        houses={houses}
         roboto={roboto}
         cardVariants={cardVariants}
         listItemVariants={listItemVariants}
@@ -91,7 +88,6 @@ const ContactSection2 = () => {
 
       {/* Recent Posts */}
       <RecentPostCard
-        blogs={blogs}
         roboto={roboto}
         cardVariants={cardVariants}
         listItemVariants={listItemVariants}

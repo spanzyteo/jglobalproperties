@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -8,6 +9,7 @@ import { easeOut, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useFeaturedHouses } from "../../features/houses";
 import HouseSkeleton from "../skeletons/HouseSkeleton";
+import { getOptimizedImageProps } from "@/app/utils/imageOptimization";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -144,11 +146,14 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
             className="h-full w-full"
           >
             <Image
-              src={firstImage.url}
-              alt={item.title}
+              {...getOptimizedImageProps(firstImage.url, item.title, {
+                width: 400,
+                height: 300,
+                quality: 75,
+                sizes:
+                  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px",
+              })}
               className="rounded-t-[5px] object-cover h-full w-full"
-              height={500}
-              width={500}
             />
           </motion.div>
           <motion.div

@@ -71,7 +71,7 @@ const Info = () => {
               className="flex flex-col items-center md:items-start gap-6"
             >
               <motion.div
-                className="h-[260px] md:h-[480px] w-full overflow-hidden rounded-tr-[50px] rounded-tl-[5px] rounded-br-[5px] rounded-bl-[50px]"
+                className="h-65 md:h-120 w-full overflow-hidden rounded-tr-[50px] rounded-tl-[5px] rounded-br-[5px] rounded-bl-[50px]"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
@@ -85,13 +85,13 @@ const Info = () => {
               </motion.div>
 
               <motion.h2
-                className={`${playfair.className} text-[28px] md:text-[30px] font-medium leading-[36px] text-center md:text-left`}
+                className={`${playfair.className} text-[28px] md:text-[30px] font-medium leading-9 text-center md:text-left`}
               >
                 {item.name}
               </motion.h2>
 
               <motion.p
-                className={`${roboto.className} text-[17px] md:text-[18px] leading-[24px] md:leading-[27px] text-center md:text-left text-gray-700`}
+                className={`${roboto.className} text-[17px] md:text-[18px] leading-6 md:leading-6.75 text-center md:text-left text-gray-700`}
               >
                 {item.description}
               </motion.p>
@@ -121,7 +121,7 @@ const Info = () => {
               className="flex flex-col items-center gap-6"
             >
               <motion.div
-                className="h-[260px] w-full overflow-hidden rounded-tr-[50px] rounded-tl-[5px] rounded-br-[5px] rounded-bl-[50px]"
+                className="h-65 w-full overflow-hidden rounded-tr-[50px] rounded-tl-[5px] rounded-br-[5px] rounded-bl-[50px]"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
@@ -135,13 +135,13 @@ const Info = () => {
               </motion.div>
 
               <h2
-                className={`${playfair.className} text-[28px] font-medium leading-[36px] text-center`}
+                className={`${playfair.className} text-[28px] font-medium leading-9 text-center`}
               >
                 {item.name}
               </h2>
 
               <p
-                className={`${roboto.className} text-[17px] leading-[24px] text-center text-gray-700`}
+                className={`${roboto.className} text-[17px] leading-6 text-center text-gray-700`}
               >
                 {item.description}
               </p>
