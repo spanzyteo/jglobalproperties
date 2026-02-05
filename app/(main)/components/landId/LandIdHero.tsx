@@ -1,34 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import lands from "../../utils/lands";
-import { setCurrentLand } from "../../store/landSlice";
+import { useState } from "react";
+import { useAppSelector } from "../../store/hooks";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import LandImageModal from "./LandImageModal";
 import LandProperties from "./LandProperties";
 
 interface LandHeroProps {
-  currentLandId: string | string[];
+  loading?: boolean;
 }
 
-const LandIdHero = ({ currentLandId }: LandHeroProps) => {
-  const dispatch = useAppDispatch();
+const LandIdHero = ({ loading = false }: LandHeroProps) => {
   const land = useAppSelector((state) => state.land.currentLand);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
-  useEffect(() => {
-    const filteredLand = lands.find(
-      (item) => item.id.toString() === currentLandId.toString()
+  if (loading) {
+    return (
+      <div className="w-full h-96 bg-gray-200 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-4 text-gray-700">Loading land details...</p>
+        </div>
+      </div>
     );
-    if (filteredLand) {
-      dispatch(setCurrentLand(filteredLand));
-      setCurrentIndex(filteredLand.images.length);
-    }
-  }, [currentLandId, dispatch]);
+  }
 
   if (!land || !land.images || land.images.length === 0) {
     return (
@@ -37,7 +35,6 @@ const LandIdHero = ({ currentLandId }: LandHeroProps) => {
       </div>
     );
   }
-
   const totalImages = land.images.length;
   const extendedImages = [...land.images, ...land.images, ...land.images];
 
@@ -228,7 +225,7 @@ const LandIdHero = ({ currentLandId }: LandHeroProps) => {
           landTitle={land.title}
         />
       )}
-      <LandProperties currentLandId={land.id} />
+      <LandProperties loading={loading} />
     </div>
   );
 };

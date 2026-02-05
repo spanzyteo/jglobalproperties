@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LandData } from "../utils/lands";
+import { FormattedLand } from "../features/lands";
 
 interface LandInfo {
-  currentLand: LandData | null
+  currentLand: FormattedLand | null;
 }
 
 const initialState: LandInfo = {
-  currentLand: null
-}
+  currentLand: null,
+};
 
 const landSlice = createSlice({
-  name: 'land',
+  name: "land",
   initialState,
   reducers: {
-    setCurrentLand: (state, action: PayloadAction<LandData>) => {
-      state.currentLand = action.payload
+    setCurrentLand: (state, action: PayloadAction<FormattedLand>) => {
+      state.currentLand = action.payload;
     },
     clearCurrentLand: (state) => {
-      state.currentLand = null
-    }
-  }
-})
+      state.currentLand = null;
+    },
+  },
+});
 
-export const { setCurrentLand, clearCurrentLand } = landSlice.actions
-export default landSlice.reducer
+export const { setCurrentLand, clearCurrentLand } = landSlice.actions;
+export default landSlice.reducer;

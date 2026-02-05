@@ -4,7 +4,7 @@ import HouseIdContent from "@/app/(main)/components/houseId/HouseIdContent";
 import HouseIdHero from "@/app/(main)/components/houseId/HouseIdHero";
 import { notFound, useParams } from "next/navigation";
 import React, { useEffect } from "react";
-import { useHouseById } from "@/app/(main)/features/houses";
+import { useHouseBySlug } from "@/app/(main)/features/houses";
 import { useAppDispatch } from "@/app/(main)/store/hooks";
 import {
   setCurrentHouse,
@@ -12,14 +12,14 @@ import {
 } from "@/app/(main)/store/houseSlice";
 
 const HouseId = () => {
-  const { id: houseId } = useParams();
+  const { id: slug } = useParams();
   const dispatch = useAppDispatch();
-  const { house, loading, error } = useHouseById(houseId as string);
+  const { house, loading, error } = useHouseBySlug(slug as string);
 
-  // Clear Redux state when house ID changes
+  // Clear Redux state when slug changes
   useEffect(() => {
     dispatch(clearCurrentHouse());
-  }, [houseId, dispatch]);
+  }, [slug, dispatch]);
 
   // Dispatch house to Redux when fetched
   useEffect(() => {
@@ -30,14 +30,14 @@ const HouseId = () => {
 
   // Debug logging
   useEffect(() => {
-    console.log("HouseId route param:", houseId);
+    console.log("HouseId route param (slug):", slug);
     console.log("House data:", house);
     console.log("Loading state:", loading);
     console.log("Error:", error);
-  }, [houseId, house, loading, error]);
+  }, [slug, house, loading, error]);
 
-  // If house not found, show 404
-  if (!houseId) {
+  // If slug not found, show 404
+  if (!slug) {
     notFound();
   }
 

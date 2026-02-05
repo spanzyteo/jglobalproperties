@@ -93,6 +93,45 @@ export const getHouseById = async (id: string): Promise<FormattedHouse> => {
   }
 };
 
+export const getHouseBySlug = async (slug: string): Promise<FormattedHouse> => {
+  try {
+    const response = await fetch(`${BASE_URL}/houses/slug/${slug}`, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch house: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+
+    if (!data.success) {
+      throw new Error("API returned unsuccessful response");
+    }
+
+    // Handle both response structures:
+    // 1. { success: true, data: { house: {...} } }
+    // 2. { success: true, data: { ...house } }
+    let houseData: HouseAPIData;
+
+    if (data.data.house) {
+      // If response contains house property
+      houseData = data.data.house;
+    } else if (data.data.id) {
+      // If response is directly the house object
+      houseData = data.data;
+    } else {
+      throw new Error("Unexpected API response structure");
+    }
+
+    return formatHouse(houseData);
+  } catch (error) {
+    console.error(`Error fetching house by slug ${slug}:`, error);
+    throw error;
+  }
+};
+
 export const getHousesByCategory = async (
   category: string,
   page: number = 1,

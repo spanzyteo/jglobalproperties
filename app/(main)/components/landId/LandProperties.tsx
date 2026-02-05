@@ -1,11 +1,9 @@
-import { Roboto } from 'next/font/google';
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import lands from '../../utils/lands';
-import { setCurrentLand } from '../../store/landSlice';
+import { Roboto } from "next/font/google";
+import React from "react";
+import { useAppSelector } from "../../store/hooks";
 
-interface LandHeroProps {
-  currentLandId: string
+interface LandPropertiesProps {
+  loading?: boolean;
 }
 
 const roboto = Roboto({
@@ -13,17 +11,8 @@ const roboto = Roboto({
   weight: ["400", "500", "600", "700"],
 });
 
-const LandProperties = ({ currentLandId }: LandHeroProps) => {
-  const dispatch = useAppDispatch()
-  const land = useAppSelector((state) => state.land.currentLand)
-
-  useEffect(() => {
-    const filteredLand = lands.find((item) => item.id === currentLandId)
-
-    if (filteredLand) {
-      dispatch(setCurrentLand(filteredLand))
-    }
-  }, [currentLandId, dispatch])
+const LandProperties = ({ loading = false }: LandPropertiesProps) => {
+  const land = useAppSelector((state) => state.land.currentLand);
 
   return (
     <div className="bg-[#f7f7f7] w-full md:pt-4 md:pb-22 flex items-center justify-center">
@@ -63,6 +52,6 @@ const LandProperties = ({ currentLandId }: LandHeroProps) => {
       </div>
     </div>
   );
-}
+};
 
-export default LandProperties
+export default LandProperties;

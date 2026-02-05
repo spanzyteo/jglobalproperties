@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { getHouses, getHousesByCategory, getHouseById } from "./api";
+import {
+  getHouses,
+  getHousesByCategory,
+  getHouseById,
+  getHouseBySlug,
+} from "./api";
 import { FormattedHouse, HousePagination } from "./types";
 
 export const useHousesByCategory = (category: string, perPage: number = 8) => {
@@ -124,6 +129,37 @@ export const useHouseById = (houseId: string) => {
       fetchHouse();
     }
   }, [houseId]);
+
+  return { house, loading, error };
+};
+
+export const useHouseBySlug = (slug: string) => {
+  const [house, setHouse] = useState<FormattedHouse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+
+    const fetchHouse = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const fetchedHouse = await getHouseBySlug(slug);
+        setHouse(fetchedHouse);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch house");
+        setHouse(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHouse();
+  }, [slug]);
 
   return { house, loading, error };
 };

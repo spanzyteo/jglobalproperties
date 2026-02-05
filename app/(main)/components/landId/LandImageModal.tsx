@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { LandImage } from "../../utils/lands";
+import { LandImage } from "../../features/lands";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 
