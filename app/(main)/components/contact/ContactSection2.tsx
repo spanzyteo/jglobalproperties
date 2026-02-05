@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import LatestHouseListings from "./LatestHouseListings";
 import LatestLandListings from "./LatestLandListings";
-import lands from "../../utils/lands";
+import { useFeaturedLands } from "../../features/lands";
 import RecentPostCard from "./RecentPostCard";
 import SearchCard from "./SearchCard";
 
@@ -15,6 +15,7 @@ const roboto = Roboto({
 const ContactSection2 = () => {
   const search = useAppSelector((state) => state.search.searchOption);
   const dispatch = useAppDispatch();
+  const { lands, loading } = useFeaturedLands(3);
 
   const cardVariants = {
     hidden: { opacity: 0, y: 40 },

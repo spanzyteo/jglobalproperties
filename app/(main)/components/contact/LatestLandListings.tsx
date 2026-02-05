@@ -32,7 +32,7 @@ const LatestLandListings = ({
           const images = item.images[0];
           return (
             <motion.a
-              href={`/pages/lands/${item.id}`}
+              href={`/pages/lands/${item.slug}`}
               key={item.id}
               className="flex gap-2 items-center cursor-pointer"
               custom={index}

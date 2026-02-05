@@ -5,7 +5,6 @@
 "use client";
 
 import React from "react";
-import MDEditor from "@uiw/react-markdown-editor";
 import { useAddNewLandState, useAddNewLandActions } from "../hooks";
 import Editor from "../../../components/editor/TipTapEditor";
 
