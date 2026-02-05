@@ -6,7 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import { getBlogBySlug, getBlogs } from "../../features/blogs";
+import { useSubmitBlogComment } from "../../features/blogs/comments";
 import type { FormattedBlog } from "../../features/blogs";
 
 interface BlogHeroProps {
@@ -27,6 +29,13 @@ const BlogIdContent = ({ currentBlogId }: BlogHeroProps) => {
   const [blog, setBlog] = useState<FormattedBlog | null>(null);
   const [relatedBlogs, setRelatedBlogs] = useState<FormattedBlog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    comment: "",
+  });
+  const { loading: submitting, submitComment } = useSubmitBlogComment();
 
   useEffect(() => {
     const fetchBlogAndRelated = async () => {
@@ -67,6 +76,84 @@ const BlogIdContent = ({ currentBlogId }: BlogHeroProps) => {
       fetchBlogAndRelated();
     }
   }, [currentBlogId]);
+
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("📝 Form submitted");
+
+    // Validation
+    if (!formData.name.trim()) {
+      console.warn("Name validation failed");
+      toast.error("Please enter your name");
+      return;
+    }
+    if (!formData.email.trim()) {
+      console.warn("Email validation failed - empty");
+      toast.error("Please enter your email");
+      return;
+    }
+    if (!formData.email.includes("@")) {
+      console.warn("Email validation failed - invalid format");
+      toast.error("Please enter a valid email");
+      return;
+    }
+    if (!formData.comment.trim()) {
+      console.warn("Comment validation failed");
+      toast.error("Please enter a comment");
+      return;
+    }
+
+    if (!blog) {
+      console.error("Blog is null");
+      toast.error("Blog not found");
+      return;
+    }
+
+    console.log("✓ All validations passed, preparing payload...");
+    console.log("Blog ID:", blog.id, "Type:", typeof blog.id);
+
+    try {
+      console.log("🚀 Sending comment to API...");
+      const payload = {
+        post: blog.id,
+        author_name: formData.name.trim(),
+        author_email: formData.email.trim(),
+        content: formData.comment.trim(),
+      };
+      console.log("📦 Comment payload:", payload);
+
+      const result = await submitComment(payload);
+
+      console.log("✅ Comment submitted successfully:", result);
+      toast.success(
+        "Comment posted successfully! It will appear after moderation.",
+      );
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        comment: "",
+      });
+    } catch (error) {
+      console.error("❌ Form submission error:", error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to post comment. Please try again.";
+      console.error("Error message to display:", errorMessage);
+      toast.error(errorMessage);
+    }
+  };
 
   if (loading) {
     return (
@@ -140,30 +227,54 @@ const BlogIdContent = ({ currentBlogId }: BlogHeroProps) => {
         className={`${roboto.className} bg-white rounded-[5px] flex flex-col gap-5 py-12 px-6 shadow-sm`}
       >
         <h2 className="text-[18px] font-medium leading-5.75">Leave a Reply</h2>
-        <form className="flex flex-col gap-3 w-full text-[14px]">
+        <form
+          onSubmit={handleSubmitComment}
+          className="flex flex-col gap-3 w-full text-[14px]"
+        >
           <div className="flex flex-col md:flex-row md:justify-between gap-3 w-full">
             <input
               type="text"
+              name="name"
               placeholder="Your Name"
-              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out"
+              value={formData.name}
+              onChange={handleFormChange}
+              disabled={submitting}
+              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out disabled:opacity-50"
             />
             <input
               type="email"
+              name="email"
               placeholder="Your Email"
-              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out"
+              value={formData.email}
+              onChange={handleFormChange}
+              disabled={submitting}
+              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out disabled:opacity-50"
             />
             <input
               type="text"
+              name="phone"
               placeholder="Your Phone"
-              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out"
+              value={formData.phone}
+              onChange={handleFormChange}
+              disabled={submitting}
+              className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out disabled:opacity-50"
             />
           </div>
           <textarea
-            className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out"
+            name="comment"
+            placeholder="Leave your comment here..."
+            value={formData.comment}
+            onChange={handleFormChange}
+            disabled={submitting}
+            className="w-full border border-gray-200 py-2 px-4 rounded-[5px] focus:outline-none focus:bg-gray-100 transition-all duration-500 ease-in-out disabled:opacity-50"
             rows={7}
           ></textarea>
-          <button className="bg-black rounded-[5px] text-white w-full md:w-34.75 py-3 font-medium hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out cursor-pointer">
-            Post Comment
+          <button
+            type="submit"
+            disabled={submitting}
+            className="bg-black rounded-[5px] text-white w-full md:w-34.75 py-3 font-medium hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {submitting ? "Posting..." : "Post Comment"}
           </button>
         </form>
       </div>

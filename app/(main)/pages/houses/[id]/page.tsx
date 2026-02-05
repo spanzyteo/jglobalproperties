@@ -57,7 +57,9 @@ const HouseId = () => {
       <HouseIdHero loading={loading} />
       <div className="bg-[#fffcfc] px-4 md:px-8 py-8 flex flex-col lg:flex-row lg:justify-between gap-4">
         <HouseIdContent loading={loading} />
-        <ContactSection2 />
+        <div className="sticky top-8 h-fit">
+          <ContactSection2 />
+        </div>
       </div>
     </div>
   );
