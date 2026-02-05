@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import TagDropdown from "./tags/TagDropdown";
+import EventDropdown from "./events/EventDropdown";
 
 const MobileSidebar = () => {
   const [loading, setLoading] = useState(false);
@@ -61,23 +62,23 @@ const MobileSidebar = () => {
           animate={{ x: 0 }}
           exit={{ x: "-100%" }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="bg-white w-[300px] xl:hidden flex-col flex fixed top-2 bottom-2 left-3 rounded-xl shadow-lg z-10"
+          className="bg-white w-75 xl:hidden flex-col flex fixed top-2 bottom-2 left-3 rounded-xl shadow-lg z-10"
         >
-          <div className="fixed h-[120px] w-[300px] flex items-center justify-between px-8">
+          <div className="fixed h-30 w-75 flex items-center justify-between px-8">
             <h1 className="text-2xl font-semibold">JGlobalProperties</h1>
             <FaXmark
               onClick={handleCloseSidebar}
-              className="h-[30px] w-[30px] cursor-pointer"
+              className="h-7.5 w-7.5 cursor-pointer"
             />
           </div>
-          <div className="flex flex-col items-start ml-8 mt-[130px] gap-4">
-            <div className="flex items-center justify-between w-[230px]">
+          <div className="flex flex-col items-start ml-8 mt-32.5 gap-4">
+            <div className="flex items-center justify-between w-57.5">
               <Link
                 onClick={() => handleCloseSidebar()}
                 href={"/admin"}
                 className="flex flex-row items-center justify-between gap-8"
               >
-                <MdSpaceDashboard className="h-[20px] w-[20px]" />
+                <MdSpaceDashboard className="h-5 w-5" />
                 <h1>Dashboard</h1>
               </Link>
             </div>
@@ -87,8 +88,9 @@ const MobileSidebar = () => {
             <HouseDropdown />
             <ReviewDropdown />
             <TagDropdown />
+            <EventDropdown />
             <button
-              className={`flex items-center gap-8 cursor-pointer w-[230px] transition-all duration-200 ${
+              className={`flex items-center gap-8 cursor-pointer w-57.5 transition-all duration-200 ${
                 loading
                   ? "opacity-70 cursor-not-allowed"
                   : "hover:bg-red-50 hover:text-red-600 rounded-lg p-2 -ml-2"
@@ -105,7 +107,7 @@ const MobileSidebar = () => {
                   </div>
                 ) : (
                   <>
-                    <LuLogOut className="h-[20px] w-[20px]" />
+                    <LuLogOut className="h-5 w-5" />
                     <h1>Logout</h1>
                   </>
                 )}

@@ -7,6 +7,7 @@ interface SidebarState {
   houses: boolean;
   reviews: boolean;
   tags: boolean;
+  events: boolean;
 }
 
 const initialState: SidebarState = {
@@ -16,6 +17,7 @@ const initialState: SidebarState = {
   houses: false,
   reviews: false,
   tags: false,
+  events: false,
 };
 
 const sidebarSlice = createSlice({
@@ -29,6 +31,7 @@ const sidebarSlice = createSlice({
       state.houses = false;
       state.reviews = false;
       state.tags = false;
+      state.events = false;
     },
     toggleBlogs: (state) => {
       state.lands = false;
@@ -37,6 +40,7 @@ const sidebarSlice = createSlice({
       state.houses = false;
       state.reviews = false;
       state.tags = false;
+      state.events = false;
     },
     toggleCategories: (state) => {
       state.lands = false;
@@ -45,6 +49,7 @@ const sidebarSlice = createSlice({
       state.houses = false;
       state.reviews = false;
       state.tags = false;
+      state.events = false;
     },
     toggleHouses: (state) => {
       state.lands = false;
@@ -53,6 +58,7 @@ const sidebarSlice = createSlice({
       state.houses = !state.houses;
       state.reviews = false;
       state.tags = false;
+      state.events = false;
     },
     toggleReviews: (state) => {
       state.lands = false;
@@ -61,6 +67,7 @@ const sidebarSlice = createSlice({
       state.houses = false;
       state.reviews = !state.reviews;
       state.tags = false;
+      state.events = false;
     },
     toggleTags: (state) => {
       state.lands = false;
@@ -68,10 +75,28 @@ const sidebarSlice = createSlice({
       state.categories = false;
       state.houses = false;
       state.reviews = false;
+      state.events = false;
       state.tags = !state.tags;
+    },
+    toggleEvents: (state) => {
+      state.lands = false;
+      state.blogs = false;
+      state.categories = false;
+      state.houses = false;
+      state.reviews = false;
+      state.tags = false;
+      state.events = !state.events;
     },
   },
 });
 
-export const { toggleLands, toggleBlogs, toggleCategories, toggleHouses, toggleReviews, toggleTags} = sidebarSlice.actions;
+export const {
+  toggleLands,
+  toggleBlogs,
+  toggleCategories,
+  toggleHouses,
+  toggleReviews,
+  toggleTags,
+  toggleEvents,
+} = sidebarSlice.actions;
 export default sidebarSlice.reducer;

@@ -24,7 +24,7 @@ const LatestLandListings = ({
       whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
       transition={{ duration: 0.3 }}
     >
-      <h2 className="font-medium leading-[25px] text-[16px]">
+      <h2 className="font-medium leading-6.25 text-[16px]">
         Latest Lands Listings
       </h2>
       <div className="flex flex-col gap-4">
@@ -41,7 +41,7 @@ const LatestLandListings = ({
               animate={inView ? "visible" : "hidden"}
               whileHover={{ x: 5, transition: { duration: 0.3 } }}
             >
-              <div className="h-[70px] w-[105px]">
+              <div className="h-17.5 w-26.25">
                 {images && (
                   <div className="h-full w-full overflow-hidden rounded-[5px]">
                     <motion.div
@@ -60,10 +60,12 @@ const LatestLandListings = ({
                   </div>
                 )}
               </div>
-              <div className="flex flex-col gap- text-[14px] font-medium max-w-[150px] md:max-w-[190px]">
+              <div className="flex flex-col gap- text-[14px] font-medium max-w-37.5 md:max-w-47.5">
                 <h4>{item.title}</h4>
-                <h4>{item.units[0] &&
-              `₦${parseInt(item.units[0].price).toLocaleString()}`}</h4>
+                <h4>
+                  {item.units[0] &&
+                    `₦${parseInt(item.units[0].price).toLocaleString()}`}
+                </h4>
               </div>
             </motion.a>
           );

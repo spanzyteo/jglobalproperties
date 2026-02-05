@@ -1,31 +1,31 @@
 import React from "react";
-import { toggleHouses } from "../../store/sidebarSlice";
+import { toggleEvents } from "../../store/sidebarSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
-import { FaHome } from "react-icons/fa";
+import { MdEvent } from "react-icons/md";
 
-const HouseSidebarSection = () => {
+const EventSidebarSection = () => {
   const sections = useAppSelector((state) => state.sidebar);
   const dispatch = useAppDispatch();
 
-  const handleHouseClick = () => {
-    dispatch(toggleHouses());
+  const handleEventClick = () => {
+    dispatch(toggleEvents());
   };
   return (
     <>
       <div
-        onClick={() => handleHouseClick()}
+        onClick={() => handleEventClick()}
         className="flex items-center justify-between w-57.5 cursor-pointer"
       >
         <div className="flex flex-row items-center justify-between gap-8">
-          <FaHome className="h-5 w-5" />
-          <h1>Houses</h1>
+          <MdEvent className="h-5 w-5" />
+          <h1>Events</h1>
         </div>
         <div className="">
           <motion.div
-            animate={{ rotate: sections.houses ? 180 : 0 }}
+            animate={{ rotate: sections?.events ? 180 : 0 }}
             initial={{ rotate: 0 }}
             transition={{ duration: 0.3 }}
           >
@@ -34,7 +34,7 @@ const HouseSidebarSection = () => {
         </div>
       </div>
       <AnimatePresence>
-        {sections.houses && (
+        {sections?.events && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -42,8 +42,8 @@ const HouseSidebarSection = () => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden flex flex-col gap-4 mt-2 ml-14"
           >
-            <Link href={"/admin/houses"}>Houses</Link>
-            <Link href={"/admin/add-new-houses"}>Add New Houses</Link>
+            <Link href={"/admin/events"}>Events</Link>
+            <Link href={"/admin/add-new-events"}>Add New Event</Link>
           </motion.div>
         )}
       </AnimatePresence>
@@ -51,4 +51,4 @@ const HouseSidebarSection = () => {
   );
 };
 
-export default HouseSidebarSection;
+export default EventSidebarSection;

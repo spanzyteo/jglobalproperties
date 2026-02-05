@@ -10,6 +10,7 @@ import CategoriesSidebarSection from "./categories/CategoriesSidebarSection";
 import HouseSidebarSection from "./houses/HouseSidebarSection";
 import ReviewSidebarSection from "./reviews/ReviewSidebarSection";
 import TagSidebarSection from "./tags/TagSidebarSection";
+import EventSidebarSection from "./events/EventSidebarSection";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -26,7 +27,7 @@ const Sidebar = () => {
       const response = await axios.post(
         "/api/auth/logout",
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       const data = await response.data;
@@ -48,17 +49,17 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="bg-white fixed w-[300px] xl:flex flex-col hidden top-2 bottom-0 left-3 rounded-xl shadow-2xl z-50 overflow-y-auto">
-        <div className=" h-[120px] w-[300px] flex items-center justify-center">
+      <div className="bg-white fixed w-75 xl:flex flex-col hidden top-2 bottom-0 left-3 rounded-xl shadow-2xl z-50 overflow-y-auto">
+        <div className=" h-30 w-75 flex items-center justify-center">
           <h1 className="text-2xl font-semibold ">JGlobalProperties</h1>
         </div>
         <div className="flex flex-col items-start ml-8 gap-4">
-          <div className="flex items-center justify-between w-[230px]">
+          <div className="flex items-center justify-between w-57.5">
             <Link
               href={"/admin"}
               className="flex flex-row items-center justify-between gap-8"
             >
-              <MdSpaceDashboard className="h-[20px] w-[20px]" />
+              <MdSpaceDashboard className="h-5 w-5" />
               <h1>Dashboard</h1>
             </Link>
           </div>
@@ -68,10 +69,11 @@ const Sidebar = () => {
           <HouseSidebarSection />
           <ReviewSidebarSection />
           <TagSidebarSection />
+          <EventSidebarSection />
 
           {/* Logout button with loading effect */}
           <button
-            className={`flex items-center gap-8 cursor-pointer w-[230px] transition-all duration-200 ${
+            className={`flex items-center gap-8 cursor-pointer w-57.5 transition-all duration-200 ${
               loading
                 ? "opacity-70 cursor-not-allowed"
                 : "hover:bg-red-50 hover:text-red-600 rounded-lg p-2 -ml-2"
@@ -88,7 +90,7 @@ const Sidebar = () => {
                 </div>
               ) : (
                 <>
-                  <LuLogOut className="h-[20px] w-[20px]" />
+                  <LuLogOut className="h-5 w-5" />
                   <h1>Logout</h1>
                 </>
               )}

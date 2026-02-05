@@ -1,37 +1,37 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { closeSidebar } from '../../store/mobileSidebarSlice';
-import { toggleHouses } from '../../store/sidebarSlice';
+import { toggleEvents } from '../../store/sidebarSlice';
 import { AnimatePresence, motion } from "framer-motion";
 import { FaHome } from 'react-icons/fa';
 import Link from 'next/link';
 import { IoIosArrowDown } from 'react-icons/io';
 
 
-const HouseDropdown = () => {
+const EventDropdown = () => {
   const sections = useAppSelector((state) => state.sidebar);
-    const dispatch = useAppDispatch();
-  
-    const handleCloseSidebar = () => {
-      dispatch(closeSidebar());
-    };
-  
-    const handleHouseClick = () => {
-      dispatch(toggleHouses());
-    };
+  const dispatch = useAppDispatch();
+
+  const handleCloseSidebar = () => {
+    dispatch(closeSidebar());
+  };
+
+  const handleEventClick = () => {
+    dispatch(toggleEvents());
+  };
   return (
     <>
       <div
-        onClick={() => handleHouseClick()}
+        onClick={() => handleEventClick()}
         className="flex items-center justify-between w-57.5 cursor-pointer"
       >
         <div className="flex flex-row items-center justify-between gap-8">
           <FaHome className="h-5 w-5" />
-          <h1>Houses</h1>
+          <h1>Events</h1>
         </div>
         <div className="">
           <motion.div
-            animate={{ rotate: sections.houses ? 180 : 0 }}
+            animate={{ rotate: sections.events ? 180 : 0 }}
             initial={{ rotate: 0 }}
             transition={{ duration: 0.3 }}
           >
@@ -40,7 +40,7 @@ const HouseDropdown = () => {
         </div>
       </div>
       <AnimatePresence>
-        {sections.houses && (
+        {sections.events && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -48,20 +48,20 @@ const HouseDropdown = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden flex flex-col gap-4 mt- ml-14"
           >
-            <Link href={"/admin/houses"} onClick={() => handleCloseSidebar()}>
-              Houses
+            <Link href={"/admin/events"} onClick={() => handleCloseSidebar()}>
+              Events
             </Link>
             <Link
-              href={"/admin/add-new-houses"}
+              href={"/admin/add-new-events"}
               onClick={() => handleCloseSidebar()}
             >
-              Add New Houses
+              Add New Events
             </Link>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-}
+};
 
-export default HouseDropdown
+export default EventDropdown
