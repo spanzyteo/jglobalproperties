@@ -32,9 +32,9 @@ const FormField: React.FC<{
   label: string;
   children: React.ReactNode;
 }> = ({ label, children }) => (
-  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-    <h1 className="font-semibold text-[#4A5568] lg:w-32">{label}</h1>
-    {children}
+  <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6">
+    <h1 className="font-semibold text-[#4A5568] lg:w-40 shrink-0">{label}</h1>
+    <div className="flex-1 max-w-2xl">{children}</div>
   </div>
 );
 
@@ -49,7 +49,7 @@ const TextInput: React.FC<{
     value={value}
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
-    className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568]"
+    className="border border-[#EFEFEF] bg-[#F9F9F6] w-full py-2.5 pl-3 focus:outline-none focus:border-[#941A1A] rounded-[5px] text-[#4A5568] transition-colors"
     required={required}
   />
 );
@@ -63,7 +63,7 @@ const SelectInput: React.FC<{
   <select
     value={value}
     onChange={(e) => onChange(e.target.value)}
-    className="focus:outline-none border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 rounded-[5px] text-[#4A5568] pl-3"
+    className="focus:outline-none focus:border-[#941A1A] border border-[#EFEFEF] bg-[#F9F9F6] w-full py-2.5 rounded-[5px] text-[#4A5568] pl-3 transition-colors cursor-pointer"
     required={required}
   >
     {options.map((option) => (
@@ -95,7 +95,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
   setMetaDescription,
 }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Title */}
       <FormField label="Title">
         <TextInput
@@ -107,9 +107,11 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
       </FormField>
 
       {/* Overview */}
-      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-        <h1 className="font-semibold text-[#4A5568] lg:w-32">Overview</h1>
-        <div className="lg:w-134.75 w-full">
+      <div className="flex flex-col lg:flex-row lg:items-start gap-3 lg:gap-6">
+        <h1 className="font-semibold text-[#4A5568] lg:w-40 shrink-0">
+          Overview
+        </h1>
+        <div className="flex-1 max-w-2xl">
           <Editor value={overview} onChange={(val) => setOverview(val || "")} />
         </div>
       </div>
@@ -174,8 +176,8 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
       </FormField>
 
       {/* Meta Description */}
-      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
-        <h1 className="font-semibold text-[#4A5568] lg:w-32">
+      <div className="flex flex-col lg:flex-row lg:items-start gap-3 lg:gap-6">
+        <h1 className="font-semibold text-[#4A5568] lg:w-40 shrink-0">
           Meta Description
         </h1>
         <textarea
@@ -183,7 +185,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
           onChange={(e) => setMetaDescription(e.target.value)}
           placeholder="SEO meta description (optional)"
           rows={3}
-          className="border border-[#EFEFEF] bg-[#F9F9F6] lg:w-134.75 w-full py-2.5 pl-3 focus:outline-none rounded-[5px] text-[#4A5568] resize-vertical"
+          className="border border-[#EFEFEF] bg-[#F9F9F6] w-full py-2.5 pl-3 focus:outline-none focus:border-[#941A1A] rounded-[5px] text-[#4A5568] resize-vertical flex-1 max-w-2xl transition-colors"
         />
       </div>
     </div>

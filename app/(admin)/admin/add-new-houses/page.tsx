@@ -195,9 +195,9 @@ const AddNewHouse = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col pb-12">
+    <div className="bg-white flex flex-col pb-12 xl:pl-80">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
+        <div className="mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-full rounded-xl mx-auto mb-8 pb-8">
           <h1 className="text-xl font-semibold mt-4">House Information</h1>
 
           {/* Title */}

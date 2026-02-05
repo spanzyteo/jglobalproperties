@@ -254,65 +254,82 @@ const EditLand = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col pb-12">
+    <div className="bg-white min-h-screen w-full flex flex-col pb-12 xl:pl-80">
       <form onSubmit={handleSubmit}>
-        <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
+        <div className="mt-8 bg-[#F2F2F2] flex flex-col px-6 lg:px-8 py-8 rounded-xl mx-auto mb-8 pb-8 w-[95%] lg:w-full max-w-5xl lg:max-w-6xl">
           {/* Header */}
-          <div className="mt-4 mb-6">
+          <div className="mb-8">
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4 transition-colors"
             >
               <MdArrowBack className="h-5 w-5" />
               Back to lands
             </button>
-            <h1 className="text-xl font-semibold">Edit Land Information</h1>
+            <h1 className="text-2xl font-bold text-[#1A202C]">
+              Edit Land Information
+            </h1>
           </div>
 
           {/* Basic Information Section */}
-          <BasicInfoSection
-            title={title}
-            setTitle={setTitle}
-            overview={overview}
-            setOverview={setOverview}
-            location={location}
-            setLocation={setLocation}
-            state={state}
-            setState={setState}
-            country={country}
-            setCountry={setCountry}
-            status={status}
-            setStatus={setStatus}
-            metaTitle={metaTitle}
-            setMetaTitle={setMetaTitle}
-            metaDescription={metaDescription}
-            setMetaDescription={setMetaDescription}
-          />
+          <div className="mb-12">
+            <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+              Basic Information
+            </h2>
+            <BasicInfoSection
+              title={title}
+              setTitle={setTitle}
+              overview={overview}
+              setOverview={setOverview}
+              location={location}
+              setLocation={setLocation}
+              state={state}
+              setState={setState}
+              country={country}
+              setCountry={setCountry}
+              status={status}
+              setStatus={setStatus}
+              metaTitle={metaTitle}
+              setMetaTitle={setMetaTitle}
+              metaDescription={metaDescription}
+              setMetaDescription={setMetaDescription}
+            />
+          </div>
 
           {/* Units Section */}
-          <UnitsSection units={units} setUnits={setUnits} />
+          <div className="mb-12">
+            <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+              Land Units
+            </h2>
+            <UnitsSection units={units} setUnits={setUnits} />
+          </div>
 
           {/* Image Management Section */}
-          <ImageManagementSection
-            existingImages={existingImages}
-            imagesToKeep={imagesToKeep}
-            setImagesToKeep={setImagesToKeep}
-            imagesToDelete={imagesToDelete}
-            setImagesToDelete={setImagesToDelete}
-            newImages={newImages}
-            setNewImages={setNewImages}
-            newImageDetails={newImageDetails}
-            setNewImageDetails={setNewImageDetails}
-          />
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+              Images
+            </h2>
+            <ImageManagementSection
+              existingImages={existingImages}
+              imagesToKeep={imagesToKeep}
+              setImagesToKeep={setImagesToKeep}
+              imagesToDelete={imagesToDelete}
+              setImagesToDelete={setImagesToDelete}
+              newImages={newImages}
+              setNewImages={setNewImages}
+              newImageDetails={newImageDetails}
+              setNewImageDetails={setNewImageDetails}
+            />
+          </div>
         </div>
 
         {/* Submit Button */}
-        <div className="xl:ml-108 flex justify-center xl:justify-start">
+        <div className="flex justify-center lg:justify-start lg:pl-8">
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#941A1A] flex items-center justify-center h-10 w-35 text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:opacity-75 active:opacity-55 transition-all duration-500 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#941A1A] flex items-center justify-center h-12 px-8 text-white rounded-[5px] mb-10 text-[14px] font-semibold hover:bg-[#7a1515] active:bg-[#5f0f0f] transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
           >
             {loading ? "Updating..." : "Update Land"}
           </button>

@@ -93,29 +93,50 @@ export const AddNewLandFormContent: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="xl:ml-108 mt-8 bg-[#F2F2F2] flex flex-col px-4 w-[90%] lg:w-194.25 rounded-xl mx-auto mb-8 pb-8">
-        <h1 className="text-xl font-semibold mt-4">Land Information</h1>
+      <div className="mt-8 bg-[#F2F2F2] flex flex-col px-6 lg:px-8 py-8 rounded-xl mx-auto mb-8 pb-8 w-[95%] lg:w-full max-w-5xl lg:max-w-6xl">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-[#1A202C]">Add New Land</h1>
+        </div>
 
-        <div className="mt-6 space-y-6">
-          {/* Basic Information */}
+        {/* Basic Information Section */}
+        <div className="mb-12">
+          <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+            Basic Information
+          </h2>
           <BasicInformationSection />
+        </div>
 
-          {/* Overview */}
+        {/* Overview Section */}
+        <div className="mb-12">
+          <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+            Overview
+          </h2>
           <OverviewSection />
+        </div>
 
-          {/* Images */}
+        {/* Images Section */}
+        <div className="mb-12">
+          <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+            Images
+          </h2>
           <ImagesSection />
+        </div>
 
-          {/* Units */}
+        {/* Units Section */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[#4A5568] mb-6 pb-3 border-b border-gray-300">
+            Land Units
+          </h2>
           <UnitsSection />
         </div>
 
         {/* Submit Button */}
-        <div className="mt-8 flex gap-4">
+        <div className="flex justify-center lg:justify-start gap-4 mt-8">
           <button
             type="submit"
             disabled={state.isSubmitting}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="bg-[#941A1A] text-white px-8 py-3 rounded-[5px] hover:bg-[#7a1515] active:bg-[#5f0f0f] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-semibold shadow-md hover:shadow-lg"
           >
             {state.isSubmitting ? (
               <>
@@ -130,7 +151,7 @@ export const AddNewLandFormContent: React.FC = () => {
           <button
             type="button"
             onClick={() => router.back()}
-            className="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400"
+            className="bg-gray-400 text-gray-700 px-8 py-3 rounded-[5px] hover:bg-gray-500 transition-all duration-200 font-semibold"
           >
             Cancel
           </button>

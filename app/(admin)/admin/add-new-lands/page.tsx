@@ -10,7 +10,7 @@ export default function AddNewLandPage() {
   return (
     <Provider store={store}>
       <ImageFilesProvider>
-        <div className="bg-white flex flex-col pb-12">
+        <div className="xl:pl-80 bg-white flex flex-col pb-12">
           <AddNewLandFormContent />
         </div>
       </ImageFilesProvider>
