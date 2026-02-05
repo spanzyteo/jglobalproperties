@@ -168,7 +168,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
       )}
       <div className="py-3 pl-4 flex flex-col gap-2 h-35">
         <Link
-          href={`/pages/houses/${item.id}`}
+          href={`/pages/houses/${item.slug}`}
           className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-colors duration-300"
         >
           {item.title}

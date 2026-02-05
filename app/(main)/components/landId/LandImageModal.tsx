@@ -101,7 +101,7 @@ const LandImageModal = ({
         </button>
 
         {/* Image */}
-        <div className="relative w-[800px] h-[500px] flex items-center justify-center">
+        <div className="relative w-200 h-125 flex items-center justify-center">
           <Image
             width={500}
             height={500}
@@ -131,7 +131,7 @@ const LandImageModal = ({
             <button
               key={img.id}
               onClick={() => setCurrentIndex(idx)}
-              className={`flex-shrink-0 w-20 h-14 rounded overflow-hidden transition-all duration-200 ${
+              className={`shrink-0 w-20 h-14 rounded overflow-hidden transition-all duration-200 ${
                 idx === currentIndex
                   ? "ring-4 ring-white scale-110"
                   : "ring-2 ring-white/30 hover:ring-white/60"

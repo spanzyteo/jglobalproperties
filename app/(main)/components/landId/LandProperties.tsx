@@ -18,7 +18,7 @@ const LandProperties = ({ loading = false }: LandPropertiesProps) => {
     <div className="bg-[#f7f7f7] w-full md:pt-4 md:pb-22 flex items-center justify-center">
       <div className="bg-white md:bg-white/80 md:rounded-[10px] w-full lg:w-[96%] lg:-mt-6 py-6 md:py-10 absolute lg:bottom-6 px-8 shadow-md">
         <div
-          className={`${roboto.className} grid grid-cols-3 md:flex flex-wrap md:justify-between gap-6 text-[14px] font-medium leading-[20px]`}
+          className={`${roboto.className} grid grid-cols-3 md:flex flex-wrap md:justify-between gap-6 text-[14px] font-medium leading-5`}
         >
           <div className="flex flex-col">
             <h3>Updated On:</h3>
@@ -27,10 +27,6 @@ const LandProperties = ({ loading = false }: LandPropertiesProps) => {
           <div className="flex flex-col">
             <h3>Status:</h3>
             <h3>{land?.status}</h3>
-          </div>
-          <div className="flex flex-col">
-            <h3>Property ID:</h3>
-            <h3>{land?.id}</h3>
           </div>
           <div className="flex flex-col">
             <h3>Location:</h3>
