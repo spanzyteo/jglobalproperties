@@ -7,7 +7,6 @@ import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { MdClose } from "react-icons/md";
 import Loader from "@/app/components/shared/Loader";
-// import Editor from "../../components/editor/TipTapEditor";
 import Editor from "../../../components/editor/TipTapEditor";
 
 type EventImage = {

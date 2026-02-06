@@ -7,16 +7,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { useInView } from "react-intersection-observer";
-import events from "../../utils/events";
+import { useEventsByPastStatus } from "../../features/events";
+import EventSkeleton from "../skeletons/EventSkeleton";
+import EmptyState from "./EmptyState";
 
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const UpcomingEvents = ({ item, index }: any) => {
+const UpcomingEvent = ({ item, index }: any) => {
   const { ref, inView } = useInView({
-    // triggerOnce: true,
     threshold: 0.2,
   });
 
@@ -30,15 +31,18 @@ const UpcomingEvents = ({ item, index }: any) => {
     },
   };
 
-  // const categoryVariants = {
-  //   initial: { x: -100, opacity: 0 },
-  //   animate: {
-  //     x: 0,
-  //     opacity: 1,
-  //     transition: { delay: 0.3, duration: 0.5 },
-  //   },
-  // };
+  // Get the first image or use a fallback
+  const imageUrl =
+    item.image && item.image.length > 0
+      ? item.image[0].url
+      : "/houses/house1.webp";
 
+  // Format the date
+  const formattedDate = new Date(item.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <motion.div
@@ -50,43 +54,35 @@ const UpcomingEvents = ({ item, index }: any) => {
       className="flex flex-col rounded-[5px] shadow-lg overflow-hidden bg-white cursor-pointer h-full relative pb-7"
     >
       {/* Image */}
-      <div className="relative overflow-hidden rounded-t-[5px] h-[200px]">
+      <div className="relative overflow-hidden rounded-t-[5px] h-50">
         <motion.div
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.4 }}
           className="w-full h-full"
         >
           <Image
-            src={item.image}
+            src={imageUrl}
             alt={item.title}
             className="object-cover w-full h-full"
             width={500}
             height={500}
           />
         </motion.div>
-        {/* <motion.div
-          className={`${roboto.className} absolute top-4 left-4 text-white bg-[#941A1A] py-1 px-3 text-[12px] rounded-[4px]`}
-          variants={categoryVariants}
-          initial="initial"
-          animate={inView ? "animate" : "initial"}
-        >
-          {item.category}
-        </motion.div> */}
       </div>
 
       {/* Text Content */}
       <div
-        className={`${roboto.className} py-3 px-4 flex flex-col gap-2 max-h-[280px] `}
+        className={`${roboto.className} py-3 px-4 flex flex-col gap-2 max-h-70`}
       >
-        <h3 className="text-[18px] font-medium leading-[23px]">{item.title}</h3>
-        <h4 className="text-[13px] text-gray-500">{item.date}</h4>
-        <p className="text-[14px] text-gray-700 leading-[22px]">
+        <h3 className="text-[18px] font-medium leading-5.75">{item.title}</h3>
+        <h4 className="text-[13px] text-gray-500">{formattedDate}</h4>
+        <p className="text-[14px] text-gray-700 leading-5.5">
           {truncateText(item.description, 15)}
         </p>
 
         <div className="flex gap-1 text-[15px] hover:text-[#941A1A] transition-all duration-500 ease-in-out font-medium items-center absolute bottom-1">
           <p>Continue reading</p>
-          <RiArrowRightSLine className="h-[20px] w-[20px]" />
+          <RiArrowRightSLine className="h-5 w-5" />
         </div>
       </div>
     </motion.div>
@@ -101,16 +97,36 @@ const truncateText = (text: string, maxWords: number) => {
 };
 
 const EventSection = () => {
-  const upcomingEvents = events.filter((item) => !item.isPast)
+  const { events, loading, error } = useEventsByPastStatus(false, 8);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <EventSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  if (error || events.length === 0) {
+    return (
+      <EmptyState
+        title="No Upcoming Events"
+        description="Stay tuned for upcoming events. We'll be hosting exciting events soon!"
+      />
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 h-full">
-      {upcomingEvents.map((item, index) => (
-        <Link href={`/pages/events/${item.id}`} key={item.id}>
-          <UpcomingEvents item={item} index={index} />
+      {events.map((item, index) => (
+        <Link href={`/pages/events/${item.slug}`} key={item.id}>
+          <UpcomingEvent item={item} index={index} />
         </Link>
       ))}
     </div>
   );
-}
+};
 
 export default EventSection;

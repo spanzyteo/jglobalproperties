@@ -1,14 +1,11 @@
 "use client";
 
 import { Playfair_Display, Roboto } from "next/font/google";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect } from "react";
-import events from "../../utils/events";
-import { setCurrentEvent } from "../../store/eventSlice";
+import { useAppSelector } from "../../store/hooks";
 import { Parallax } from "react-parallax";
 
 interface EventHeroProps {
-  currentEventId: string | string[];
+  loading?: boolean;
 }
 
 const playfair = Playfair_Display({
@@ -21,19 +18,10 @@ const roboto = Roboto({
   weight: ["400", "500", "600", "700"],
 });
 
-const EventIdHero = ({ currentEventId }: EventHeroProps) => {
-  const dispatch = useAppDispatch();
+const EventIdHero = ({ loading = false }: EventHeroProps) => {
   const event = useAppSelector((state) => state.events.currentEvent);
 
-  useEffect(() => {
-    const filteredEvent = events.find(
-      (item) => item.id.toString() === currentEventId.toString()
-    );
-    if (filteredEvent) {
-      dispatch(setCurrentEvent(filteredEvent));
-    }
-  }, [currentEventId, dispatch]);
-
+  // Show loading only if actually loading or no event data
   if (!event) {
     return (
       <Parallax
@@ -58,6 +46,7 @@ const EventIdHero = ({ currentEventId }: EventHeroProps) => {
       </Parallax>
     );
   }
+
   return (
     <Parallax
       strength={800}

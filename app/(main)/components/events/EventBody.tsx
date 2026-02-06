@@ -11,13 +11,13 @@ const EventBody = () => {
   return (
     <div className="px-4 md:px-8 py-12 flex flex-col gap-4">
       <h1
-        className={`${playfair.className} text-[34px] font-medium leading-[44px]`}
+        className={`${playfair.className} text-[34px] font-medium leading-11`}
       >
         Upcoming Events
       </h1>
       <EventSection />
       <h1
-        className={`${playfair.className} text-[34px] font-medium leading-[44px]`}
+        className={`${playfair.className} text-[34px] font-medium leading-11`}
       >
         Past Events
       </h1>

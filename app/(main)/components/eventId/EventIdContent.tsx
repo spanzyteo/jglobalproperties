@@ -1,17 +1,11 @@
 "use client";
 import { Playfair_Display, Roboto } from "next/font/google";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect, useMemo } from "react";
-import events from "../../utils/events";
-import { setCurrentEvent } from "../../store/eventSlice";
+import { useAppSelector } from "../../store/hooks";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { RiArrowRightSLine } from "react-icons/ri";
 
 interface EventContentProps {
-  currentEventId: string | string[];
+  loading?: boolean;
 }
 
 const roboto = Roboto({
@@ -24,23 +18,8 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-const EventIdContent = ({ currentEventId }: EventContentProps) => {
-  const dispatch = useAppDispatch();
+const EventIdContent = ({ loading = false }: EventContentProps) => {
   const event = useAppSelector((state) => state.events.currentEvent);
-
-  useEffect(() => {
-    const filteredEvent = events.find(
-      (item) => item.id.toString() === currentEventId.toString()
-    );
-    if (filteredEvent) {
-      dispatch(setCurrentEvent(filteredEvent));
-    }
-  }, [currentEventId, dispatch]);
-
-  const previousEvents = useMemo(() => {
-    if (!event) return [];
-    return events.filter((item) => item.isPast && item.id !== event.id);
-  }, [event]);
 
   const truncateText = (text: string, maxWords: number) => {
     const words = text.split(" ");
@@ -48,21 +27,85 @@ const EventIdContent = ({ currentEventId }: EventContentProps) => {
     return words.slice(0, maxWords).join(" ") + "...";
   };
 
+  // Get the main image
+  const mainImageUrl =
+    event?.image && event.image.length > 0
+      ? event.image[0].url
+      : "/house-bg.webp";
+
+  // Format the date
+  const formattedDate = event?.date
+    ? new Date(event.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
+
+  // Description rendering with HTML support
+  const DescriptionContent = () => {
+    if (!event?.description) return null;
+
+    // Check if description is HTML content (from tiptap)
+    const isHTML = /<[^>]*>/g.test(event.description);
+
+    if (isHTML) {
+      return (
+        <div
+          className="text-[14px] leading-5.75 prose prose-sm max-w-none"
+          dangerouslySetInnerHTML={{ __html: event.description }}
+        />
+      );
+    }
+
+    return <p className="text-[14px] leading-5.75">{event.description}</p>;
+  };
+
+  if (!event) {
+    return (
+      <div className="flex flex-col gap-6 w-full lg:max-w-218.25">
+        <div
+          className={`${roboto.className} bg-white rounded-[5px] flex flex-col gap-10 py-12 px-6 shadow-sm`}
+        >
+          <p className="text-gray-500">Event data not available</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-6 w-full lg:max-w-218.25">
+        <div
+          className={`${roboto.className} bg-white rounded-[5px] flex flex-col gap-10 py-12 px-6 shadow-sm`}
+        >
+          <div className="h-8 bg-gray-200 rounded animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded animate-pulse" />
+          <div className="h-64 bg-gray-200 rounded animate-pulse" />
+          <div className="space-y-3">
+            <div className="h-4 bg-gray-200 rounded animate-pulse" />
+            <div className="h-4 bg-gray-200 rounded animate-pulse" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-6 w-full lg:max-w-[873px]">
+    <div className="flex flex-col gap-6 w-full lg:max-w-218.25">
       <div
         className={`${roboto.className} bg-white rounded-[5px] flex flex-col gap-10 py-12 px-6 shadow-sm`}
       >
         <h1
-          className={`${playfair.className} text-[34px] font-medium leading-[44px]`}
+          className={`${playfair.className} text-[34px] font-medium leading-11`}
         >
           {event?.title}
         </h1>
         <div className="flex flex-col md:flex-row gap-1 md:gap-4 items-start md:items-center">
           <div className="flex items-center gap-2">
             <FaCalendarAlt />
-            <h3 className="text-[13px] leading-[23px] mt-1">
-              Posted on {event?.date}
+            <h3 className="text-[13px] leading-5.75 mt-1">
+              Posted on {formattedDate}
             </h3>
           </div>
           <div className="flex items-center gap-2">
@@ -73,13 +116,13 @@ const EventIdContent = ({ currentEventId }: EventContentProps) => {
           </div>
         </div>
         <Image
-          src={event?.image || "/house-bg.webp"}
-          alt={event?.title || "Blog image"}
+          src={mainImageUrl}
+          alt={event.title || "Event image"}
           width={819}
-          height={819}
-          className="w-[819px] rounded-[5px] object-cover h-[250px] md:h-[500px]"
+          height={500}
+          className="rounded-[5px] object-cover h-[250px] md:h-[500px] w-full"
         />
-        <p className="text-[14px] leading-[23px]">{event?.description}</p>
+        <DescriptionContent />
       </div>
 
       {/* Form for comment */}
@@ -116,62 +159,6 @@ const EventIdContent = ({ currentEventId }: EventContentProps) => {
           </button>
         </form>
       </div>
-
-      {/* Previous events */}
-      {previousEvents.length > 0 && (
-        <div className={`${roboto.className} flex flex-col gap-4`}>
-          <h1 className="text-[24px] font-medium leading-[31px]">
-            Previous Events
-          </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-            {previousEvents.slice(0, 2).map((item) => {
-              return (
-                <Link
-                  href={`/pages/events/${item.id}`}
-                  key={item.id}
-                  className="flex flex-col gap- rounded-[5px] shadow-lg"
-                >
-                  <div className="relative overflow-hidden rounded-t-[5px]">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-full h-full"
-                    >
-                      <Image
-                        src={item.image}
-                        alt="img"
-                        className="rounded-t-[5px] object-cover h-[250px] w-full"
-                        height={500}
-                        width={500}
-                      />
-                    </motion.div>
-                  </div>
-
-                  <div
-                    className={`${roboto.className} py-3 px-4 flex flex-col gap-2 max-h-[280px]`}
-                  >
-                    <h3 className={`text-[18px] font-medium leading-[23px]`}>
-                      {item.title}
-                    </h3>
-                    <h4 className={`text-[14px] leading-[23px]`}>
-                      {item.date}
-                    </h4>
-                    <h4 className={`text-[14px] space-x-2`}>
-                      {truncateText(item.description, 15)}
-                    </h4>
-                    <div
-                      className={`flex gap-1 text-[15px] hover:text-[#941A1A] transition-all duration-500 ease-in-out font-medium items-center`}
-                    >
-                      <p>Continue reading</p>
-                      <RiArrowRightSLine className="h-[20px] w-[20px]" />
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

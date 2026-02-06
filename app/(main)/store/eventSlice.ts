@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EventData } from "../utils/events";
+import { FormattedEvent } from "../features/events";
 
 interface EventInfo {
-  currentEvent: EventData | null
+  currentEvent: FormattedEvent | null;
 }
 
 const initialState: EventInfo = {
-  currentEvent: null
-}
+  currentEvent: null,
+};
 
 const eventSlice = createSlice({
-  name: 'events',
+  name: "events",
   initialState,
   reducers: {
-    setCurrentEvent: (state, action: PayloadAction<EventData>) => {
-      state.currentEvent = action.payload
+    setCurrentEvent: (state, action: PayloadAction<FormattedEvent>) => {
+      state.currentEvent = action.payload;
     },
     clearCurrentEvent: (state) => {
-      state.currentEvent = null
-    }
-  }
-})
+      state.currentEvent = null;
+    },
+  },
+});
 
-export const { setCurrentEvent, clearCurrentEvent } = eventSlice.actions
-export default eventSlice.reducer
+export const { setCurrentEvent, clearCurrentEvent } = eventSlice.actions;
+export default eventSlice.reducer;
