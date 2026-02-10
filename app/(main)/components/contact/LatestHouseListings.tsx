@@ -48,7 +48,7 @@ const LatestHouseListings = ({
             const imageUrl = item.images && item.images[0]?.url;
             return (
               <motion.a
-                href={`/pages/houses/${item.id}`}
+                href={`/houses/${item.id}`}
                 key={item.id}
                 className="flex gap-2 items-center cursor-pointer"
                 custom={index}

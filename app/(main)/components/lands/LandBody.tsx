@@ -83,7 +83,6 @@ const LandBody = () => {
   const renderLandCard = (item: any) => {
     // Handle case when item has no images
     if (!item.images || item.images.length === 0) {
-      console.warn(`Land ${item.id} has no images`);
       return (
         <div
           key={item.id}
@@ -96,7 +95,7 @@ const LandBody = () => {
             className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-35`}
           >
             <Link
-              href={`/pages/lands/${item.slug}`}
+              href={`/lands/${item.slug}`}
               className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-all duration-500 ease-in-out"
             >
               {item.title}
@@ -207,7 +206,7 @@ const LandBody = () => {
           className={`${roboto.className} py-3 pl-4 flex flex-col gap-2 h-35`}
         >
           <Link
-            href={`/pages/lands/${item.slug}`}
+            href={`/lands/${item.slug}`}
             className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-all duration-500 ease-in-out"
           >
             {item.title}
@@ -219,15 +218,14 @@ const LandBody = () => {
           className={`${roboto.className} flex items-center justify-between px-4 border-t border-t-gray-200`}
         >
           <h2 className="text-[18px] font-medium leading-[18.2px]">
-            {item.units[0] &&
-              `₦${parseInt(item.units[0].price).toLocaleString()}`}
+            {item.units[0] && `${item.units[0].price}`}
           </h2>
           <div className="p-2.5 border-l border-l-gray-200">
             <Image
-              src={"/ceo.JPG"}
+              src={"/logo.png"}
               alt="ceo"
-              height={100}
-              width={100}
+              height={350}
+              width={350}
               className="rounded-[5px] h-15 w-15 object-cover"
             />
           </div>

@@ -20,7 +20,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, type }) => {
 
   // Safe data extraction with fallbacks
   const href =
-    type === "lands" ? `/pages/lands/${property.id}` : `/pages/houses/${property.id}`;
+    type === "lands" ? `/lands/${property.id}` : `/houses/${property.id}`;
 
   // Safely get image URL based on type
   const imageUrl =

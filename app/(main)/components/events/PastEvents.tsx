@@ -120,7 +120,7 @@ const PastEventSection = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 h-full">
       {events.map((item, index) => (
-        <Link href={`/pages/events/${item.slug}`} key={item.id}>
+        <Link href={`/events/${item.slug}`} key={item.id}>
           <PastEvent item={item} index={index} />
         </Link>
       ))}

@@ -56,7 +56,7 @@ const TeamMemberCard = ({ item }: any) => {
   return (
     <motion.div
       ref={ref}
-      className="h-[408px] md:h-[450px] lg:h-[400px] relative overflow-hidden rounded-tl-[5px] rounded-tr-[50px] rounded-bl-[50px] rounded-br-[5px] group cursor-pointer"
+      className="h-102 md:h-112.5 lg:h-100 relative overflow-hidden rounded-tl-[5px] rounded-tr-[50px] rounded-bl-[50px] rounded-br-[5px] group cursor-pointer"
       variants={cardVariants}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
@@ -87,8 +87,8 @@ const TeamMemberCard = ({ item }: any) => {
         initial="initial"
         animate={inView ? "animate" : "initial"}
       >
-        <h3 className="text-[18px] font-medium leading-[23px]">{item.name}</h3>
-        <h4 className="text-[14px] leading-[30px]">{item.role}</h4>
+        <h3 className="text-[18px] font-medium leading-5.75">{item.name}</h3>
+        <h4 className="text-[14px] leading-7.5">{item.role}</h4>
       </motion.div>
     </motion.div>
   );
@@ -195,7 +195,7 @@ const Team = () => {
             <h1>THE TEAM</h1>
           </motion.div>
           <motion.h1
-            className={`${playfair.className} text-[34px] md:text-[45px] max-w-[625px] text-center md:text-left`}
+            className={`${playfair.className} text-[34px] md:text-[45px] max-w-156.25 text-center md:text-left`}
             variants={titleVariants}
           >
             Your Trusted Real Estate Partners
@@ -207,11 +207,11 @@ const Team = () => {
           style={{ originY: 0 }}
         />
         <motion.div
-          className="flex justify-center max-w-[597px] text-[18px] md:pl-8"
+          className="flex justify-center max-w-149.25 text-[18px] md:pl-8"
           variants={rightSideVariants}
         >
           <h3
-            className={`${roboto.className} md:leading-[28px] leading-[25px] max-w-[597px] text-center md:text-left`}
+            className={`${roboto.className} md:leading-7 leading-6.25 max-w-149.25 text-center md:text-left`}
           >
             Whether you&apos;re a first-time buyer exploring your options or a
             seasoned investor seeking strategic advice, our agents are here to
@@ -222,7 +222,7 @@ const Team = () => {
       </motion.div>
 
       {/* Team Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
         {team.map((item, index) => (
           <TeamMemberCard key={item.id} item={item} index={index} />
         ))}

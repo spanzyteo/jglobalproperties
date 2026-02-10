@@ -26,7 +26,7 @@ const Contact = () => {
       />
 
       {/* Overlay with bottom gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/80" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/50 to-black/80" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6">
@@ -35,12 +35,12 @@ const Contact = () => {
           <h1 className={`${roboto.className}`}>CONTACT US</h1>
         </div>
         <h1
-          className={`text-white text-[34px] md:text-[65px] ${playfair.className} max-w-[245px] md:max-w-[520px] leading-[34px] md:leading-[71px] text-center`}
+          className={`text-white text-[34px] md:text-[65px] ${playfair.className} max-w-61.25 md:max-w-130 leading-8.5 md:leading-17.75 text-center`}
         >
           Are you looking to buy a home?
         </h1>
         <p
-          className={`${roboto.className} text-white max-w-[520px] text-center text-[18px]`}
+          className={`${roboto.className} text-white max-w-130 text-center text-[18px]`}
         >
           Explore Nigeria&apos;s finest real estate opportunities across Lagos,
           Abuja, Port Harcourt and beyond. Discover your dream home in one of

@@ -32,7 +32,7 @@ const LatestLandListings = ({
           const images = item.images[0];
           return (
             <motion.a
-              href={`/pages/lands/${item.slug}`}
+              href={`/lands/${item.slug}`}
               key={item.id}
               className="flex gap-2 items-center cursor-pointer"
               custom={index}
@@ -62,10 +62,7 @@ const LatestLandListings = ({
               </div>
               <div className="flex flex-col gap- text-[14px] font-medium max-w-37.5 md:max-w-47.5">
                 <h4>{item.title}</h4>
-                <h4>
-                  {item.units[0] &&
-                    `₦${parseInt(item.units[0].price).toLocaleString()}`}
-                </h4>
+                <h4>{item.units[0] && `${item.units[0].price}`}</h4>
               </div>
             </motion.a>
           );

@@ -19,20 +19,12 @@ export const team: TeamData[] = [
     id: 1,
     name: "Rita Akoke",
     role: "Digital Marketer",
-    image: "/team/rita.webp",
+    image: "/team/rita.jpeg",
     description:
       "Rita is a creative and strategic content writer with robust knowledge in digital marketing. She has a passion for crafting compelling stories/strategies and driving online success.",
   },
   {
     id: 2,
-    name: "Iweka Tiana",
-    role: "Director of Communications",
-    image: "/team/tiana.webp",
-    description:
-      "Tiana is an exceptional team leader who oversees and directs both internal and external communications.",
-  },
-  {
-    id: 3,
     name: "Josiah Victor",
     role: "Creative",
     image: "/team/victor.webp",

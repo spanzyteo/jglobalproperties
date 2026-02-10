@@ -168,7 +168,7 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
       )}
       <div className="py-3 pl-4 flex flex-col gap-2 h-35">
         <Link
-          href={`/pages/houses/${item.slug}`}
+          href={`/houses/${item.slug}`}
           className="text-[18px] font-medium leading-5.75 hover:text-[#941A1A] hover:underline transition-colors duration-300"
         >
           {item.title}
@@ -181,12 +181,12 @@ const PropertyCard = ({ item, firstImage, roboto }: any) => {
         <h2 className="text-[18px] font-medium leading-[18.2px]">
           {item.price}
         </h2>
-        <div className="p-2.5 border-l border-l-gray-200 ">
+        <div className="p-2 border-l border-l-gray-200">
           <Image
-            src={"/ceo.JPG"}
+            src={"/logo.png"}
             alt="ceo"
-            height={100}
-            width={100}
+            height={350}
+            width={350}
             className="rounded-[5px] h-15 w-15 object-cover"
           />
         </div>
@@ -223,7 +223,7 @@ const LoadMoreButton = ({ roboto }: any) => {
       variants={buttonVariants}
     >
       <Link
-        href={"/pages/houses"}
+        href={"/houses"}
         className={`${roboto.className} py-2 px-4 bg-black text-white rounded-[5px] mx-auto mt-10 text-[15px] hover:opacity-85 transition-all duration-500 ease-in-out font-medium block w-fit`}
       >
         Load More Listings

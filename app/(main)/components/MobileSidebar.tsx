@@ -107,15 +107,17 @@ const MobileSidebar = () => {
 
   const menuItems = [
     { href: "/", label: "Home", type: "link" },
-    {
-      label: "Pages",
-      type: "dropdown",
-      subItems: [
-        { href: "/pages/lands", label: "Lands" },
-        { href: "/pages/houses", label: "Houses" },
-        { href: "/pages/events", label: "Events" },
-      ],
-    },
+    // {
+    //   label: "Pages",
+    //   type: "dropdown",
+    //   subItems: [
+    //     { href: "/lands", label: "Lands" },
+    //     { href: "/houses", label: "Houses" },
+    //     { href: "/events", label: "Events" },
+    //   ],
+    // },
+    { href: "/houses", label: "Houses", type: "link" },
+    { href: "/lands", label: "Lands", type: "link" },
     { href: "/about", label: "About us", type: "link" },
     { href: "/blog", label: "Blog", type: "link" },
     { href: "/contact", label: "Contact us", type: "link" },
@@ -125,7 +127,7 @@ const MobileSidebar = () => {
     <AnimatePresence mode="wait">
       {sidebar && (
         <motion.div
-          className="fixed z-[60] top-0 w-full lg:hidden flex flex-col pb-9 items-start bg-black shadow-lg"
+          className="fixed z-60 top-0 w-full lg:hidden flex flex-col pb-9 items-start bg-black shadow-lg"
           variants={sidebarVariants}
           initial="hidden"
           animate="visible"
@@ -202,7 +204,7 @@ const MobileSidebar = () => {
                         transition: { duration: 0.1 },
                       }}
                     >
-                      <span className="text-[1rem] font-medium leading-[1.25rem] text-white hover:text-blue-600 transition-colors duration-200">
+                      <span className="text-[1rem] font-medium leading-5 text-white hover:text-blue-600 transition-colors duration-200">
                         {item.label}
                       </span>
                       <motion.div
@@ -215,51 +217,7 @@ const MobileSidebar = () => {
                           <MdKeyboardArrowDown className="w-6 h-6 text-white" />
                         )}
                       </motion.div>
-                    </motion.div>
-
-                    {/* Dropdown Items */}
-                    <AnimatePresence>
-                      {isPropertiesOpen && (
-                        <motion.div
-                          className="flex flex-col overflow-hidden"
-                          variants={dropdownContainerVariants}
-                          initial="hidden"
-                          animate="visible"
-                          exit="exit"
-                          transition={{
-                            duration: 0.3,
-                            ease: [0.04, 0.62, 0.23, 0.98],
-                          }}
-                        >
-                          {item.subItems?.map((subItem, subIndex) => (
-                            <motion.div
-                              key={subItem.href}
-                              className="flex h-10 py-2 px-8 items-center w-full border-b border-b-gray-700"
-                              variants={dropdownItemVariants}
-                              initial="hidden"
-                              animate="visible"
-                              exit="hidden"
-                              transition={{
-                                duration: 0.2,
-                                delay: subIndex * 0.05,
-                              }}
-                              whileTap={{
-                                scale: 0.98,
-                                transition: { duration: 0.1 },
-                              }}
-                            >
-                              <Link
-                                href={subItem.href}
-                                className="text-[0.95rem] font-normal leading-[1.25rem] text-gray-300 hover:text-[#941A1A] transition-colors duration-200"
-                                onClick={handleCloseSidebar}
-                              >
-                                {subItem.label}
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    </motion.div>                
                   </div>
                 ) : (
                   <motion.div
@@ -271,7 +229,7 @@ const MobileSidebar = () => {
                   >
                     <Link
                       href={item.href || "/"}
-                      className="text-[1rem] font-medium leading-[1.25rem] text-white hover:text-blue-600 transition-colors duration-200"
+                      className="text-[1rem] font-medium leading-5 text-white hover:text-blue-600 transition-colors duration-200"
                       onClick={handleCloseSidebar}
                     >
                       {item.label}
