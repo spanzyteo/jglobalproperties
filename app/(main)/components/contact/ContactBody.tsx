@@ -49,7 +49,7 @@ const ContactBody = () => {
     <div className="bg-[#fffcfc] px-4 md:px-8 py-8 flex flex-col md:flex-row gap-4 overflow-hidden">
       <motion.div
         ref={leftRef}
-        className={`${roboto.className} flex flex-col gap-6 w-full lg:max-w-218.25`}
+        className={`${roboto.className} flex flex-col gap-6 w-full lg:w-[70%]`}
         variants={containerVariants}
         initial="hidden"
         animate={leftInView ? "visible" : "hidden"}
@@ -70,6 +70,7 @@ const ContactBody = () => {
         initial="hidden"
         animate={rightInView ? "visible" : "hidden"}
         variants={containerVariants}
+        className="lg:w-[30%] sticky top-8 h-fit"
       >
         <ContactSection2 />
       </motion.div>
