@@ -51,9 +51,9 @@ const LandId = () => {
   return (
     <div>
       <LandIdHero loading={loading} />
-      <div className="bg-[#fffcfc] px-4 md:px-8 py-8 flex flex-col lg:flex-row gap-4">
+      <div className="bg-[#fffcfc] px-4 md:px-8 py-8 flex flex-col lg:flex-row lg:justify-between gap-4">
         <LandIdContent loading={loading} />
-        <div className="sticky top-8 h-fit">
+        <div className="sticky top-8 h-fit lg:w-[30%]">
           <ContactSection2 />
         </div>
       </div>

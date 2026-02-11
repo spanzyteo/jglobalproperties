@@ -184,7 +184,7 @@ const BlogIdContent = ({ currentBlogId }: BlogHeroProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:max-w-218.25">
+    <div className="flex flex-col gap-6 w-full lg:w-[70%] mt-28 md:mt-0">
       <div
         className={`${roboto.className} bg-white rounded-[5px] flex flex-col gap-10 py-12 px-6 shadow-sm`}
       >

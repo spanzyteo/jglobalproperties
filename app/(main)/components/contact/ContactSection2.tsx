@@ -63,7 +63,7 @@ const ContactSection2 = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:max-w-91.25">
+    <div className="flex flex-col gap-6 w-full">
       {/* Advanced Search */}
       <SearchCard
         search={search}
