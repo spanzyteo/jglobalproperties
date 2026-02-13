@@ -118,7 +118,7 @@ function UnsubscribeContent() {
         <button
           onClick={handleUnsubscribe}
           disabled={loading}
-          className="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mb-3"
+          className="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mb-3 cursor-pointer"
         >
           {loading ? "Unsubscribing..." : "Unsubscribe"}
         </button>

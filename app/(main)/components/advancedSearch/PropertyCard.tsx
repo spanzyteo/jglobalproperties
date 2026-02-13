@@ -9,24 +9,13 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, type }) => {
-  const formatPrice = (price: number | string) => {
-    const numPrice = typeof price === "string" ? parseInt(price) : price;
-    return new Intl.NumberFormat("en-NG", {
-      style: "currency",
-      currency: "NGN",
-      minimumFractionDigits: 0,
-    }).format(numPrice);
-  };
 
   // Safe data extraction with fallbacks
   const href =
-    type === "lands" ? `/lands/${property.id}` : `/houses/${property.id}`;
+    type === "lands" ? `/lands/${property.slug}` : `/houses/${property.slug}`;
 
-  // Safely get image URL based on type
-  const imageUrl =
-    type === "lands"
-      ? property.images?.[0]?.url || "/placeholder.jpg"
-      : property.image?.[0]?.url || "/placeholder.jpg";
+  // Safely get image URL - both lands and houses use 'images' array
+  const imageUrl = property.images?.[0]?.url || "/placeholder.jpg";
 
   // Safely get price based on type
   const price =
@@ -47,7 +36,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, type }) => {
         />
 
         {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Status badge for lands */}
         {type === "lands" && property.status && (
@@ -79,7 +68,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, type }) => {
         {/* Location */}
         <div className="flex items-start gap-2 text-sm text-gray-600 mb-3">
           <svg
-            className="w-4 h-4 mt-0.5 flex-shrink-0"
+            className="w-4 h-4 mt-0.5 shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -105,9 +94,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, type }) => {
 
         {/* Price */}
         <div className="flex items-center justify-between">
-          <p className="text-xl font-bold text-[#941A1A]">
-            {formatPrice(price)}
-          </p>
+          <p className="text-xl font-bold text-[#941A1A]">{price}</p>
 
           {/* View details arrow */}
           <div className="flex items-center gap-1 text-sm text-gray-500 group-hover:text-[#941A1A] transition-colors">

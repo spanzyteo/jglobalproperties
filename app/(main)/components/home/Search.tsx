@@ -9,7 +9,32 @@ const Search = () => {
   const search = useAppSelector((state) => state.search.searchOption);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const states = nigeriaState.all()
+  const states = [
+    {
+      name: "Lagos",
+    },
+    {
+      name: "Abuja",
+    },
+    {
+      name: "Ogun",
+    },
+    {
+      name: "Ibadan",
+    },
+    {
+      name: "Oyo",
+    },
+    {
+      name: "Asaba",
+    },
+    {
+      name: "Delta",
+    },
+    {
+      name: "Rivers",
+    },
+  ];
 
   const [formData, setFormData] = useState({
     propertyName: "",
@@ -17,7 +42,9 @@ const Search = () => {
     state: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -39,12 +66,12 @@ const Search = () => {
   };
 
   return (
-    <div className="flex flex-col items-center md:items-start w-full md:max-w-[390px] lg:max-w-[460px]">
+    <div className="flex flex-col items-center md:items-start w-full md:max-w-97.5 lg:max-w-115">
       {/* Tab */}
       <div className="flex items-center gap-1">
         <div
           onClick={() => dispatch(searchState("lands"))}
-          className={`cursor-pointer rounded-t-[0.25rem] px-6 py-3 ${
+          className={`cursor-pointer rounded-t-sm px-6 py-3 ${
             search === "lands"
               ? "bg-[#941A1A]/80 text-white"
               : "bg-white hover:text-[#941A1A]"
@@ -54,7 +81,7 @@ const Search = () => {
         </div>
         <div
           onClick={() => dispatch(searchState("houses"))}
-          className={`cursor-pointer rounded-t-[0.5rem] px-6 py-3 ${
+          className={`cursor-pointer rounded-t-lg px-6 py-3 ${
             search === "houses"
               ? "bg-[#941A1A]/80 text-white"
               : "bg-white hover:text-[#941A1A]"
@@ -66,7 +93,7 @@ const Search = () => {
       {search === "lands" && (
         <form
           onSubmit={handleSearch}
-          className="bg-white rounded-b-[0.5rem] rounded-tr-[0.5rem] rounded-tl-[0.5rem] md:rounded-tl-none flex flex-col gap-8 w-full p-4"
+          className="bg-white rounded-b-lg rounded-tr-lg rounded-tl-lg md:rounded-tl-none flex flex-col gap-8 w-full p-4"
         >
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="propertyName">Property Name</label>
@@ -110,9 +137,9 @@ const Search = () => {
           </div>
           <button
             type="submit"
-            className="flex gap-1 items-center justify-center bg-black py-3 rounded-[0.5rem] text-white cursor-pointer hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out"
+            className="flex gap-1 items-center justify-center bg-black py-3 rounded-lg text-white cursor-pointer hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out"
           >
-            <BiSearch className="h-[25px] w-[25px]" />
+            <BiSearch className="h-6.25 w-6.25" />
             <h2 className="font-medium">SEARCH</h2>
           </button>
         </form>
@@ -120,7 +147,7 @@ const Search = () => {
       {search === "houses" && (
         <form
           onSubmit={handleSearch}
-          className="bg-white rounded-b-[0.5rem] rounded-tr-[0.5rem] rounded-tl-[0.5rem] md:rounded-tl-none flex flex-col gap-8 w-full p-4"
+          className="bg-white rounded-b-lg rounded-tr-lg rounded-tl-lg md:rounded-tl-none flex flex-col gap-8 w-full p-4"
         >
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="propertyName">Property Name</label>
@@ -152,9 +179,7 @@ const Search = () => {
               onChange={handleInputChange}
               className="border-b border-b-gray-300 focus:outline-none"
             >
-              <option value="">
-                All States
-              </option>
+              <option value="" disabled>Select State</option>
               {states.map((st) => (
                 <option key={st.name} value={st.name}>
                   {st.name}
@@ -164,9 +189,9 @@ const Search = () => {
           </div>
           <button
             type="submit"
-            className="flex gap-1 items-center justify-center bg-black py-3 rounded-[0.5rem] text-white cursor-pointer hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out"
+            className="flex gap-1 items-center justify-center bg-black py-3 rounded-lg text-white cursor-pointer hover:bg-white hover:border hover:text-black transition-all duration-500 ease-in-out"
           >
-            <BiSearch className="h-[25px] w-[25px]" />
+            <BiSearch className="h-6.25 w-6.25" />
             <h2 className="font-medium">SEARCH</h2>
           </button>
         </form>

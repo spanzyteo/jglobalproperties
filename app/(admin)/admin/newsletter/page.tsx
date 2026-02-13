@@ -93,7 +93,7 @@ export default function NewsletterDashboard() {
   }
 
   return (
-    <div className="p-6 max-w-5xl mx-auto xl:ml-80">
+    <div className="p-6 max-w-5xl mx-auto xl:ml-80 min-h-screen">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">

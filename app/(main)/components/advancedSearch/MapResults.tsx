@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { searchState } from "../../store/searchSlice";
 import { state as nigeriaState } from "locations-ng";
 import { useSearchParams } from "next/navigation";
-import lands from "../../utils/lands";
-import houses from "../../utils/houses";
 import PropertyCard from "./PropertyCard";
+import { getLands } from "../../features/lands/api";
+import { getHouses } from "../../features/houses/api";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -43,6 +43,7 @@ const MapResults = ({
 
   const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [allProperties, setAllProperties] = useState<any[]>([]);
 
   // Initialize filters from URL params
   useEffect(() => {
@@ -64,15 +65,33 @@ const MapResults = ({
     });
   }, [searchParams, dispatch]);
 
-  // Filter results whenever filters or search type changes
+  // Fetch properties from API whenever search type changes
+  useEffect(() => {
+    const fetchProperties = async () => {
+      setIsLoading(true);
+      try {
+        if (search === "lands") {
+          const { lands } = await getLands(1, 100); // Fetch up to 100 results
+          setAllProperties(lands);
+        } else if (search === "houses") {
+          const { houses } = await getHouses(1, 100); // Fetch up to 100 results
+          setAllProperties(houses);
+        }
+      } catch (error) {
+        console.error("Error fetching properties:", error);
+        setAllProperties([]);
+      }
+    };
+
+    fetchProperties();
+  }, [search]);
+
+  // Filter results whenever filters or properties change
   useEffect(() => {
     setIsLoading(true);
 
-    // Simulate slight delay for better UX (remove in production with real API)
     const timer = setTimeout(() => {
-      const dataSource = search === "lands" ? lands : houses;
-
-      const results = dataSource.filter((item) => {
+      const results = allProperties.filter((item) => {
         const matchesTitle =
           !filters.title ||
           item.title.toLowerCase().includes(filters.title.toLowerCase());
@@ -113,7 +132,7 @@ const MapResults = ({
     }, 150);
 
     return () => clearTimeout(timer);
-  }, [filters, search]); // Remove onFilteredResults from dependencies
+  }, [filters, search, allProperties]); // Include allProperties in dependencies
 
   // Separate effect to notify parent - only when results actually change
   useEffect(() => {
@@ -121,7 +140,7 @@ const MapResults = ({
   }, [filteredResults, onFilteredResults]); // Only depend on filteredResults, not the callback
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFilters({
       ...filters,
@@ -144,7 +163,7 @@ const MapResults = ({
   return (
     <div className="flex flex-col w-full md:w-1/2 lg:w-2/5 px-4 py-6 gap-6">
       {/* Filter Panel - Sticky on scroll */}
-      <div className="rounded-lg p-5 bg-white shadow-md  top-[4.1875rem] lg:top-[6rem] z-10">
+      <div className="rounded-lg p-5 bg-white shadow-md  top-16.75 lg:top-24 z-10">
         {/* Main Location Search */}
         <div className="mb-4">
           <input

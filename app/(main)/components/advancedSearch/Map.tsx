@@ -206,7 +206,7 @@ const Map: React.FC<MapProps> = ({ properties }) => {
   }, [properties, locationCoordinates, stateCoordinates]); // Now these are memoized
 
   return (
-    <div className="hidden md:block md:w-1/2 lg:w-3/5 h-screen sticky top-[4.1875rem] lg:top-[6rem]">
+    <div className="hidden md:block md:w-1/2 lg:w-3/5 h-screen sticky top-16.75 lg:top-24">
       <div ref={mapContainerRef} className="w-full h-full" />
     </div>
   );

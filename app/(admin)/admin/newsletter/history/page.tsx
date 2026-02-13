@@ -88,7 +88,7 @@ export default function NewsletterHistory() {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto xl:ml-80">
+    <div className="p-6 max-w-7xl mx-auto xl:ml-80 min-h-screen">
       {/* Campaign Detail Modal */}
       {selectedCampaign && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
