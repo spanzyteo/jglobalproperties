@@ -81,12 +81,11 @@ const Footer = () => {
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
           <Link href={"/about"}>About</Link>
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
-          <Link href={"/events"}>Events</Link>
-          <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
           <Link href={"/blog"}>Blogs</Link>
           <h3 className="h-[0.1rem] w-[0.1rem] bg-[#F0F0F0E3]"></h3>
         </div>
-        <h3>©2024 All Rights Reserved</h3>
+        <h3>©2026DD All Rights Reserved</h3>
+        <h3>©2026DD All Rights Reserved</h3>
       </div>
     </div>
   );

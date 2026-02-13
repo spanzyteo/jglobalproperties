@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       success: true,
       user: data.user,
       message: data.message,
+      access_token: data.access_token, // Include token from backend for client
     });
 
     const setCookieHeaders = backendResponse.headers["set-cookie"];
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
     console.error("Login API error:", error);
     return NextResponse.json(
       { message: error.message || "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

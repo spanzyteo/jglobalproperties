@@ -8,6 +8,7 @@ interface SidebarState {
   reviews: boolean;
   tags: boolean;
   events: boolean;
+  newsletter: boolean;
 }
 
 const initialState: SidebarState = {
@@ -18,6 +19,7 @@ const initialState: SidebarState = {
   reviews: false,
   tags: false,
   events: false,
+  newsletter: false,
 };
 
 const sidebarSlice = createSlice({
@@ -86,6 +88,17 @@ const sidebarSlice = createSlice({
       state.reviews = false;
       state.tags = false;
       state.events = !state.events;
+      state.newsletter = false;
+    },
+    toggleNewsletter: (state) => {
+      state.lands = false;
+      state.blogs = false;
+      state.categories = false;
+      state.houses = false;
+      state.reviews = false;
+      state.tags = false;
+      state.events = false;
+      state.newsletter = !state.newsletter;
     },
   },
 });
@@ -98,5 +111,6 @@ export const {
   toggleReviews,
   toggleTags,
   toggleEvents,
+  toggleNewsletter,
 } = sidebarSlice.actions;
 export default sidebarSlice.reducer;

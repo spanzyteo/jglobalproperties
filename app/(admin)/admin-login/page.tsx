@@ -34,12 +34,17 @@ const AdminLogin = () => {
           email,
           password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       const data = response.data;
 
       if (response.status === 200) {
+        // Store token in sessionStorage for Authorization header
+        if (data.access_token) {
+          sessionStorage.setItem("access_token", data.access_token);
+          console.log("✅ Token stored in sessionStorage");
+        }
         toast.success("Login Successful");
         console.log("Login Successful");
         router.push("/admin");
@@ -51,7 +56,7 @@ const AdminLogin = () => {
       const message =
         error.response?.data?.message || "An error occurred while logging in";
       toast.error(message);
-      console.log(message)
+      console.log(message);
     } finally {
       setLoading(false);
     }

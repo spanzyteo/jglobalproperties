@@ -6,6 +6,56 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Modal = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
+
+  // In the handleSubmit function, change the API endpoint:
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/newsletter/subscribe`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            source: "homepage_modal",
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("success");
+        setMessage(data.message || "Thank you for subscribing!");
+
+        localStorage.setItem("newsletter_subscribed", "true");
+        setFormData({ name: "", email: "" });
+
+        setTimeout(() => {
+          closeModal();
+        }, 3000);
+      } else {
+        setStatus("error");
+        setMessage(data.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      setStatus("error");
+      setMessage("Failed to subscribe. Please try again later.");
+    }
+  };
 
   useEffect(() => {
     // Show modal after 10 seconds
@@ -77,25 +127,46 @@ const Modal = () => {
                     Sign up for our weekly newsletter
                   </p>
                 </div>
-                <form className="flex flex-col items-start gap-[0.4rem] lg:gap-3.5 w-full">
+                <form
+                  className="flex flex-col items-start gap-[0.4rem] lg:gap-3.5 w-full"
+                  onSubmit={handleSubmit}
+                >
                   <div className="flex flex-col items-start gap-1 lg:gap-2 w-full">
                     <input
                       type="text"
                       placeholder="Name"
                       className="flex flex-col h-12 px-4 border rounded-lg text-[0.875rem] leading-4.5 text-black w-full focus:outline-none border-[#D9D9D9]"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      required
                     />
                     <input
                       type="email"
                       placeholder="Email"
                       className="flex flex-col h-12 px-4 border rounded-lg text-[0.875rem] leading-4.5 text-black w-full focus:outline-none border-[#D9D9D9]"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      required
                     />
                   </div>
                   <button
                     type="submit"
                     className="py-[0.78rem] lg:py-4 px-6 lg:px-8 flex items-center justify-center rounded-lg bg-[#941A1A] text-[0.78rem] lg:text-[1rem] leading-4 lg:leading-5 text-white w-full hover:bg-[#7a1616] transition-colors"
+                    disabled={status === "loading"}
                   >
-                    Sign up
+                    {status === "loading" ? "Signing up..." : "Sign up"}
                   </button>
+                  {message && (
+                    <div
+                      className={`mt-2 text-sm ${status === "success" ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {message}
+                    </div>
+                  )}
                 </form>
               </div>
               <Image

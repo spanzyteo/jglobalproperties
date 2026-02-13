@@ -11,6 +11,7 @@ import HouseSidebarSection from "./houses/HouseSidebarSection";
 import ReviewSidebarSection from "./reviews/ReviewSidebarSection";
 import TagSidebarSection from "./tags/TagSidebarSection";
 import EventSidebarSection from "./events/EventSidebarSection";
+import NewsletterSidebarSection from "./newsletter/NewsletterSidebarSection";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -33,6 +34,9 @@ const Sidebar = () => {
       const data = await response.data;
 
       if (response.status === 200) {
+        // Clear token from sessionStorage
+        sessionStorage.removeItem("access_token");
+
         toast.success(data.message || "Logged out successfully");
 
         router.push("/");
@@ -70,6 +74,7 @@ const Sidebar = () => {
           <ReviewSidebarSection />
           <TagSidebarSection />
           <EventSidebarSection />
+          <NewsletterSidebarSection />
 
           {/* Logout button with loading effect */}
           <button

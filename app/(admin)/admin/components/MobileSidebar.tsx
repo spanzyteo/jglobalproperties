@@ -17,6 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import TagDropdown from "./tags/TagDropdown";
 import EventDropdown from "./events/EventDropdown";
+import NewsletterDropdown from "./newsletter/NewsletterDropdown";
 
 const MobileSidebar = () => {
   const [loading, setLoading] = useState(false);
@@ -35,12 +36,15 @@ const MobileSidebar = () => {
       const response = await axios.post(
         "/api/auth/logout",
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       const data = await response.data;
 
       if (response.status === 200) {
+        // Clear token from sessionStorage
+        sessionStorage.removeItem("access_token");
+
         toast.success(data.message || "Logged out successfully");
 
         router.push("/");
@@ -89,6 +93,7 @@ const MobileSidebar = () => {
             <ReviewDropdown />
             <TagDropdown />
             <EventDropdown />
+            <NewsletterDropdown />
             <button
               className={`flex items-center gap-8 cursor-pointer w-57.5 transition-all duration-200 ${
                 loading
